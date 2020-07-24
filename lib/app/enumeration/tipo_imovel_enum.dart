@@ -1,0 +1,1 @@
+enum TipoImovel { CASA, APARTAMENTO, SALA, GALPAO }
