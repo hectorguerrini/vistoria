@@ -30,6 +30,13 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
           Computed<String>(() => super.getStringAmbiente,
               name: '_CadastroImovelControllerBase.getStringAmbiente'))
       .value;
+  Computed<int> _$getQtdeAmbienteComputed;
+
+  @override
+  int get getQtdeAmbiente =>
+      (_$getQtdeAmbienteComputed ??= Computed<int>(() => super.getQtdeAmbiente,
+              name: '_CadastroImovelControllerBase.getQtdeAmbiente'))
+          .value;
   Computed<bool> _$isFieldsValidComputed;
 
   @override
@@ -70,6 +77,14 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
     });
   }
 
+  final _$editAmbienteAsyncAction =
+      AsyncAction('_CadastroImovelControllerBase.editAmbiente');
+
+  @override
+  Future editAmbiente() {
+    return _$editAmbienteAsyncAction.run(() => super.editAmbiente());
+  }
+
   final _$_CadastroImovelControllerBaseActionController =
       ActionController(name: '_CadastroImovelControllerBase');
 
@@ -90,6 +105,17 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
         .startAction(name: '_CadastroImovelControllerBase.addAmbiente');
     try {
       return super.addAmbiente();
+    } finally {
+      _$_CadastroImovelControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic deleteAmbiente(AmbienteModel ambienteModel) {
+    final _$actionInfo = _$_CadastroImovelControllerBaseActionController
+        .startAction(name: '_CadastroImovelControllerBase.deleteAmbiente');
+    try {
+      return super.deleteAmbiente(ambienteModel);
     } finally {
       _$_CadastroImovelControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -118,7 +144,7 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
   }
 
   @override
-  dynamic setQtde(String value) {
+  dynamic setQtde(int value) {
     final _$actionInfo = _$_CadastroImovelControllerBaseActionController
         .startAction(name: '_CadastroImovelControllerBase.setQtde');
     try {
@@ -136,6 +162,7 @@ imovelModel: ${imovelModel},
 getTipoImovel: ${getTipoImovel},
 getAmbiente: ${getAmbiente},
 getStringAmbiente: ${getStringAmbiente},
+getQtdeAmbiente: ${getQtdeAmbiente},
 isFieldsValid: ${isFieldsValid}
     ''';
   }

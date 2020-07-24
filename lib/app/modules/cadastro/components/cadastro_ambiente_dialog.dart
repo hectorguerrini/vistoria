@@ -25,26 +25,44 @@ class _CadastroAmbienteDialogState extends State<CadastroAmbienteDialog> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Observer(builder: (_) {
           return DropdownButton(
-              disabledHint:
-                  Text(controller.getStringAmbiente),
+              disabledHint: Text(controller.getStringAmbiente),
               isExpanded: true,
               hint: Text('Ambientes'),
               value: controller.getAmbiente,
               items: controller.listAmbientes
                   .map((e) => DropdownMenuItem(
                       child: Text(e.toString().split('.')[1]), value: e))
+                  .where((element) => !controller.imovelModel.listAmbientes
+                      .map((e) => e.ambiente)
+                      .contains(element))
                   .toList(),
               onChanged: !widget.modoEdicao ? controller.setAmbiente : null);
         }),
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: TextField(
-          onChanged: controller.setQtde,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(labelText: 'Quantidade'),
-        ),
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Text('Quantidade:'),
       ),
+      Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Observer(builder: (_) {
+            return GridView.count(
+              crossAxisCount: 4,
+              shrinkWrap: true,
+              children: <Widget>[
+                inputChipCustom(
+                    1, controller.getQtdeAmbiente, controller.setQtde),
+                inputChipCustom(
+                    2, controller.getQtdeAmbiente, controller.setQtde),
+                inputChipCustom(
+                    3, controller.getQtdeAmbiente, controller.setQtde),
+                inputChipCustom(
+                    4, controller.getQtdeAmbiente, controller.setQtde),
+                inputChipCustom(
+                    5, controller.getQtdeAmbiente, controller.setQtde),
+              ],
+            );
+          })),
       ButtonBar(
         children: <Widget>[
           FlatButton.icon(
@@ -58,6 +76,18 @@ class _CadastroAmbienteDialogState extends State<CadastroAmbienteDialog> {
                 style: TextStyle(color: Colors.red),
               )),
           Observer(builder: (_) {
+            if (widget.modoEdicao) {
+              return FlatButton.icon(
+                  onPressed: controller.isFieldsValid
+                      ? () {
+                          controller.editAmbiente();
+                          Modular.to.pop();
+                        }
+                      : null,
+                  icon: Icon(FontAwesome.floppy),
+                  label: Text('Editar'));
+            }
+
             return FlatButton.icon(
                 onPressed: controller.isFieldsValid
                     ? () {
@@ -72,4 +102,21 @@ class _CadastroAmbienteDialogState extends State<CadastroAmbienteDialog> {
       )
     ]);
   }
+}
+
+Widget inputChipCustom(int value, int valueCompare, Function f) {
+  var _textColor = MaterialStateColor.resolveWith((states) {
+    if (states.contains(MaterialState.selected)) {
+      return Colors.white;
+    }
+    return Colors.black;
+  });
+  return InputChip(
+    label: Text(value.toString()),
+    labelStyle: TextStyle(color: _textColor),
+    selected: valueCompare == value,
+    selectedColor: Colors.green,
+    checkmarkColor: Colors.white,
+    onPressed: () => f(value),
+  );
 }

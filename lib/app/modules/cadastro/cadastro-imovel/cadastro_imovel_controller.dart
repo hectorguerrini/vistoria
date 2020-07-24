@@ -49,19 +49,38 @@ abstract class _CadastroImovelControllerBase with Store {
   }
 
   @action
+  editAmbiente() async {
+    List<AmbienteModel> _lista = imovelModel.listAmbientes;
+    var i = _lista
+        .indexWhere((element) => element.ambiente == ambienteModel.ambiente);
+    _lista[i] = ambienteModel;
+    imovelModel = imovelModel.copyWith(listAmbientes: _lista);
+    setAmbienteModel(new AmbienteModel(quantidade: 0));
+  }
+
+  @action
+  deleteAmbiente(AmbienteModel ambienteModel) {
+    List<AmbienteModel> _lista = imovelModel.listAmbientes;
+    _lista.remove(ambienteModel);
+    imovelModel = imovelModel.copyWith(listAmbientes: _lista);
+  }
+
+  @action
   setAmbienteModel(AmbienteModel value) => ambienteModel = value;
   @action
   setAmbiente(Ambientes value) =>
       ambienteModel = ambienteModel.copyWith(ambiente: value);
   @action
-  setQtde(String value) =>
-      ambienteModel = ambienteModel.copyWith(quantidade: int.parse(value));
+  setQtde(int value) =>
+      ambienteModel = ambienteModel.copyWith(quantidade: value);
   @computed
   Ambientes get getAmbiente => ambienteModel.ambiente;
   @computed
   String get getStringAmbiente => ambienteModel.ambiente != null
       ? ambienteModel.ambiente.toShortString()
       : '';
+  @computed
+  int get getQtdeAmbiente => ambienteModel.quantidade;
   @computed
   bool get isFieldsValid =>
       ambienteModel.ambiente != null && ambienteModel.quantidade > 0;

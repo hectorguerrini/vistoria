@@ -5,6 +5,7 @@ import 'package:vistoria/app/enumeration/ambientes_enum.dart';
 import 'package:vistoria/app/modules/cadastro/components/cadastro_ambiente_dialog.dart';
 import 'package:vistoria/app/modules/cadastro/cadastro-imovel/cadastro_imovel_controller.dart';
 import 'package:vistoria/app/modules/cadastro/models/ambiente_model.dart';
+import 'package:vistoria/app/shared/components/confirmation_dialog.dart';
 
 class CardAmbiente extends StatelessWidget {
   final CadastroImovelController _controller =
@@ -22,7 +23,7 @@ class CardAmbiente extends StatelessWidget {
           trailing: PopupMenuButton(
               icon: Icon(Icons.more_vert),
               offset: Offset(0, 100),
-              onSelected: (value) {
+              onSelected: (value) async {
                 switch (value) {
                   case 'EDITAR':
                     _controller.setAmbienteModel(item);
@@ -32,7 +33,15 @@ class CardAmbiente extends StatelessWidget {
                               modoEdicao: true,
                             ));
                     break;
-                  case 'DELETER':
+                  case 'DELETAR':
+                    var confimacao = await showDialog(
+                        context: context,
+                        builder: (_) => new ConfirmationDialog(
+                              action: 'Deletar',
+                            ));
+                    if (confimacao) {
+                      _controller.deleteAmbiente(item);
+                    }
                     break;
                   default:
                 }
