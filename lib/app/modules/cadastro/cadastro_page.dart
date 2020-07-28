@@ -68,7 +68,8 @@ class _CadastroPageState
             child: Card(
                 child: ListTile(
               onTap: () {
-                Modular.to.pushNamed('/cadastro/lista_cliente');
+                Modular.to
+                    .pushNamed('/cadastro/lista_cliente', arguments: false);
               },
               contentPadding: EdgeInsets.all(8.0),
               title: Text(

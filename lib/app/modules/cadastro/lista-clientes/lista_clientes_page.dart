@@ -59,7 +59,9 @@ class _ListaClientesPageState
                       onTap: () async {
                         if (widget.modoSelecao) {
                           var confimacao = await Modular.to.showDialog(
-                              builder: (context) => ConfirmationDialog());
+                              builder: (context) => ConfirmationDialog(
+                                    action: 'Selecionar Cliente',
+                                  ));
                           if (confimacao) {
                             Modular.to.pop(item);
                           }

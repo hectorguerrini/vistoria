@@ -36,9 +36,8 @@ abstract class _CadastroImovelControllerBase with Store {
   }
   @action
   selectProprietario() {
-    Modular.to
-        .pushNamed('/cadastro/lista_cliente', arguments: true)
-        .then((value) => print(value));
+    Modular.to.pushNamed('/cadastro/lista_cliente', arguments: true).then(
+        (value) => imovelModel = imovelModel.copyWith(proprietario: value));
   }
 
   @computed

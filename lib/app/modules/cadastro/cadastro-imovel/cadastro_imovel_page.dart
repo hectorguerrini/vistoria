@@ -42,12 +42,13 @@ class _CadastroImovelPageState
                   }
 
                   return TextFormField(
-                    onTap: () {
-                      print('teste');
-                    },
                     readOnly: true,
+                    initialValue: controller.getProprietario.nomeCompleto,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: Icon(Icons.search),
+                            onPressed: controller.selectProprietario),
                         labelText: 'Proprietario',
                         border: OutlineInputBorder()),
                   );
