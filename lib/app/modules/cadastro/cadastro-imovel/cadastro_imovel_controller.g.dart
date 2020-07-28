@@ -9,6 +9,13 @@ part of 'cadastro_imovel_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
+  Computed<ClienteModel> _$getProprietarioComputed;
+
+  @override
+  ClienteModel get getProprietario => (_$getProprietarioComputed ??=
+          Computed<ClienteModel>(() => super.getProprietario,
+              name: '_CadastroImovelControllerBase.getProprietario'))
+      .value;
   Computed<TipoImovel> _$getTipoImovelComputed;
 
   @override
@@ -89,6 +96,17 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
       ActionController(name: '_CadastroImovelControllerBase');
 
   @override
+  dynamic selectProprietario() {
+    final _$actionInfo = _$_CadastroImovelControllerBaseActionController
+        .startAction(name: '_CadastroImovelControllerBase.selectProprietario');
+    try {
+      return super.selectProprietario();
+    } finally {
+      _$_CadastroImovelControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setTipoImovel(TipoImovel value) {
     final _$actionInfo = _$_CadastroImovelControllerBaseActionController
         .startAction(name: '_CadastroImovelControllerBase.setTipoImovel');
@@ -159,6 +177,7 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
     return '''
 ambienteModel: ${ambienteModel},
 imovelModel: ${imovelModel},
+getProprietario: ${getProprietario},
 getTipoImovel: ${getTipoImovel},
 getAmbiente: ${getAmbiente},
 getStringAmbiente: ${getStringAmbiente},

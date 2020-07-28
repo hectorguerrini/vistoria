@@ -31,11 +31,27 @@ class _CadastroImovelPageState
             padding: EdgeInsets.all(20),
             children: <Widget>[
               Card(
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      labelText: 'Proprietario', border: OutlineInputBorder()),
-                ),
+                child: Observer(builder: (_) {
+                  if (controller.getProprietario == null) {
+                    return FlatButton.icon(
+                        onPressed: controller.selectProprietario,
+                        icon: Icon(Icons.add, color: Colors.black54),
+                        label: Text('Selecionar um Proprietario',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black54)));
+                  }
+
+                  return TextFormField(
+                    onTap: () {
+                      print('teste');
+                    },
+                    readOnly: true,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        labelText: 'Proprietario',
+                        border: OutlineInputBorder()),
+                  );
+                }),
               ),
               Card(
                 shape: OutlineInputBorder(

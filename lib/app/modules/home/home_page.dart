@@ -47,8 +47,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           ],
         ),
       ),
-      body: Column(
-        children: <Widget>[],
+      body: Center(
+        child: RaisedButton(
+          onPressed: controller.resetButton,
+          child: Text('Reset'),
+        ),
       ),
     );
   }

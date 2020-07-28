@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:vistoria/app/shared/components/message_dialog.dart';
 import 'cadastro_cliente_controller.dart';
 
 class CadastroClientePage extends StatefulWidget {
@@ -30,6 +31,7 @@ class _CadastroClientePageState
                 child: TextFormField(
                   onChanged: controller.setNomeCompleto,
                   keyboardType: TextInputType.text,
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: 'Nome Completo',
                     border: OutlineInputBorder(),
@@ -52,7 +54,7 @@ class _CadastroClientePageState
                     child: Card(
                       child: TextFormField(
                         controller: controller.celularCtrl,
-                        onChanged: controller.setEmail,
+                        onChanged: controller.setCelular,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                             labelText: 'Celular', border: OutlineInputBorder()),
@@ -74,7 +76,7 @@ class _CadastroClientePageState
               ),
               Card(
                 child: TextFormField(
-                  onChanged: controller.setEmail,
+                  onChanged: controller.setTelefone,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       labelText: 'Telefone', border: OutlineInputBorder()),
@@ -90,7 +92,7 @@ class _CadastroClientePageState
                 child: TextFormField(
                   controller: controller.cpfCtrl,
                   onChanged: controller.setCpf,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: 'CPF', border: OutlineInputBorder()),
                 ),
@@ -98,7 +100,7 @@ class _CadastroClientePageState
               Card(
                 child: TextFormField(
                   onChanged: controller.setRg,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: 'RG', border: OutlineInputBorder()),
                 ),
@@ -116,7 +118,14 @@ class _CadastroClientePageState
             ],
           )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          await controller.save();
+          showDialog(
+              context: context,
+              builder: (_) => MessageDialog(
+                    mensagem: 'Cadastrado com Sucesso',
+                  ));
+        },
         child: Icon(Icons.save),
       ),
     );

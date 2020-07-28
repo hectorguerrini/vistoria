@@ -34,7 +34,7 @@ class _CadastroAmbienteDialogState extends State<CadastroAmbienteDialog> {
                       child: Text(e.toString().split('.')[1]), value: e))
                   .where((element) => !controller.imovelModel.listAmbientes
                       .map((e) => e.ambiente)
-                      .contains(element))
+                      .contains(element.value))
                   .toList(),
               onChanged: !widget.modoEdicao ? controller.setAmbiente : null);
         }),

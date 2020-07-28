@@ -33,6 +33,13 @@ mixin _$CadastroClienteController on _CadastroClienteControllerBase, Store {
     });
   }
 
+  final _$saveAsyncAction = AsyncAction('_CadastroClienteControllerBase.save');
+
+  @override
+  Future save() {
+    return _$saveAsyncAction.run(() => super.save());
+  }
+
   final _$_CadastroClienteControllerBaseActionController =
       ActionController(name: '_CadastroClienteControllerBase');
 

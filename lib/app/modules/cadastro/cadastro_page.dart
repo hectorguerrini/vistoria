@@ -67,14 +67,17 @@ class _CadastroPageState
           Container(
             child: Card(
                 child: ListTile(
+              onTap: () {
+                Modular.to.pushNamed('/cadastro/lista_cliente');
+              },
               contentPadding: EdgeInsets.all(8.0),
               title: Text(
-                "Cadastro de Cliente",
+                "Clientes Cadastrados",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20, color: Colors.black87),
               ),
               subtitle: Icon(
-                Icons.vpn_key,
+                Icons.group,
                 color: Colors.black54,
                 size: 72,
               ),

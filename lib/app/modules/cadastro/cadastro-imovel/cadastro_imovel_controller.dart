@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/enumeration/ambientes_enum.dart';
 import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/ambiente_model.dart';
+import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 part 'cadastro_imovel_controller.g.dart';
 
@@ -32,6 +34,15 @@ abstract class _CadastroImovelControllerBase with Store {
     // _lista.add(
     //     new AmbienteModel(ambiente: Ambientes.CHURRASQUEIRA, quantidade: 1));
   }
+  @action
+  selectProprietario() {
+    Modular.to
+        .pushNamed('/cadastro/lista_cliente', arguments: true)
+        .then((value) => print(value));
+  }
+
+  @computed
+  ClienteModel get getProprietario => imovelModel.proprietario;
 
   @action
   setTipoImovel(TipoImovel value) =>

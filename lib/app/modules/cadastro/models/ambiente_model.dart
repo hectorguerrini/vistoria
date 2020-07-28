@@ -4,8 +4,11 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/meteocons_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:vistoria/app/enumeration/ambientes_enum.dart';
+part 'ambiente_model.g.dart';
 
+@JsonSerializable()
 class AmbienteModel {
   final Ambientes ambiente;
   final int quantidade;
@@ -51,4 +54,8 @@ class AmbienteModel {
     }
     return icon;
   }
+
+  factory AmbienteModel.fromJson(Map<String, dynamic> json) =>
+      _$AmbienteModelFromJson(json);
+  Map<String, dynamic> toJson() => _$AmbienteModelToJson(this);
 }

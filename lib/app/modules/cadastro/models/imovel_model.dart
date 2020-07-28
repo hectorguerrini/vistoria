@@ -1,8 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 
 import 'ambiente_model.dart';
 import 'cliente_model.dart';
 
+part 'imovel_model.g.dart';
+
+@JsonSerializable()
 class ImovelModel {
   final ClienteModel proprietario;
   final TipoImovel tipoImovel;
@@ -26,4 +30,8 @@ class ImovelModel {
         listAmbientes: listAmbientes ?? this.listAmbientes,
         observacao: observacao ?? this.observacao);
   }
+
+  factory ImovelModel.fromJson(Map<String, dynamic> json) =>
+      _$ImovelModelFromJson(json);
+  Map<String, dynamic> toJson() => _$ImovelModelToJson(this);
 }

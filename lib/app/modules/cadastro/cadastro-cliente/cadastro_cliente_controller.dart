@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
+import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
 part 'cadastro_cliente_controller.g.dart';
 
 class CadastroClienteController = _CadastroClienteControllerBase
     with _$CadastroClienteController;
 
 abstract class _CadastroClienteControllerBase with Store {
+  final CadastroClienteRepository _repository;
   final TextEditingController celularCtrl =
       new MaskedTextController(mask: '(00) 00000-0000');
   final TextEditingController cpfCtrl =
@@ -19,7 +21,7 @@ abstract class _CadastroClienteControllerBase with Store {
   @observable
   ClienteModel clienteModel;
 
-  _CadastroClienteControllerBase() {
+  _CadastroClienteControllerBase(this._repository) {
     clienteModel = new ClienteModel(isWhatsapp: false);
   }
   @action
@@ -58,4 +60,10 @@ abstract class _CadastroClienteControllerBase with Store {
 
   @computed
   bool get isWhatsapp => clienteModel.isWhatsapp;
+
+  @action
+  save() async {
+    await _repository.saveCliente(clienteModel);
+    print('Cliente cadastrado');
+  }
 }

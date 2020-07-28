@@ -1,3 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'cliente_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class ClienteModel {
   final String nomeCompleto;
   final String email;
@@ -38,4 +42,8 @@ class ClienteModel {
       dtNascimento: dtNascimento ?? this.dtNascimento,
     );
   }
+
+  factory ClienteModel.fromJson(Map<String, dynamic> json) =>
+      _$ClienteModelFromJson(json);
+  Map<String, dynamic> toJson() => _$ClienteModelToJson(this);
 }
