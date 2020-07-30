@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
+import 'package:vistoria/app/shared/components/message_dialog.dart';
 part 'cadastro_cliente_controller.g.dart';
 
 class CadastroClienteController = _CadastroClienteControllerBase
@@ -64,6 +66,10 @@ abstract class _CadastroClienteControllerBase with Store {
   @action
   save() async {
     await _repository.saveCliente(clienteModel);
+    Modular.to.showDialog(
+        builder: (context) => MessageDialog(
+              mensagem: 'Cadastrado com Sucesso',
+            ));
     print('Cliente cadastrado');
   }
 }

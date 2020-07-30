@@ -8,7 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:vistoria/app/enumeration/ambientes_enum.dart';
 part 'ambiente_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class AmbienteModel {
   final Ambientes ambiente;
   final int quantidade;

@@ -120,11 +120,6 @@ class _CadastroClientePageState
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await controller.save();
-          showDialog(
-              context: context,
-              builder: (_) => MessageDialog(
-                    mensagem: 'Cadastrado com Sucesso',
-                  ));
         },
         child: Icon(Icons.save),
       ),

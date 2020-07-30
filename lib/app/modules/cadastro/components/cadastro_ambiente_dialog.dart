@@ -44,23 +44,32 @@ class _CadastroAmbienteDialogState extends State<CadastroAmbienteDialog> {
         child: Text('Quantidade:'),
       ),
       Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Observer(builder: (_) {
-            return GridView.count(
-              crossAxisCount: 4,
-              shrinkWrap: true,
-              children: <Widget>[
-                inputChipCustom(
-                    1, controller.getQtdeAmbiente, controller.setQtde),
-                inputChipCustom(
-                    2, controller.getQtdeAmbiente, controller.setQtde),
-                inputChipCustom(
-                    3, controller.getQtdeAmbiente, controller.setQtde),
-                inputChipCustom(
-                    4, controller.getQtdeAmbiente, controller.setQtde),
-                inputChipCustom(
-                    5, controller.getQtdeAmbiente, controller.setQtde),
-              ],
+            return Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: GridView.count(
+                crossAxisCount: 4,
+                shrinkWrap: true,
+                children: <Widget>[
+                  inputChipCustom(
+                      1, controller.getQtdeAmbiente, controller.setQtde),
+                  inputChipCustom(
+                      2, controller.getQtdeAmbiente, controller.setQtde),
+                  inputChipCustom(
+                      3, controller.getQtdeAmbiente, controller.setQtde),
+                  inputChipCustom(
+                      4, controller.getQtdeAmbiente, controller.setQtde),
+                  inputChipCustom(
+                      5, controller.getQtdeAmbiente, controller.setQtde),
+                  inputChipCustom(
+                      6, controller.getQtdeAmbiente, controller.setQtde),
+                  inputChipCustom(
+                      7, controller.getQtdeAmbiente, controller.setQtde),
+                  inputChipCustom(
+                      8, controller.getQtdeAmbiente, controller.setQtde),
+                ],
+              ),
             );
           })),
       ButtonBar(

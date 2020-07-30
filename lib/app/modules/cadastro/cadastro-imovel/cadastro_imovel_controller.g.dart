@@ -16,6 +16,13 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
           Computed<ClienteModel>(() => super.getProprietario,
               name: '_CadastroImovelControllerBase.getProprietario'))
       .value;
+  Computed<EnderecoModel> _$getEnderecoComputed;
+
+  @override
+  EnderecoModel get getEndereco => (_$getEnderecoComputed ??=
+          Computed<EnderecoModel>(() => super.getEndereco,
+              name: '_CadastroImovelControllerBase.getEndereco'))
+      .value;
   Computed<TipoImovel> _$getTipoImovelComputed;
 
   @override
@@ -92,6 +99,13 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
     return _$editAmbienteAsyncAction.run(() => super.editAmbiente());
   }
 
+  final _$saveAsyncAction = AsyncAction('_CadastroImovelControllerBase.save');
+
+  @override
+  Future save() {
+    return _$saveAsyncAction.run(() => super.save());
+  }
+
   final _$_CadastroImovelControllerBaseActionController =
       ActionController(name: '_CadastroImovelControllerBase');
 
@@ -101,6 +115,28 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
         .startAction(name: '_CadastroImovelControllerBase.selectProprietario');
     try {
       return super.selectProprietario();
+    } finally {
+      _$_CadastroImovelControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic addEndereco() {
+    final _$actionInfo = _$_CadastroImovelControllerBaseActionController
+        .startAction(name: '_CadastroImovelControllerBase.addEndereco');
+    try {
+      return super.addEndereco();
+    } finally {
+      _$_CadastroImovelControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic editEndereco() {
+    final _$actionInfo = _$_CadastroImovelControllerBaseActionController
+        .startAction(name: '_CadastroImovelControllerBase.editEndereco');
+    try {
+      return super.editEndereco();
     } finally {
       _$_CadastroImovelControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -178,6 +214,7 @@ mixin _$CadastroImovelController on _CadastroImovelControllerBase, Store {
 ambienteModel: ${ambienteModel},
 imovelModel: ${imovelModel},
 getProprietario: ${getProprietario},
+getEndereco: ${getEndereco},
 getTipoImovel: ${getTipoImovel},
 getAmbiente: ${getAmbiente},
 getStringAmbiente: ${getStringAmbiente},

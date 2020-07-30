@@ -43,6 +43,6 @@ class LocalStorageHive implements ILocalStorage {
   @override
   Future reset() async {
     var box = await _instance.future;
-    box.delete('clientes');
+    box.delete('imoveis');
   }
 }

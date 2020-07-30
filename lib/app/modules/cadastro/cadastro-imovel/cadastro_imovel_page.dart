@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:vistoria/app/modules/cadastro/components/cadastro_ambiente_dialog.dart';
 import 'package:vistoria/app/modules/cadastro/cadastro-imovel/cadastro_imovel_controller.dart';
 import 'package:vistoria/app/modules/cadastro/models/ambiente_model.dart';
 import 'package:vistoria/app/modules/cadastro/components/card_ambiente.dart';
+import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
+import 'package:vistoria/app/shared/components/custom_floating_button_save.dart';
 
 class CadastroImovelPage extends StatefulWidget {
   final String title;
@@ -76,6 +79,34 @@ class _CadastroImovelPageState
                 }),
               ),
               Card(
+                child: Observer(builder: (_) {
+                  if (controller.getEndereco == null) {
+                    return FlatButton.icon(
+                        onPressed: controller.addEndereco,
+                        icon: Icon(Icons.add, color: Colors.black54),
+                        label: Text('Adicionar Endereço',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black54)));
+                  }
+                  EnderecoModel end = controller.getEndereco;
+                  return ListTile(
+                      leading: Icon(Icons.home),
+                      trailing: IconButton(
+                          icon: Icon(FontAwesome.pencil),
+                          onPressed: controller.editEndereco),
+                      title:
+                          Text('${end.logradouro}  Nº ${end.numero ?? 'S/N'}'),
+                      subtitle: Text.rich(
+                        TextSpan(children: [
+                          if (end.complemento != '')
+                            TextSpan(text: '${end.complemento}\n'),
+                          TextSpan(text: '${end.cidade}/${end.uf}\n'),
+                          TextSpan(text: 'CEP: ${end.cep}'),
+                        ]),
+                      ));
+                }),
+              ),
+              Card(
                 child: TextFormField(
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
@@ -133,6 +164,7 @@ class _CadastroImovelPageState
               ),
             ],
           )),
+      floatingActionButton: CustomFloatingButtonSave(f: controller.save),
     );
   }
 }

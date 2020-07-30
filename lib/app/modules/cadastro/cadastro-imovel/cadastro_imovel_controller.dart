@@ -5,13 +5,17 @@ import 'package:vistoria/app/enumeration/ambientes_enum.dart';
 import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/ambiente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
+import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
+import 'package:vistoria/app/modules/cadastro/repositories/cadastro_imovel_repository.dart';
+import 'package:vistoria/app/shared/components/message_dialog.dart';
 part 'cadastro_imovel_controller.g.dart';
 
 class CadastroImovelController = _CadastroImovelControllerBase
     with _$CadastroImovelController;
 
 abstract class _CadastroImovelControllerBase with Store {
+  final CadastroImovelRepository _repository;
   Key formKey;
 
   List<TipoImovel> listTipoImovel = TipoImovel.values;
@@ -21,7 +25,7 @@ abstract class _CadastroImovelControllerBase with Store {
   @observable
   ImovelModel imovelModel = new ImovelModel(listAmbientes: []);
 
-  _CadastroImovelControllerBase() {
+  _CadastroImovelControllerBase(this._repository) {
     // List<AmbienteModel> _lista = [];
     // _lista.add(new AmbienteModel(ambiente: Ambientes.SALA, quantidade: 1));
     // _lista.add(new AmbienteModel(ambiente: Ambientes.BANHEIROS, quantidade: 2));
@@ -42,6 +46,23 @@ abstract class _CadastroImovelControllerBase with Store {
 
   @computed
   ClienteModel get getProprietario => imovelModel.proprietario;
+
+  @action
+  addEndereco() {
+    Modular.to.pushNamed('/cadastro/endereco').then(
+        (value) => imovelModel = imovelModel.copyWith(enderecoModel: value));
+  }
+
+  @action
+  editEndereco() {
+    Modular.to
+        .pushNamed('/cadastro/endereco', arguments: imovelModel.enderecoModel)
+        .then((value) =>
+            imovelModel = imovelModel.copyWith(enderecoModel: value));
+  }
+
+  @computed
+  EnderecoModel get getEndereco => imovelModel.enderecoModel;
 
   @action
   setTipoImovel(TipoImovel value) =>
@@ -94,4 +115,16 @@ abstract class _CadastroImovelControllerBase with Store {
   @computed
   bool get isFieldsValid =>
       ambienteModel.ambiente != null && ambienteModel.quantidade > 0;
+  @action
+  save() async {
+    try {
+      await _repository.saveImovel(imovelModel);
+      Modular.to.showDialog(
+          builder: (context) => MessageDialog(
+                mensagem: 'Cadastrado com Sucesso',
+              ));
+    } on Exception catch (e) {
+      print(e.toString());
+    }
+  }
 }

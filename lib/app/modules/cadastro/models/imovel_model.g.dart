@@ -17,15 +17,20 @@ ImovelModel _$ImovelModelFromJson(Map<String, dynamic> json) {
             ? null
             : AmbienteModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    enderecoModel: json['enderecoModel'] == null
+        ? null
+        : EnderecoModel.fromJson(json['enderecoModel'] as Map<String, dynamic>),
     observacao: json['observacao'] as String,
   );
 }
 
 Map<String, dynamic> _$ImovelModelToJson(ImovelModel instance) =>
     <String, dynamic>{
-      'proprietario': instance.proprietario,
+      'proprietario': instance.proprietario?.toJson(),
       'tipoImovel': _$TipoImovelEnumMap[instance.tipoImovel],
-      'listAmbientes': instance.listAmbientes,
+      'listAmbientes':
+          instance.listAmbientes?.map((e) => e?.toJson())?.toList(),
+      'enderecoModel': instance.enderecoModel?.toJson(),
       'observacao': instance.observacao,
     };
 
