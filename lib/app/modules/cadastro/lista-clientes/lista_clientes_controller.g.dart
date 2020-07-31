@@ -25,6 +25,15 @@ mixin _$ListaClientesController on _ListaClientesControllerBase, Store {
     });
   }
 
+  final _$selecionarClienteAsyncAction =
+      AsyncAction('_ListaClientesControllerBase.selecionarCliente');
+
+  @override
+  Future selecionarCliente(ClienteModel clienteModel) {
+    return _$selecionarClienteAsyncAction
+        .run(() => super.selecionarCliente(clienteModel));
+  }
+
   final _$_ListaClientesControllerBaseActionController =
       ActionController(name: '_ListaClientesControllerBase');
 
@@ -34,17 +43,6 @@ mixin _$ListaClientesController on _ListaClientesControllerBase, Store {
         .startAction(name: '_ListaClientesControllerBase.getListaClientes');
     try {
       return super.getListaClientes();
-    } finally {
-      _$_ListaClientesControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic returnarCliente() {
-    final _$actionInfo = _$_ListaClientesControllerBaseActionController
-        .startAction(name: '_ListaClientesControllerBase.returnarCliente');
-    try {
-      return super.returnarCliente();
     } finally {
       _$_ListaClientesControllerBaseActionController.endAction(_$actionInfo);
     }

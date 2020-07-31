@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:vistoria/app/modules/cadastro/lista-clientes/lista_clientes_controller.dart';
-import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
-import 'package:vistoria/app/shared/components/confirmation_dialog.dart';
+import 'package:vistoria/app/modules/cadastro/lista-imoveis/lista_imoveis_controller.dart';
+import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
+import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 
-class ListaClientesPage extends StatefulWidget {
+class ListaImoveisPage extends StatefulWidget {
   final String title;
-  final bool modoSelecao;
-  const ListaClientesPage(
-      {Key key, this.title = 'Lista de Clientes', this.modoSelecao = false})
-      : super(key: key);
 
+  const ListaImoveisPage({Key key, this.title = 'Lista de imoveis'})
+      : super(key: key);
   @override
-  _ListaClientesPageState createState() => _ListaClientesPageState();
+  _ListaImoveisPageState createState() => _ListaImoveisPageState();
 }
 
-class _ListaClientesPageState
-    extends ModularState<ListaClientesPage, ListaClientesController> {
+class _ListaImoveisPageState
+    extends ModularState<ListaImoveisPage, ListaImoveisController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.modoSelecao ? 'Selecionar Cliente' : widget.title),
+          title: Text(widget.title),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -38,24 +35,24 @@ class _ListaClientesPageState
                         borderRadius: BorderRadius.circular(30.0))),
               ),
               Observer(builder: (_) {
-                if (controller.listClientes.error != null) {
+                if (controller.listImoveis.error != null) {
                   return Center(
                       child: RaisedButton(
-                          onPressed: controller.getListaClientes,
+                          onPressed: controller.getListaImoveis,
                           child: Text('Carregar')));
                 }
-                if (controller.listClientes.value == null) {
+                if (controller.listImoveis.value == null) {
                   return Center(child: CircularProgressIndicator());
                 }
 
-                List<ClienteModel> list = controller.listClientes.value;
+                List<ImovelModel> list = controller.listImoveis.value;
 
                 if (list.length == 0) {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Center(
                         child: Text(
-                      "Nenhum cliente cadastrado",
+                      "Nenhum imovel cadastrado",
                       style: TextStyle(color: Colors.black54),
                     )),
                   );
@@ -65,22 +62,19 @@ class _ListaClientesPageState
                   padding: EdgeInsets.only(top: 10),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    ClienteModel item = list[index];
+                    ImovelModel item = list[index];
                     return ListTile(
-                      onTap: () async {
-                        if (widget.modoSelecao) {
-                          controller.selecionarCliente(item);
-                        }
-                      },
-                      title: Text(item.nomeCompleto),
-                      subtitle: Text(
-                          "${item.cpf}\nCel:${item.celular}\n${item.telefone != null ? "Tel:" + item.telefone : ""}"),
-                      trailing: item.isWhatsapp
-                          ? Icon(
-                              FontAwesome.whatsapp,
-                              color: Colors.green,
-                            )
-                          : Icon(Icons.phone),
+                      title: Text.rich(TextSpan(children: [
+                        TextSpan(text: item.tipoImovel.toShortString()),
+                        TextSpan(text: ' - '),
+                        TextSpan(
+                            text:
+                                "${item.enderecoModel.logradouro} ${item.enderecoModel.numero}")
+                      ])),
+                      subtitle: Text.rich(TextSpan(children: [
+                        TextSpan(text: "Proprietario: "),
+                        TextSpan(text: item.proprietario.nomeCompleto)
+                      ])),
                     );
                   },
                   separatorBuilder: (context, index) => Divider(

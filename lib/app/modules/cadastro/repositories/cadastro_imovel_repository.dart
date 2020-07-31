@@ -12,4 +12,15 @@ class CadastroImovelRepository {
     imoveis.add(imovelModel.toJson());
     _storage.put('imoveis', imoveis);
   }
+
+  Future<List<ImovelModel>> getListImoveis() async {
+    var imoveis = await _storage.get('imoveis');
+    if (imoveis == null) imoveis = [];
+    List<ImovelModel> lista = [];
+    for (var item in imoveis) {
+      var json = Map<String, dynamic>.from(item);
+      lista.add(ImovelModel.fromJson(json));
+    }
+    return lista;
+  }
 }

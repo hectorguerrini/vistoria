@@ -84,6 +84,25 @@ class _CadastroPageState
               ),
             )),
           ),
+          Container(
+            child: Card(
+                child: ListTile(
+              onTap: () {
+                Modular.to.pushNamed('/cadastro/lista_imoveis');
+              },
+              contentPadding: EdgeInsets.all(8.0),
+              title: Text(
+                "Imoveis Cadastrados",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.black87),
+              ),
+              subtitle: Icon(
+                Icons.list,
+                color: Colors.black54,
+                size: 72,
+              ),
+            )),
+          ),
         ],
       ),
     );

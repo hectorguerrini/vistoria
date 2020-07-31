@@ -6,6 +6,8 @@ import 'package:vistoria/app/modules/cadastro/cadastro-imovel/cadastro_imovel_co
 import 'package:vistoria/app/modules/cadastro/cadastro-imovel/cadastro_imovel_page.dart';
 import 'package:vistoria/app/modules/cadastro/lista-clientes/lista_clientes_controller.dart';
 import 'package:vistoria/app/modules/cadastro/lista-clientes/lista_clientes_page.dart';
+import 'package:vistoria/app/modules/cadastro/lista-imoveis/lista_imoveis_controller.dart';
+import 'package:vistoria/app/modules/cadastro/lista-imoveis/lista_imoveis_page.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_endereco_repository.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_imovel_repository.dart';
@@ -28,6 +30,7 @@ class CadastroModule extends ChildModule {
         Bind((i) => CadastroImovelRepository(i.get<LocalStorageHive>())),
         Bind(
             (i) => ListaClientesController(i.get<CadastroClienteRepository>())),
+        Bind((i) => ListaImoveisController(i.get<CadastroImovelRepository>())),
         Bind((i) =>
             CadastroEnderecoController(i.get<CadastroEnderecoRepository>())),
         Bind((i) => CadastroEnderecoRepository(i.get<Dio>())),
@@ -45,6 +48,7 @@ class CadastroModule extends ChildModule {
             child: (_, args) => ListaClientesPage(
                   modoSelecao: args.data,
                 )),
+        Router('/lista_imoveis', child: (_, args) => ListaImoveisPage()),
       ];
 
   static Inject get to => Inject<CadastroModule>.of();

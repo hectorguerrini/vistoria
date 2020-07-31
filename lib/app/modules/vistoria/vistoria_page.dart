@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'vistoria_controller.dart';
 
 class VistoriaPage extends StatefulWidget {
@@ -20,8 +21,32 @@ class _VistoriaPageState
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[],
+      body: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        padding: const EdgeInsets.all(10),
+        children: <Widget>[
+          Container(
+            child: Card(
+                child: ListTile(
+              onTap: () {
+                Modular.to.pushNamed('/vistoria/nova_vistoria');
+              },
+              contentPadding: EdgeInsets.all(8.0),
+              title: Text(
+                "Realizar Vistoria",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.black87),
+              ),
+              subtitle: Icon(
+                FontAwesome5.wpforms,
+                color: Colors.black54,
+                size: 72,
+              ),
+            )),
+          )
+        ],
       ),
     );
   }
