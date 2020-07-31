@@ -17,6 +17,22 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
               name: '_NovaVistoriaControllerBase.getImovelModel'))
       .value;
 
+  final _$currentStepAtom =
+      Atom(name: '_NovaVistoriaControllerBase.currentStep');
+
+  @override
+  int get currentStep {
+    _$currentStepAtom.reportRead();
+    return super.currentStep;
+  }
+
+  @override
+  set currentStep(int value) {
+    _$currentStepAtom.reportWrite(value, super.currentStep, () {
+      super.currentStep = value;
+    });
+  }
+
   final _$vistoriaModelAtom =
       Atom(name: '_NovaVistoriaControllerBase.vistoriaModel');
 
@@ -81,8 +97,20 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
   }
 
   @override
+  dynamic selectImovel() {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.selectImovel');
+    try {
+      return super.selectImovel();
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+currentStep: ${currentStep},
 vistoriaModel: ${vistoriaModel},
 getImovelModel: ${getImovelModel}
     ''';

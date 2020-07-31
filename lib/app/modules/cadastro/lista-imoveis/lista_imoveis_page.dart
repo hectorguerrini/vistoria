@@ -7,8 +7,9 @@ import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 
 class ListaImoveisPage extends StatefulWidget {
   final String title;
-
-  const ListaImoveisPage({Key key, this.title = 'Lista de imoveis'})
+  final bool modoSelecao;
+  const ListaImoveisPage(
+      {Key key, this.title = 'Lista de imoveis', this.modoSelecao = false})
       : super(key: key);
   @override
   _ListaImoveisPageState createState() => _ListaImoveisPageState();
@@ -64,6 +65,11 @@ class _ListaImoveisPageState
                   itemBuilder: (context, index) {
                     ImovelModel item = list[index];
                     return ListTile(
+                      onTap: () async {
+                        if (widget.modoSelecao) {
+                          controller.selecionarImovel(item);
+                        }
+                      },
                       title: Text.rich(TextSpan(children: [
                         TextSpan(text: item.tipoImovel.toShortString()),
                         TextSpan(text: ' - '),

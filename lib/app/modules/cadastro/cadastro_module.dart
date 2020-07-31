@@ -48,7 +48,10 @@ class CadastroModule extends ChildModule {
             child: (_, args) => ListaClientesPage(
                   modoSelecao: args.data,
                 )),
-        Router('/lista_imoveis', child: (_, args) => ListaImoveisPage()),
+        Router('/lista_imoveis',
+            child: (_, args) => ListaImoveisPage(
+                  modoSelecao: args.data,
+                )),
       ];
 
   static Inject get to => Inject<CadastroModule>.of();

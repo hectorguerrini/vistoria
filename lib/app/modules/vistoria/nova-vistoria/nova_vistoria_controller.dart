@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_model.dart';
@@ -7,13 +9,19 @@ class NovaVistoriaController = _NovaVistoriaControllerBase
     with _$NovaVistoriaController;
 
 abstract class _NovaVistoriaControllerBase with Store {
-  int currentStep = 0;
   @observable
-  VistoriaModel vistoriaModel;
+  int currentStep;
+
+  @observable
+  VistoriaModel vistoriaModel = new VistoriaModel();
+
+  _NovaVistoriaControllerBase() {
+    currentStep = 0;
+  }
 
   @action
   next() {
-    goTo(currentStep + 1);
+    currentStep++;
   }
 
   @action
@@ -34,4 +42,11 @@ abstract class _NovaVistoriaControllerBase with Store {
 
   @computed
   ImovelModel get getImovelModel => vistoriaModel.imovelModel;
+
+  @action
+  selectImovel() {
+    Modular.to
+        .pushNamed('/cadastro/lista_imoveis', arguments: true)
+        .then((value) => setImovelModel(value));
+  }
 }

@@ -27,7 +27,7 @@ abstract class _ListaImoveisControllerBase with Store {
   selecionarImovel(ImovelModel imovelModel) async {
     var confimacao = await Modular.to.showDialog(
         builder: (context) => ConfirmationDialog(
-              action: 'Selecionar Cliente',
+              action: 'Selecionar Imovel',
             ));
     if (confimacao) {
       Modular.to.pop(imovelModel);
