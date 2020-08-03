@@ -18,6 +18,9 @@ ClienteModel _$ClienteModelFromJson(Map<String, dynamic> json) {
     dtNascimento: json['dtNascimento'] == null
         ? null
         : DateTime.parse(json['dtNascimento'] as String),
+    endereco: json['endereco'] == null
+        ? null
+        : EnderecoModel.fromJson(json['endereco'] as Map<String, dynamic>),
   );
 }
 
@@ -31,4 +34,5 @@ Map<String, dynamic> _$ClienteModelToJson(ClienteModel instance) =>
       'cpf': instance.cpf,
       'rg': instance.rg,
       'dtNascimento': instance.dtNascimento?.toIso8601String(),
+      'endereco': instance.endereco?.toJson(),
     };

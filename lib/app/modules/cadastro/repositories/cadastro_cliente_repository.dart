@@ -19,6 +19,7 @@ class CadastroClienteRepository {
     List<ClienteModel> lista = [];
     for (var item in clientes) {
       var json = Map<String, dynamic>.from(item);
+      json["endereco"] = Map<String, dynamic>.from(json["endereco"]);
       lista.add(ClienteModel.fromJson(json));
     }
     return lista;

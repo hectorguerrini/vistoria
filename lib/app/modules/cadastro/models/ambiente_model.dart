@@ -33,7 +33,7 @@ class AmbienteModel {
       case Ambientes.AREA_SERVICO:
         icon = Icon(FontAwesome5.tools);
         break;
-      case Ambientes.QUARTOS:
+      case Ambientes.QUARTO:
         icon = Icon(FontAwesome.bed);
         break;
       case Ambientes.SUITES:

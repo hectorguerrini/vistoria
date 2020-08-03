@@ -1,22 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ambiente_model.dart';
+part of 'vistoria_ambiente_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AmbienteModel _$AmbienteModelFromJson(Map<String, dynamic> json) {
-  return AmbienteModel(
+VistoriaAmbienteModel _$VistoriaAmbienteModelFromJson(
+    Map<String, dynamic> json) {
+  return VistoriaAmbienteModel(
     ambiente: _$enumDecodeNullable(_$AmbientesEnumMap, json['ambiente']),
-    quantidade: json['quantidade'] as int,
+    observacao: json['observacao'] as String,
+    listItens: (json['listItens'] as List)
+        ?.map((e) => e == null
+            ? null
+            : ItensAmbienteModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
-Map<String, dynamic> _$AmbienteModelToJson(AmbienteModel instance) =>
+Map<String, dynamic> _$VistoriaAmbienteModelToJson(
+        VistoriaAmbienteModel instance) =>
     <String, dynamic>{
       'ambiente': _$AmbientesEnumMap[instance.ambiente],
-      'quantidade': instance.quantidade,
+      'observacao': instance.observacao,
+      'listItens': instance.listItens?.map((e) => e?.toJson())?.toList(),
     };
 
 T _$enumDecode<T>(

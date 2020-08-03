@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
 part 'cliente_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
@@ -11,6 +12,7 @@ class ClienteModel {
   final String cpf;
   final String rg;
   final DateTime dtNascimento;
+  final EnderecoModel endereco;
 
   ClienteModel(
       {this.nomeCompleto,
@@ -20,7 +22,8 @@ class ClienteModel {
       this.isWhatsapp,
       this.cpf,
       this.rg,
-      this.dtNascimento});
+      this.dtNascimento,
+      this.endereco});
 
   copyWith(
       {String nomeCompleto,
@@ -30,17 +33,18 @@ class ClienteModel {
       bool isWhatsapp,
       String cpf,
       String rg,
-      DateTime dtNascimento}) {
+      DateTime dtNascimento,
+      EnderecoModel endereco}) {
     return ClienteModel(
-      nomeCompleto: nomeCompleto ?? this.nomeCompleto,
-      email: email ?? this.email,
-      celular: celular ?? this.celular,
-      telefone: telefone ?? this.telefone,
-      isWhatsapp: isWhatsapp ?? this.isWhatsapp,
-      cpf: cpf ?? this.cpf,
-      rg: rg ?? this.rg,
-      dtNascimento: dtNascimento ?? this.dtNascimento,
-    );
+        nomeCompleto: nomeCompleto ?? this.nomeCompleto,
+        email: email ?? this.email,
+        celular: celular ?? this.celular,
+        telefone: telefone ?? this.telefone,
+        isWhatsapp: isWhatsapp ?? this.isWhatsapp,
+        cpf: cpf ?? this.cpf,
+        rg: rg ?? this.rg,
+        dtNascimento: dtNascimento ?? this.dtNascimento,
+        endereco: endereco ?? this.endereco);
   }
 
   factory ClienteModel.fromJson(Map<String, dynamic> json) =>

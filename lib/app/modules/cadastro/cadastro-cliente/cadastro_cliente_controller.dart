@@ -3,6 +3,7 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
+import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
 import 'package:vistoria/app/shared/components/message_dialog.dart';
 part 'cadastro_cliente_controller.g.dart';
@@ -62,6 +63,23 @@ abstract class _CadastroClienteControllerBase with Store {
 
   @computed
   bool get isWhatsapp => clienteModel.isWhatsapp;
+
+  @action
+  addEndereco() {
+    Modular.to
+        .pushNamed('/cadastro/endereco')
+        .then((value) => clienteModel = clienteModel.copyWith(endereco: value));
+  }
+
+  @action
+  editEndereco() {
+    Modular.to
+        .pushNamed('/cadastro/endereco', arguments: clienteModel.endereco)
+        .then((value) => clienteModel = clienteModel.copyWith(endereco: value));
+  }
+
+  @computed
+  EnderecoModel get getEndereco => clienteModel.endereco;
 
   @action
   save() async {

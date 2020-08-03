@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
 import 'package:vistoria/app/shared/components/message_dialog.dart';
 import 'cadastro_cliente_controller.dart';
 
@@ -114,6 +116,34 @@ class _CadastroClientePageState
                       labelText: 'Data Nascimento',
                       border: OutlineInputBorder()),
                 ),
+              ),
+              Card(
+                child: Observer(builder: (_) {
+                  if (controller.getEndereco == null) {
+                    return FlatButton.icon(
+                        onPressed: controller.addEndereco,
+                        icon: Icon(Icons.add, color: Colors.black54),
+                        label: Text('Adicionar Endereço',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black54)));
+                  }
+                  EnderecoModel end = controller.getEndereco;
+                  return ListTile(
+                      leading: Icon(Icons.home),
+                      trailing: IconButton(
+                          icon: Icon(FontAwesome.pencil),
+                          onPressed: controller.editEndereco),
+                      title:
+                          Text('${end.logradouro}  Nº ${end.numero ?? 'S/N'}'),
+                      subtitle: Text.rich(
+                        TextSpan(children: [
+                          if (end.complemento != '')
+                            TextSpan(text: '${end.complemento}\n'),
+                          TextSpan(text: '${end.cidade}/${end.uf}\n'),
+                          TextSpan(text: 'CEP: ${end.cep}'),
+                        ]),
+                      ));
+                }),
               ),
             ],
           )),

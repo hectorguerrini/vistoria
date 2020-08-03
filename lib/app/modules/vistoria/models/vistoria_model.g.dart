@@ -17,6 +17,11 @@ VistoriaModel _$VistoriaModelFromJson(Map<String, dynamic> json) {
     fiador: json['fiador'] == null
         ? null
         : ClienteModel.fromJson(json['fiador'] as Map<String, dynamic>),
+    listAmbientes: (json['listAmbientes'] as List)
+        ?.map((e) => e == null
+            ? null
+            : VistoriaAmbienteModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
@@ -25,4 +30,6 @@ Map<String, dynamic> _$VistoriaModelToJson(VistoriaModel instance) =>
       'imovelModel': instance.imovelModel?.toJson(),
       'locatario': instance.locatario?.toJson(),
       'fiador': instance.fiador?.toJson(),
+      'listAmbientes':
+          instance.listAmbientes?.map((e) => e?.toJson())?.toList(),
     };

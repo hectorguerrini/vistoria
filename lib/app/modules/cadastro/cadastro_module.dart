@@ -44,7 +44,7 @@ class CadastroModule extends ChildModule {
         Router('/cliente', child: (_, args) => CadastroClientePage()),
         Router('/imovel', child: (_, args) => CadastroImovelPage()),
         Router('/endereco', child: (_, args) => CadastroEnderecoPage()),
-        Router('/lista_cliente',
+        Router('/lista_clientes',
             child: (_, args) => ListaClientesPage(
                   modoSelecao: args.data,
                 )),

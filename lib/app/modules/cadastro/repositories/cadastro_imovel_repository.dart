@@ -20,6 +20,8 @@ class CadastroImovelRepository {
     for (var item in imoveis) {
       var json = Map<String, dynamic>.from(item);
       json["proprietario"] = Map<String, dynamic>.from(json["proprietario"]);
+      json["proprietario"]["endereco"] =
+          Map<String, dynamic>.from(json["proprietario"]["endereco"]);
       json["listAmbientes"] = (json["listAmbientes"] as List)
           .map((e) => Map<String, dynamic>.from(e))
           .toList();

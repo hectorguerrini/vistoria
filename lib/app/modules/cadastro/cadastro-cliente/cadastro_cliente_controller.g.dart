@@ -16,6 +16,13 @@ mixin _$CadastroClienteController on _CadastroClienteControllerBase, Store {
       (_$isWhatsappComputed ??= Computed<bool>(() => super.isWhatsapp,
               name: '_CadastroClienteControllerBase.isWhatsapp'))
           .value;
+  Computed<EnderecoModel> _$getEnderecoComputed;
+
+  @override
+  EnderecoModel get getEndereco => (_$getEnderecoComputed ??=
+          Computed<EnderecoModel>(() => super.getEndereco,
+              name: '_CadastroClienteControllerBase.getEndereco'))
+      .value;
 
   final _$clienteModelAtom =
       Atom(name: '_CadastroClienteControllerBase.clienteModel');
@@ -132,10 +139,33 @@ mixin _$CadastroClienteController on _CadastroClienteControllerBase, Store {
   }
 
   @override
+  dynamic addEndereco() {
+    final _$actionInfo = _$_CadastroClienteControllerBaseActionController
+        .startAction(name: '_CadastroClienteControllerBase.addEndereco');
+    try {
+      return super.addEndereco();
+    } finally {
+      _$_CadastroClienteControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic editEndereco() {
+    final _$actionInfo = _$_CadastroClienteControllerBaseActionController
+        .startAction(name: '_CadastroClienteControllerBase.editEndereco');
+    try {
+      return super.editEndereco();
+    } finally {
+      _$_CadastroClienteControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 clienteModel: ${clienteModel},
-isWhatsapp: ${isWhatsapp}
+isWhatsapp: ${isWhatsapp},
+getEndereco: ${getEndereco}
     ''';
   }
 }

@@ -16,6 +16,21 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
           Computed<ImovelModel>(() => super.getImovelModel,
               name: '_NovaVistoriaControllerBase.getImovelModel'))
       .value;
+  Computed<ClienteModel> _$getLocatarioComputed;
+
+  @override
+  ClienteModel get getLocatario => (_$getLocatarioComputed ??=
+          Computed<ClienteModel>(() => super.getLocatario,
+              name: '_NovaVistoriaControllerBase.getLocatario'))
+      .value;
+  Computed<List<VistoriaAmbienteModel>> _$getListAmbientesComputed;
+
+  @override
+  List<VistoriaAmbienteModel> get getListAmbientes =>
+      (_$getListAmbientesComputed ??= Computed<List<VistoriaAmbienteModel>>(
+              () => super.getListAmbientes,
+              name: '_NovaVistoriaControllerBase.getListAmbientes'))
+          .value;
 
   final _$currentStepAtom =
       Atom(name: '_NovaVistoriaControllerBase.currentStep');
@@ -108,11 +123,46 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
   }
 
   @override
+  dynamic setLocatario(ClienteModel value) {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.setLocatario');
+    try {
+      return super.setLocatario(value);
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic selectLocatario() {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.selectLocatario');
+    try {
+      return super.selectLocatario();
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic addItensAmbientes(int index) {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.addItensAmbientes');
+    try {
+      return super.addItensAmbientes(index);
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentStep: ${currentStep},
 vistoriaModel: ${vistoriaModel},
-getImovelModel: ${getImovelModel}
+getImovelModel: ${getImovelModel},
+getLocatario: ${getLocatario},
+getListAmbientes: ${getListAmbientes}
     ''';
   }
 }

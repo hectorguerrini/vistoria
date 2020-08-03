@@ -2,7 +2,7 @@ enum Ambientes {
   SALA,
   COZINHA,
   AREA_SERVICO,
-  QUARTOS,
+  QUARTO,
   SUITES,
   BANHEIROS,
   VARANDA,
