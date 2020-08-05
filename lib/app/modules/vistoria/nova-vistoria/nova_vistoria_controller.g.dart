@@ -64,6 +64,22 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
     });
   }
 
+  final _$listAmbientesAtom =
+      Atom(name: '_NovaVistoriaControllerBase.listAmbientes');
+
+  @override
+  ObservableList<VistoriaAmbienteModel> get listAmbientes {
+    _$listAmbientesAtom.reportRead();
+    return super.listAmbientes;
+  }
+
+  @override
+  set listAmbientes(ObservableList<VistoriaAmbienteModel> value) {
+    _$listAmbientesAtom.reportWrite(value, super.listAmbientes, () {
+      super.listAmbientes = value;
+    });
+  }
+
   final _$_NovaVistoriaControllerBaseActionController =
       ActionController(name: '_NovaVistoriaControllerBase');
 
@@ -156,10 +172,22 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
   }
 
   @override
+  dynamic setObservacaoAmbiente(String value, dynamic index) {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.setObservacaoAmbiente');
+    try {
+      return super.setObservacaoAmbiente(value, index);
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentStep: ${currentStep},
 vistoriaModel: ${vistoriaModel},
+listAmbientes: ${listAmbientes},
 getImovelModel: ${getImovelModel},
 getLocatario: ${getLocatario},
 getListAmbientes: ${getListAmbientes}

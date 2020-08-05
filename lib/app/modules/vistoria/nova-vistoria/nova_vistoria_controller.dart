@@ -17,6 +17,10 @@ abstract class _NovaVistoriaControllerBase with Store {
   @observable
   VistoriaModel vistoriaModel = new VistoriaModel();
 
+  @observable
+  ObservableList<VistoriaAmbienteModel> listAmbientes =
+      new ObservableList<VistoriaAmbienteModel>();
+
   _NovaVistoriaControllerBase() {
     currentStep = 0;
   }
@@ -58,6 +62,7 @@ abstract class _NovaVistoriaControllerBase with Store {
               VistoriaAmbienteModel(ambiente: element.ambiente, listItens: []));
         }
       });
+      listAmbientes = list.asObservable();
       vistoriaModel = vistoriaModel.copyWith(listAmbientes: list);
     });
   }
@@ -82,9 +87,17 @@ abstract class _NovaVistoriaControllerBase with Store {
 
   @action
   addItensAmbientes(int index) {
-    Modular.to.pushNamed('/vistoria/itens_ambiente').then((value) =>
-        vistoriaModel.listAmbientes[index].copyWith(listItens: value));
+    Modular.to.pushNamed('/vistoria/itens_ambiente').then((value) {
+      var list = vistoriaModel.listAmbientes;
+      list[index] = list[index].copyWith(listItens: value);
+      listAmbientes = list.asObservable();
+      vistoriaModel = vistoriaModel.copyWith(listAmbientes: list);
+    }).catchError((onError) {});
   }
+
+  @action
+  setObservacaoAmbiente(String value, index) =>
+      listAmbientes[index] = listAmbientes[index].copyWith(observacao: value);
 
   StepState getStepState(int index, dynamic value) {
     if (index == currentStep) {

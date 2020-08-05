@@ -72,23 +72,21 @@ class _CadastroItensAmbienteDialogState
                   style: TextStyle(color: Colors.red),
                 )),
             Observer(builder: (_) {
-              // if (widget.modoEdicao) {
-              //   return FlatButton.icon(
-              //       onPressed: controller.isFieldsValid
-              //           ? () {
-              //               controller.editItemAmbiente();
-              //               Modular.to.pop();
-              //             }
-              //           : null,
-              //       icon: Icon(FontAwesome.floppy),
-              //       label: Text('Editar'));
-              // }
+              if (widget.modoEdicao) {
+                return FlatButton.icon(
+                    onPressed: controller.isFieldsValid
+                        ? () {
+                            Modular.to.pop(controller.itens);
+                          }
+                        : null,
+                    icon: Icon(FontAwesome.floppy),
+                    label: Text('Editar'));
+              }
 
               return FlatButton.icon(
                   onPressed: controller.isFieldsValid
                       ? () {
-                          controller.addItemAmbiente();
-                          Modular.to.pop();
+                          Modular.to.pop(controller.itens);
                         }
                       : null,
                   icon: Icon(FontAwesome.floppy),

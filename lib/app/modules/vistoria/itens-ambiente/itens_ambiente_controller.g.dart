@@ -9,13 +9,6 @@ part of 'itens_ambiente_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
-  Computed<List<ItensAmbienteModel>> _$getListItensComputed;
-
-  @override
-  List<ItensAmbienteModel> get getListItens => (_$getListItensComputed ??=
-          Computed<List<ItensAmbienteModel>>(() => super.getListItens,
-              name: '_ItensAmbienteControllerBase.getListItens'))
-      .value;
   Computed<ItensAmbiente> _$getItemAmbienteComputed;
 
   @override
@@ -41,13 +34,13 @@ mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
   final _$listItensAtom = Atom(name: '_ItensAmbienteControllerBase.listItens');
 
   @override
-  List<ItensAmbienteModel> get listItens {
+  ObservableList<ItensAmbienteModel> get listItens {
     _$listItensAtom.reportRead();
     return super.listItens;
   }
 
   @override
-  set listItens(List<ItensAmbienteModel> value) {
+  set listItens(ObservableList<ItensAmbienteModel> value) {
     _$listItensAtom.reportWrite(value, super.listItens, () {
       super.listItens = value;
     });
@@ -70,17 +63,6 @@ mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
 
   final _$_ItensAmbienteControllerBaseActionController =
       ActionController(name: '_ItensAmbienteControllerBase');
-
-  @override
-  dynamic addItem() {
-    final _$actionInfo = _$_ItensAmbienteControllerBaseActionController
-        .startAction(name: '_ItensAmbienteControllerBase.addItem');
-    try {
-      return super.addItem();
-    } finally {
-      _$_ItensAmbienteControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   dynamic setItemAmbiente(ItensAmbiente value) {
@@ -127,11 +109,43 @@ mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
   }
 
   @override
+  dynamic addItem() {
+    final _$actionInfo = _$_ItensAmbienteControllerBaseActionController
+        .startAction(name: '_ItensAmbienteControllerBase.addItem');
+    try {
+      return super.addItem();
+    } finally {
+      _$_ItensAmbienteControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic editItemAmbiente(ItensAmbienteModel value, int index) {
+    final _$actionInfo = _$_ItensAmbienteControllerBaseActionController
+        .startAction(name: '_ItensAmbienteControllerBase.editItemAmbiente');
+    try {
+      return super.editItemAmbiente(value, index);
+    } finally {
+      _$_ItensAmbienteControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic save() {
+    final _$actionInfo = _$_ItensAmbienteControllerBaseActionController
+        .startAction(name: '_ItensAmbienteControllerBase.save');
+    try {
+      return super.save();
+    } finally {
+      _$_ItensAmbienteControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 listItens: ${listItens},
 itens: ${itens},
-getListItens: ${getListItens},
 getItemAmbiente: ${getItemAmbiente},
 getEstado: ${getEstado},
 isFieldsValid: ${isFieldsValid}

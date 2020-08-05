@@ -11,20 +11,13 @@ class ItensAmbienteController = _ItensAmbienteControllerBase
 
 abstract class _ItensAmbienteControllerBase with Store {
   @observable
-  List<ItensAmbienteModel> listItens = [];
+  ObservableList<ItensAmbienteModel> listItens =
+      new ObservableList<ItensAmbienteModel>();
 
   @observable
   ItensAmbienteModel itens = new ItensAmbienteModel();
 
   _ItensAmbienteControllerBase();
-
-  @action
-  addItem() {
-    Modular.to.showDialog(builder: (context) => CadastroItensAmbienteDialog());
-  }
-
-  @computed
-  List<ItensAmbienteModel> get getListItens => listItens;
 
   @action
   setItemAmbiente(ItensAmbiente value) => itens = itens.copyWith(item: value);
@@ -50,5 +43,38 @@ abstract class _ItensAmbienteControllerBase with Store {
   @action
   addItemAmbiente() {
     listItens.add(itens);
+  }
+
+  @action
+  addItem() {
+    Modular.to
+        .showDialog(
+            builder: (context) => CadastroItensAmbienteDialog(
+                  modoEdicao: false,
+                ))
+        .then((value) {
+      if (value != null) {
+        listItens.add(value);
+      }
+    }).whenComplete(() => itens = new ItensAmbienteModel());
+  }
+
+  @action
+  editItemAmbiente(ItensAmbienteModel value, int index) {
+    itens = value;
+    Modular.to
+        .showDialog(
+            builder: (context) => CadastroItensAmbienteDialog(
+                  modoEdicao: true,
+                ))
+        .then((value) {
+      listItens[index] = value;
+      itens = new ItensAmbienteModel();
+    }).catchError((onError) => itens = new ItensAmbienteModel());
+  }
+
+  @action
+  save() {
+    Modular.to.pop(listItens.toList());
   }
 }
