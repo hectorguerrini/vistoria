@@ -21,6 +21,9 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  # firebase_analytics: ^5.0.16
+  firebase_core: ^0.4.5
+  firebase_auth: ^0.16.1
   oktoast: ^2.3.2
   cloud_firestore: ^0.13.7
   json_annotation: ^3.0.1
