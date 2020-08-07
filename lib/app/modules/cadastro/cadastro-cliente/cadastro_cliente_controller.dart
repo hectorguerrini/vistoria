@@ -89,5 +89,6 @@ abstract class _CadastroClienteControllerBase with Store {
               mensagem: 'Cadastrado com Sucesso',
             ));
     print('Cliente cadastrado');
+    Modular.to.pop();
   }
 }

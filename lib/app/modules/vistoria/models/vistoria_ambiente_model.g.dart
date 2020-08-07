@@ -10,6 +10,7 @@ VistoriaAmbienteModel _$VistoriaAmbienteModelFromJson(
     Map<String, dynamic> json) {
   return VistoriaAmbienteModel(
     ambiente: _$enumDecodeNullable(_$AmbientesEnumMap, json['ambiente']),
+    descricao: json['descricao'] as String,
     observacao: json['observacao'] as String,
     listItens: (json['listItens'] as List)
         ?.map((e) => e == null
@@ -23,6 +24,7 @@ Map<String, dynamic> _$VistoriaAmbienteModelToJson(
         VistoriaAmbienteModel instance) =>
     <String, dynamic>{
       'ambiente': _$AmbientesEnumMap[instance.ambiente],
+      'descricao': instance.descricao,
       'observacao': instance.observacao,
       'listItens': instance.listItens?.map((e) => e?.toJson())?.toList(),
     };

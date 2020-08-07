@@ -123,8 +123,9 @@ abstract class _CadastroImovelControllerBase with Store {
           builder: (context) => MessageDialog(
                 mensagem: 'Cadastrado com Sucesso',
               ));
-    } on Exception catch (e) {
-      print(e.toString());
+      Modular.to.pop();
+    } catch (e) {
+      print(e.message);
     }
   }
 }

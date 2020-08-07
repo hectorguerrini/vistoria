@@ -6,17 +6,21 @@ part 'vistoria_ambiente_model.g.dart';
 @JsonSerializable(explicitToJson: true)
 class VistoriaAmbienteModel {
   final Ambientes ambiente;
+  final String descricao;
   final String observacao;
   final List<ItensAmbienteModel> listItens;
 
-  VistoriaAmbienteModel({this.ambiente, this.observacao, this.listItens});
+  VistoriaAmbienteModel(
+      {this.ambiente, this.descricao, this.observacao, this.listItens});
 
   copyWith(
       {Ambientes ambiente,
       String observacao,
+      String descricao,
       List<ItensAmbienteModel> listItens}) {
     return VistoriaAmbienteModel(
         ambiente: ambiente ?? this.ambiente,
+        descricao: descricao ?? this.descricao,
         observacao: observacao ?? this.observacao,
         listItens: listItens ?? this.listItens);
   }

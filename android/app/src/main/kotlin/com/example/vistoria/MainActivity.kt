@@ -1,4 +1,4 @@
-package com.example.vistoria
+package com.hector.vistoria
 
 import io.flutter.embedding.android.FlutterActivity
 

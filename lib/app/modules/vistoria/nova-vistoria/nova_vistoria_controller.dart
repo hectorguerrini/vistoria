@@ -20,6 +20,10 @@ abstract class _NovaVistoriaControllerBase with Store {
   @observable
   ObservableList<VistoriaAmbienteModel> listAmbientes =
       new ObservableList<VistoriaAmbienteModel>();
+  @observable
+  TextEditingController obsCtrl = new TextEditingController();
+  @observable
+  TextEditingController descCtrl = new TextEditingController();
 
   _NovaVistoriaControllerBase() {
     currentStep = 0;
@@ -86,9 +90,12 @@ abstract class _NovaVistoriaControllerBase with Store {
       vistoriaModel.listAmbientes;
 
   @action
-  addItensAmbientes(int index) {
-    Modular.to.pushNamed('/vistoria/itens_ambiente').then((value) {
-      var list = vistoriaModel.listAmbientes;
+  addItensAmbientes(int index, {VistoriaAmbienteModel item}) {
+    Modular.to
+        .pushNamed('/vistoria/itens_ambiente',
+            arguments: item?.listItens ?? null)
+        .then((value) {
+      var list = listAmbientes;
       list[index] = list[index].copyWith(listItens: value);
       listAmbientes = list.asObservable();
       vistoriaModel = vistoriaModel.copyWith(listAmbientes: list);
@@ -96,8 +103,23 @@ abstract class _NovaVistoriaControllerBase with Store {
   }
 
   @action
+  setDescricaoAmbiente(String value, index) =>
+      listAmbientes[index] = listAmbientes[index].copyWith(descricao: value);
+
+  @action
   setObservacaoAmbiente(String value, index) =>
       listAmbientes[index] = listAmbientes[index].copyWith(observacao: value);
+
+  @action
+  setStep(int step) {
+    currentStep = step;
+    if (step >= 2) {
+      obsCtrl = new TextEditingController(
+          text: listAmbientes[currentStep - 2].observacao);
+      descCtrl = new TextEditingController(
+          text: listAmbientes[currentStep - 2].descricao);
+    }
+  }
 
   StepState getStepState(int index, dynamic value) {
     if (index == currentStep) {

@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  oktoast: ^2.3.2
+  cloud_firestore: ^0.13.7
   json_annotation: ^3.0.1
   path_provider: ^1.6.11
   hive: ^1.4.2

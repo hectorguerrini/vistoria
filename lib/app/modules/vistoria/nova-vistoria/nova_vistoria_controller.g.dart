@@ -80,6 +80,36 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
     });
   }
 
+  final _$obsCtrlAtom = Atom(name: '_NovaVistoriaControllerBase.obsCtrl');
+
+  @override
+  TextEditingController get obsCtrl {
+    _$obsCtrlAtom.reportRead();
+    return super.obsCtrl;
+  }
+
+  @override
+  set obsCtrl(TextEditingController value) {
+    _$obsCtrlAtom.reportWrite(value, super.obsCtrl, () {
+      super.obsCtrl = value;
+    });
+  }
+
+  final _$descCtrlAtom = Atom(name: '_NovaVistoriaControllerBase.descCtrl');
+
+  @override
+  TextEditingController get descCtrl {
+    _$descCtrlAtom.reportRead();
+    return super.descCtrl;
+  }
+
+  @override
+  set descCtrl(TextEditingController value) {
+    _$descCtrlAtom.reportWrite(value, super.descCtrl, () {
+      super.descCtrl = value;
+    });
+  }
+
   final _$_NovaVistoriaControllerBaseActionController =
       ActionController(name: '_NovaVistoriaControllerBase');
 
@@ -161,11 +191,22 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
   }
 
   @override
-  dynamic addItensAmbientes(int index) {
+  dynamic addItensAmbientes(int index, {VistoriaAmbienteModel item}) {
     final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
         .startAction(name: '_NovaVistoriaControllerBase.addItensAmbientes');
     try {
-      return super.addItensAmbientes(index);
+      return super.addItensAmbientes(index, item: item);
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setDescricaoAmbiente(String value, dynamic index) {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.setDescricaoAmbiente');
+    try {
+      return super.setDescricaoAmbiente(value, index);
     } finally {
       _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -183,11 +224,24 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
   }
 
   @override
+  dynamic setStep(int step) {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.setStep');
+    try {
+      return super.setStep(step);
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentStep: ${currentStep},
 vistoriaModel: ${vistoriaModel},
 listAmbientes: ${listAmbientes},
+obsCtrl: ${obsCtrl},
+descCtrl: ${descCtrl},
 getImovelModel: ${getImovelModel},
 getLocatario: ${getLocatario},
 getListAmbientes: ${getListAmbientes}

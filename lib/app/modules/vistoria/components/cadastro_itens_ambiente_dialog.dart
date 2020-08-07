@@ -38,6 +38,9 @@ class _CadastroItensAmbienteDialogState
               items: ItensAmbiente.values
                   .map((e) => DropdownMenuItem(
                       child: Text(e.toShortString()), value: e))
+                  .where((element) => !controller.listItens
+                      .map((element) => element.item)
+                      .contains(element.value))
                   .toList(),
               onChanged: controller.setItemAmbiente);
         }),

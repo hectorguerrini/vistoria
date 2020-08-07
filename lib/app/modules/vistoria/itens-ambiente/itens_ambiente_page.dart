@@ -103,7 +103,10 @@ class _ItensAmbientePageState
                                                 "- Estado ${item.estadoItens.toShortString()}"),
                                       ])),
                                 ),
-                                subtitle: Text('Obs: ' + item.observacao),
+                                subtitle: Text('Obs: ' +
+                                    (item.observacao != null
+                                        ? item.observacao
+                                        : '')),
                               ),
                               ButtonBar(
                                 children: <Widget>[

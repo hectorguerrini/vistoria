@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 import 'package:vistoria/app/enumeration/ambientes_enum.dart';
+import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/nova-vistoria/nova_vistoria_controller.dart';
@@ -24,7 +26,7 @@ class _NovaVistoriaPageState
   TextEditingController testeCtrl = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    Widget getOne() {
+    Widget stepLocatario() {
       if (controller.getLocatario == null) {
         return FlatButton.icon(
             onPressed: controller.selectLocatario,
@@ -72,7 +74,6 @@ class _NovaVistoriaPageState
           isActive: controller.currentStep >= 0,
           title: Text("Selecionar Imovel"),
           content: Container(
-            width: MediaQuery.of(context).size.width,
             child: Card(child: Observer(builder: (_) {
               if (controller.getImovelModel == null) {
                 return FlatButton.icon(
@@ -121,33 +122,53 @@ class _NovaVistoriaPageState
           state: controller.getStepState(1, controller.getLocatario),
           isActive: controller.currentStep >= 1,
           title: Text("Selecionar Locatario"),
-          content: Card(child: getOne()),
+          content: Observer(builder: (_) {
+            return Card(child: stepLocatario());
+          }),
         )
       ];
 
-      if (controller.getListAmbientes != null) {
-        controller.getListAmbientes.asMap().forEach((index, e) {
-          FocusNode _focus = new FocusNode();
-          _focus.addListener(() {
-            print('Has focus: $_focus.hasFocus');
-          });
+      if (controller.listAmbientes != null) {
+        controller.listAmbientes.asMap().forEach((index, e) {
           Step step = new Step(
+              subtitle: Text(e.descricao ?? 'Sem descrição'),
+              state: controller.getStepState(index + 2, e.observacao),
               isActive: controller.currentStep >= index + 2,
               title: Text("${e.ambiente.toShortString()}"),
               content: Card(
                 child: Column(
                   children: <Widget>[
-                    TextField(
-                      key: Key(Random.secure().nextDouble().toString()),
-                      focusNode: _focus,
-                      decoration: InputDecoration(
-                          labelText: 'Observação',
-                          border: OutlineInputBorder()),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        onChanged: (value) =>
+                            controller.setDescricaoAmbiente(value, index),
+                        controller: controller.descCtrl,
+                        maxLines: null,
+                        textCapitalization: TextCapitalization.words,
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                            labelText: 'Descrição',
+                            border: OutlineInputBorder()),
+                      ),
                     ),
-                    Builder(builder: (_) {
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        onChanged: (value) =>
+                            controller.setObservacaoAmbiente(value, index),
+                        controller: controller.obsCtrl,
+                        maxLines: null,
+                        textCapitalization: TextCapitalization.sentences,
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                            labelText: 'Observação',
+                            border: OutlineInputBorder()),
+                      ),
+                    ),
+                    Observer(builder: (_) {
                       var len =
                           controller.listAmbientes[index].listItens.length;
-                      print(len);
                       if (len == 0) {
                         return FlatButton.icon(
                             onPressed: () =>
@@ -157,9 +178,22 @@ class _NovaVistoriaPageState
                                 textAlign: TextAlign.center,
                                 style: TextStyle(color: Colors.black54)));
                       }
-                      return ListTile(
-                        title: Text(
-                            '${controller.getListAmbientes[index].listItens.length} Itens'),
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: ListTile(
+                          title: Text(
+                              '${controller.getListAmbientes[index].listItens.length} Itens'),
+                          subtitle: Text.rich(TextSpan(
+                              children: controller
+                                  .listAmbientes[index].listItens
+                                  .map((e) => TextSpan(
+                                      text: '- ${e.item.toShortString()}\n'))
+                                  .toList())),
+                          trailing: IconButton(
+                              icon: Icon(FontAwesome5.pencil_alt),
+                              onPressed: () =>
+                                  controller.addItensAmbientes(index, item: e)),
+                        ),
                       );
                     }),
                   ],
@@ -181,11 +215,19 @@ class _NovaVistoriaPageState
                 key: Key(Random.secure().nextDouble().toString()),
                 onStepContinue: () {
                   setState(() {
-                    controller.currentStep++;
+                    controller.setStep(controller.currentStep + 1);
                   });
                 },
-                onStepCancel: controller.cancel,
-                onStepTapped: controller.goTo,
+                onStepCancel: () {
+                  setState(() {
+                    controller.setStep(controller.currentStep - 1);
+                  });
+                },
+                onStepTapped: (step) {
+                  setState(() {
+                    controller.setStep(step);
+                  });
+                },
                 currentStep: controller.currentStep,
                 type: StepperType.vertical,
                 steps: getListStep())));

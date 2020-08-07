@@ -17,7 +17,12 @@ abstract class _ItensAmbienteControllerBase with Store {
   @observable
   ItensAmbienteModel itens = new ItensAmbienteModel();
 
-  _ItensAmbienteControllerBase();
+  _ItensAmbienteControllerBase() {
+    if (Modular.args.data != null) {
+      List<ItensAmbienteModel> list = Modular.args.data;
+      listItens = list.asObservable();
+    }
+  }
 
   @action
   setItemAmbiente(ItensAmbiente value) => itens = itens.copyWith(item: value);
@@ -35,10 +40,7 @@ abstract class _ItensAmbienteControllerBase with Store {
   EstadoItens get getEstado => itens.estadoItens;
 
   @computed
-  bool get isFieldsValid =>
-      itens.item != null &&
-      itens.estadoItens != null &&
-      itens.observacao != null;
+  bool get isFieldsValid => itens.item != null && itens.estadoItens != null;
 
   @action
   addItemAmbiente() {

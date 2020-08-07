@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "385067977141",
+    "firebase_url": "https://green-vistoria.firebaseio.com",
+    "project_id": "green-vistoria",
+    "storage_bucket": "green-vistoria.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385067977141:android:0cae2e8ef89997c13271fc",
+        "android_client_info": {
+          "package_name": "com.hector.vistoria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385067977141-2uptl3je2mmhe7o8epjkm07saqhdi2s4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz-7IMy0_JmVxC15-kB0PabwhTSYc5yWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385067977141-2uptl3je2mmhe7o8epjkm07saqhdi2s4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
