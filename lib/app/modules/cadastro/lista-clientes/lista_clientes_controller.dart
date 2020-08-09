@@ -12,7 +12,7 @@ abstract class _ListaClientesControllerBase with Store {
   final CadastroClienteRepository _repository;
 
   @observable
-  ObservableFuture<List<ClienteModel>> listClientes;
+  ObservableStream<List<ClienteModel>> listClientes;
 
   _ListaClientesControllerBase(this._repository) {
     getListaClientes();
@@ -20,7 +20,11 @@ abstract class _ListaClientesControllerBase with Store {
 
   @action
   getListaClientes() {
-    listClientes = _repository.getListClientes().asObservable();
+    try {
+      listClientes = _repository.getListClientes().asObservable();
+    } catch (e) {
+      print(e);
+    }
   }
 
   @action

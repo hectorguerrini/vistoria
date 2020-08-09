@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/shared/auth/auth_controller.dart';
@@ -26,10 +27,24 @@ abstract class _LoginControllerBase with Store {
   @action
   login() async {
     try {
-      _authController.loginWithEmail(loginModel.email, loginModel.senha);
+      await _authController.loginWithEmail(loginModel.email, loginModel.senha);
       Modular.to.pushReplacementNamed('/home');
-    } catch (e) {
-      print(e.message);
+    } on PlatformException catch (e) {
+      switch (e.code) {
+        case "ERROR_INVALID_EMAIL":
+          print("Seu email está invalido. (exemplo@email.com)");
+          break;
+        case "ERROR_WRONG_PASSWORD":
+          print("Sua senha está incorreta. Tente novamente");
+          break;
+        case "ERROR_USER_NOT_FOUND":
+          print(
+              "Email não cadastrado. Insira um email cadastrado ou se registre.");
+          break;
+        default:
+          print("Erro de conexão.");
+          break;
+      }
     }
   }
 

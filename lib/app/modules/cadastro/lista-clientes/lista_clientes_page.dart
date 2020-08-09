@@ -38,13 +38,13 @@ class _ListaClientesPageState
                         borderRadius: BorderRadius.circular(30.0))),
               ),
               Observer(builder: (_) {
-                if (controller.listClientes.error != null) {
+                if (controller.listClientes.hasError) {
                   return Center(
                       child: RaisedButton(
                           onPressed: controller.getListaClientes,
                           child: Text('Carregar')));
                 }
-                if (controller.listClientes.value == null) {
+                if (controller.listClientes.data == null) {
                   return Center(child: CircularProgressIndicator());
                 }
 

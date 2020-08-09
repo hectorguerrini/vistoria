@@ -1,9 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
+import 'package:vistoria/app/shared/models/base_model.dart';
 part 'cliente_model.g.dart';
 
-@JsonSerializable(explicitToJson: true)
-class ClienteModel {
+@JsonSerializable(explicitToJson: true, anyMap: true)
+class ClienteModel extends BaseModel {
   final String nomeCompleto;
   final String email;
   final String celular;

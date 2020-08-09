@@ -6,7 +6,7 @@ part of 'cliente_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ClienteModel _$ClienteModelFromJson(Map<String, dynamic> json) {
+ClienteModel _$ClienteModelFromJson(Map json) {
   return ClienteModel(
     nomeCompleto: json['nomeCompleto'] as String,
     email: json['email'] as String,
@@ -20,12 +20,18 @@ ClienteModel _$ClienteModelFromJson(Map<String, dynamic> json) {
         : DateTime.parse(json['dtNascimento'] as String),
     endereco: json['endereco'] == null
         ? null
-        : EnderecoModel.fromJson(json['endereco'] as Map<String, dynamic>),
-  );
+        : EnderecoModel.fromJson((json['endereco'] as Map)?.map(
+            (k, e) => MapEntry(k as String, e),
+          )),
+  )
+    ..createUid = json['createUid'] as String
+    ..updateUid = json['updateUid'] as String;
 }
 
 Map<String, dynamic> _$ClienteModelToJson(ClienteModel instance) =>
     <String, dynamic>{
+      'createUid': instance.createUid,
+      'updateUid': instance.updateUid,
       'nomeCompleto': instance.nomeCompleto,
       'email': instance.email,
       'celular': instance.celular,

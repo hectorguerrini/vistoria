@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
+import 'package:vistoria/app/shared/auth/auth_controller.dart';
 import 'package:vistoria/app/shared/components/message_dialog.dart';
 part 'cadastro_cliente_controller.g.dart';
 
@@ -13,6 +14,7 @@ class CadastroClienteController = _CadastroClienteControllerBase
 
 abstract class _CadastroClienteControllerBase with Store {
   final CadastroClienteRepository _repository;
+  final AuthController _authController = Modular.get();
   final TextEditingController celularCtrl =
       new MaskedTextController(mask: '(00) 00000-0000');
   final TextEditingController cpfCtrl =
@@ -83,12 +85,19 @@ abstract class _CadastroClienteControllerBase with Store {
 
   @action
   save() async {
-    await _repository.saveCliente(clienteModel);
-    Modular.to.showDialog(
-        builder: (context) => MessageDialog(
-              mensagem: 'Cadastrado com Sucesso',
-            ));
-    print('Cliente cadastrado');
-    Modular.to.pop();
+    try {
+      clienteModel.createUid = _authController.user.uid;
+      clienteModel.updateUid = _authController.user.uid;
+      await _repository.saveCliente(clienteModel);
+      Modular.to
+          .showDialog(
+              builder: (context) => MessageDialog(
+                    mensagem: 'Cadastrado com Sucesso',
+                  ))
+          .then((value) => Modular.to.pop());
+      print('Cliente cadastrado');
+    } catch (e) {
+      print(e);
+    }
   }
 }
