@@ -14,7 +14,8 @@ class CadastroClienteRepository {
   }
 
   Stream<List<ClienteModel>> getListClientes() {
-    return _clienteCollection.snapshots().map((event) =>
-        event.documents.map((e) => ClienteModel.fromJson(e.data)).toList());
+    return _clienteCollection.snapshots().map((event) => event.documents
+        .map((e) => ClienteModel.fromJson(e.data)..reference = e.reference)
+        .toList());
   }
 }

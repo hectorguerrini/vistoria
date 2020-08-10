@@ -25,6 +25,14 @@ mixin _$ListaImoveisController on _ListaImoveisControllerBase, Store {
     });
   }
 
+  final _$getListaImoveisAsyncAction =
+      AsyncAction('_ListaImoveisControllerBase.getListaImoveis');
+
+  @override
+  Future getListaImoveis() {
+    return _$getListaImoveisAsyncAction.run(() => super.getListaImoveis());
+  }
+
   final _$selecionarImovelAsyncAction =
       AsyncAction('_ListaImoveisControllerBase.selecionarImovel');
 
@@ -32,20 +40,6 @@ mixin _$ListaImoveisController on _ListaImoveisControllerBase, Store {
   Future selecionarImovel(ImovelModel imovelModel) {
     return _$selecionarImovelAsyncAction
         .run(() => super.selecionarImovel(imovelModel));
-  }
-
-  final _$_ListaImoveisControllerBaseActionController =
-      ActionController(name: '_ListaImoveisControllerBase');
-
-  @override
-  dynamic getListaImoveis() {
-    final _$actionInfo = _$_ListaImoveisControllerBaseActionController
-        .startAction(name: '_ListaImoveisControllerBase.getListaImoveis');
-    try {
-      return super.getListaImoveis();
-    } finally {
-      _$_ListaImoveisControllerBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override

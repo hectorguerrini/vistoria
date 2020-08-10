@@ -8,6 +8,7 @@ import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_imovel_repository.dart';
+import 'package:vistoria/app/shared/auth/auth_controller.dart';
 import 'package:vistoria/app/shared/components/message_dialog.dart';
 part 'cadastro_imovel_controller.g.dart';
 
@@ -16,6 +17,7 @@ class CadastroImovelController = _CadastroImovelControllerBase
 
 abstract class _CadastroImovelControllerBase with Store {
   final CadastroImovelRepository _repository;
+  final AuthController _authController = Modular.get();
   Key formKey;
 
   List<TipoImovel> listTipoImovel = TipoImovel.values;
@@ -118,12 +120,15 @@ abstract class _CadastroImovelControllerBase with Store {
   @action
   save() async {
     try {
+      imovelModel.createUid = _authController.user.uid;
+      imovelModel.updateUid = _authController.user.uid;
       await _repository.saveImovel(imovelModel);
-      Modular.to.showDialog(
-          builder: (context) => MessageDialog(
-                mensagem: 'Cadastrado com Sucesso',
-              ));
-      Modular.to.pop();
+      Modular.to
+          .showDialog(
+              builder: (context) => MessageDialog(
+                    mensagem: 'Cadastrado com Sucesso',
+                  ))
+          .then((value) => Modular.to.pop());
     } catch (e) {
       print(e.message);
     }

@@ -21,12 +21,16 @@ ImovelModel _$ImovelModelFromJson(Map<String, dynamic> json) {
         ? null
         : EnderecoModel.fromJson(json['enderecoModel'] as Map<String, dynamic>),
     observacao: json['observacao'] as String,
-  );
+  )
+    ..createUid = json['createUid'] as String
+    ..updateUid = json['updateUid'] as String;
 }
 
 Map<String, dynamic> _$ImovelModelToJson(ImovelModel instance) =>
     <String, dynamic>{
-      'proprietario': instance.proprietario?.toJson(),
+      'createUid': instance.createUid,
+      'updateUid': instance.updateUid,
+      'proprietario': ImovelModel._proprietarioToJson(instance.proprietario),
       'tipoImovel': _$TipoImovelEnumMap[instance.tipoImovel],
       'listAmbientes':
           instance.listAmbientes?.map((e) => e?.toJson())?.toList(),

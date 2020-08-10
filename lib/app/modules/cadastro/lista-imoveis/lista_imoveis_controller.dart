@@ -19,7 +19,7 @@ abstract class _ListaImoveisControllerBase with Store {
   }
 
   @action
-  getListaImoveis() {
+  getListaImoveis() async {
     listImoveis = _repository.getListImoveis().asObservable();
   }
 

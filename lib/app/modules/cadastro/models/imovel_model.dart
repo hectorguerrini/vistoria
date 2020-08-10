@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
+import 'package:vistoria/app/shared/models/base_model.dart';
 
 import 'ambiente_model.dart';
 import 'cliente_model.dart';
@@ -8,7 +10,8 @@ import 'cliente_model.dart';
 part 'imovel_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ImovelModel {
+class ImovelModel extends BaseModel {
+  @JsonKey(toJson: _proprietarioToJson)
   final ClienteModel proprietario;
   final TipoImovel tipoImovel;
   final List<AmbienteModel> listAmbientes;
@@ -35,6 +38,9 @@ class ImovelModel {
         enderecoModel: enderecoModel ?? this.enderecoModel,
         observacao: observacao ?? this.observacao);
   }
+
+  static DocumentReference _proprietarioToJson(ClienteModel proprietario) =>
+      proprietario.reference;
 
   factory ImovelModel.fromJson(Map<String, dynamic> json) =>
       _$ImovelModelFromJson(json);
