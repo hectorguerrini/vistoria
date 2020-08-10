@@ -11,11 +11,6 @@ class CustomFloatingButtonSave extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () async {
         await f();
-        showDialog(
-            context: context,
-            builder: (_) => MessageDialog(
-                  mensagem: 'Cadastrado com Sucesso',
-                ));
       },
       child: Icon(Icons.save),
     );

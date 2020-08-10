@@ -148,10 +148,10 @@ abstract class _NovaVistoriaControllerBase with Store {
   @action
   save() async {
     try {
-      vistoriaModel.createUid = _authController.user.uid;
-      vistoriaModel.updateUid = _authController.user.uid;
       vistoriaModel =
           vistoriaModel.copyWith(listAmbientes: listAmbientes.toList());
+      vistoriaModel.createUid = _authController.user.uid;
+      vistoriaModel.updateUid = _authController.user.uid;
       var confimacao = await Modular.to.showDialog(
           builder: (context) => ConfirmationDialog(
                 action:
@@ -164,5 +164,19 @@ abstract class _NovaVistoriaControllerBase with Store {
     } catch (e) {
       print(e.message);
     }
+  }
+
+  @action
+  Future<bool> willPop() async {
+    var confimacao = await Modular.to.showDialog(
+        builder: (context) => ConfirmationDialog(
+              action: 'Sair da Vistoria, Deseja salvar os Dados?',
+            ));
+
+    if (confimacao) {
+      await save();
+      return true;
+    }
+    return false;
   }
 }

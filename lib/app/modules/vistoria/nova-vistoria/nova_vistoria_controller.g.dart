@@ -117,6 +117,14 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
     return _$saveAsyncAction.run(() => super.save());
   }
 
+  final _$willPopAsyncAction =
+      AsyncAction('_NovaVistoriaControllerBase.willPop');
+
+  @override
+  Future<bool> willPop() {
+    return _$willPopAsyncAction.run(() => super.willPop());
+  }
+
   final _$_NovaVistoriaControllerBaseActionController =
       ActionController(name: '_NovaVistoriaControllerBase');
 

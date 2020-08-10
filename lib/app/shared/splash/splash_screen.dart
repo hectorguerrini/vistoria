@@ -11,7 +11,7 @@ class _SplashScreenState extends ModularState<SplashScreen, SplashController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      // backgroundColor: Colors.green,
       body: Center(
         child: Image(image: AssetImage('assets/logo.png')),
       ),
