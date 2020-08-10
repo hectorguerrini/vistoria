@@ -10,6 +10,7 @@ import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/nova-vistoria/nova_vistoria_controller.dart';
+import 'package:vistoria/app/shared/components/custom_floating_button_save.dart';
 
 class NovaVistoriaPage extends StatefulWidget {
   final String title;
@@ -98,7 +99,7 @@ class _NovaVistoriaPageState
                     child: Text.rich(TextSpan(children: [
                       TextSpan(text: imovel.enderecoModel.logradouro),
                       TextSpan(text: ' Nº ${imovel.enderecoModel.numero}\n'),
-                      if (imovel.enderecoModel.complemento != null)
+                      if (imovel.enderecoModel.complemento.isNotEmpty)
                         TextSpan(text: "${imovel.enderecoModel.complemento}\n"),
                       TextSpan(text: imovel.enderecoModel.cep)
                     ])),
@@ -206,30 +207,32 @@ class _NovaVistoriaPageState
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Stepper(
-                key: Key(Random.secure().nextDouble().toString()),
-                onStepContinue: () {
-                  setState(() {
-                    controller.setStep(controller.currentStep + 1);
-                  });
-                },
-                onStepCancel: () {
-                  setState(() {
-                    controller.setStep(controller.currentStep - 1);
-                  });
-                },
-                onStepTapped: (step) {
-                  setState(() {
-                    controller.setStep(step);
-                  });
-                },
-                currentStep: controller.currentStep,
-                type: StepperType.vertical,
-                steps: getListStep())));
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: Stepper(
+              key: Key(Random.secure().nextDouble().toString()),
+              onStepContinue: () {
+                setState(() {
+                  controller.setStep(controller.currentStep + 1);
+                });
+              },
+              onStepCancel: () {
+                setState(() {
+                  controller.setStep(controller.currentStep - 1);
+                });
+              },
+              onStepTapped: (step) {
+                setState(() {
+                  controller.setStep(step);
+                });
+              },
+              currentStep: controller.currentStep,
+              type: StepperType.vertical,
+              steps: getListStep())),
+      floatingActionButton: CustomFloatingButtonSave(f: controller.save),
+    );
   }
 }

@@ -110,6 +110,13 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
     });
   }
 
+  final _$saveAsyncAction = AsyncAction('_NovaVistoriaControllerBase.save');
+
+  @override
+  Future save() {
+    return _$saveAsyncAction.run(() => super.save());
+  }
+
   final _$_NovaVistoriaControllerBaseActionController =
       ActionController(name: '_NovaVistoriaControllerBase');
 

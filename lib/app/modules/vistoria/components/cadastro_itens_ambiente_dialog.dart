@@ -31,6 +31,7 @@ class _CadastroItensAmbienteDialogState
       children: <Widget>[
         Observer(builder: (_) {
           return DropdownButton(
+              disabledHint: Text(controller.getItemAmbiente.toShortString()),
               isExpanded: true,
               underline: Container(height: 0),
               hint: Text('Item do ambiente'),
@@ -42,7 +43,8 @@ class _CadastroItensAmbienteDialogState
                       .map((element) => element.item)
                       .contains(element.value))
                   .toList(),
-              onChanged: controller.setItemAmbiente);
+              onChanged:
+                  !widget.modoEdicao ? controller.setItemAmbiente : null);
         }),
         Observer(builder: (_) {
           return DropdownButton(

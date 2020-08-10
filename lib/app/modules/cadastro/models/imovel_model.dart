@@ -11,7 +11,7 @@ part 'imovel_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ImovelModel extends BaseModel {
-  @JsonKey(toJson: _proprietarioToJson)
+  @JsonKey(toJson: _proprietarioToJson, fromJson: _proprietarioFromJson)
   final ClienteModel proprietario;
   final TipoImovel tipoImovel;
   final List<AmbienteModel> listAmbientes;
@@ -36,11 +36,14 @@ class ImovelModel extends BaseModel {
         tipoImovel: tipoImovel ?? this.tipoImovel,
         listAmbientes: listAmbientes ?? this.listAmbientes,
         enderecoModel: enderecoModel ?? this.enderecoModel,
-        observacao: observacao ?? this.observacao);
+        observacao: observacao ?? this.observacao)
+      ..reference = this.reference;
   }
 
   static DocumentReference _proprietarioToJson(ClienteModel proprietario) =>
       proprietario.reference;
+  static ClienteModel _proprietarioFromJson(DocumentReference ref) =>
+      ClienteModel()..reference = ref;
 
   factory ImovelModel.fromJson(Map<String, dynamic> json) =>
       _$ImovelModelFromJson(json);

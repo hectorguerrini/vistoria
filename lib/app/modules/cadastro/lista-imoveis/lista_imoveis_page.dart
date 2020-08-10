@@ -36,7 +36,7 @@ class _ListaImoveisPageState
                         borderRadius: BorderRadius.circular(30.0))),
               ),
               Observer(builder: (_) {
-                if (controller.listImoveis.error != null) {
+                if (controller.listImoveis.hasError) {
                   return Center(
                       child: RaisedButton(
                           onPressed: controller.getListaImoveis,
@@ -78,8 +78,8 @@ class _ListaImoveisPageState
                                 "${item.enderecoModel.logradouro} ${item.enderecoModel.numero}")
                       ])),
                       subtitle: Text.rich(TextSpan(children: [
-                        TextSpan(text: "Proprietario: "),
-                        TextSpan(text: item.proprietario.nomeCompleto)
+                        TextSpan(text: "Cep: "),
+                        TextSpan(text: item.enderecoModel.cep)
                       ])),
                     );
                   },

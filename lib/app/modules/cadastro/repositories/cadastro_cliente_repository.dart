@@ -18,4 +18,10 @@ class CadastroClienteRepository {
         .map((e) => ClienteModel.fromJson(e.data)..reference = e.reference)
         .toList());
   }
+
+  Future<ClienteModel> getCliente(DocumentReference ref) async {
+    return await ref
+        .get()
+        .then((value) => ClienteModel.fromJson(value.data)..reference = ref);
+  }
 }

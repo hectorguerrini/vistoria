@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:vistoria/app/enumeration/status_vistoria_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_ambiente_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_model.dart';
+import 'package:vistoria/app/modules/vistoria/repositories/nova_vistoria_repository.dart';
+import 'package:vistoria/app/shared/auth/auth_controller.dart';
+import 'package:vistoria/app/shared/components/confirmation_dialog.dart';
 part 'nova_vistoria_controller.g.dart';
 
 class NovaVistoriaController = _NovaVistoriaControllerBase
     with _$NovaVistoriaController;
 
 abstract class _NovaVistoriaControllerBase with Store {
+  final AuthController _authController = Modular.get();
+  final NovaVistoriaRepository _repository;
   @observable
   int currentStep;
 
   @observable
-  VistoriaModel vistoriaModel = new VistoriaModel();
+  VistoriaModel vistoriaModel =
+      new VistoriaModel(statusVistoria: StatusVistoria.RASCUNHO);
 
   @observable
   ObservableList<VistoriaAmbienteModel> listAmbientes =
@@ -25,7 +32,7 @@ abstract class _NovaVistoriaControllerBase with Store {
   @observable
   TextEditingController descCtrl = new TextEditingController();
 
-  _NovaVistoriaControllerBase() {
+  _NovaVistoriaControllerBase(this._repository) {
     currentStep = 0;
   }
 
@@ -58,16 +65,18 @@ abstract class _NovaVistoriaControllerBase with Store {
     Modular.to
         .pushNamed('/cadastro/lista_imoveis', arguments: true)
         .then((value) {
-      setImovelModel(value);
-      List<VistoriaAmbienteModel> list = [];
-      vistoriaModel.imovelModel.listAmbientes.forEach((element) {
-        for (var i = 0; i < element.quantidade; i++) {
-          list.add(
-              VistoriaAmbienteModel(ambiente: element.ambiente, listItens: []));
-        }
-      });
-      listAmbientes = list.asObservable();
-      vistoriaModel = vistoriaModel.copyWith(listAmbientes: list);
+      if (value != null) {
+        setImovelModel(value);
+        List<VistoriaAmbienteModel> list = [];
+        vistoriaModel.imovelModel.listAmbientes.forEach((element) {
+          for (var i = 0; i < element.quantidade; i++) {
+            list.add(VistoriaAmbienteModel(
+                ambiente: element.ambiente, listItens: []));
+          }
+        });
+        listAmbientes = list.asObservable();
+        vistoriaModel = vistoriaModel.copyWith(listAmbientes: list);
+      }
     });
   }
 
@@ -82,7 +91,9 @@ abstract class _NovaVistoriaControllerBase with Store {
   selectLocatario() {
     Modular.to
         .pushNamed('/cadastro/lista_clientes', arguments: true)
-        .then((value) => setLocatario(value));
+        .then((value) {
+      if (value != null) setLocatario(value);
+    });
   }
 
   @computed
@@ -95,10 +106,12 @@ abstract class _NovaVistoriaControllerBase with Store {
         .pushNamed('/vistoria/itens_ambiente',
             arguments: item?.listItens ?? null)
         .then((value) {
-      var list = listAmbientes;
-      list[index] = list[index].copyWith(listItens: value);
-      listAmbientes = list.asObservable();
-      vistoriaModel = vistoriaModel.copyWith(listAmbientes: list);
+      if (value != null) {
+        var list = listAmbientes;
+        list[index] = list[index].copyWith(listItens: value);
+        listAmbientes = list.asObservable();
+        vistoriaModel = vistoriaModel.copyWith(listAmbientes: list);
+      }
     }).catchError((onError) {});
   }
 
@@ -130,5 +143,26 @@ abstract class _NovaVistoriaControllerBase with Store {
       return StepState.complete;
     }
     return StepState.indexed;
+  }
+
+  @action
+  save() async {
+    try {
+      vistoriaModel.createUid = _authController.user.uid;
+      vistoriaModel.updateUid = _authController.user.uid;
+      vistoriaModel =
+          vistoriaModel.copyWith(listAmbientes: listAmbientes.toList());
+      var confimacao = await Modular.to.showDialog(
+          builder: (context) => ConfirmationDialog(
+                action:
+                    'Salvar como ${vistoriaModel.statusVistoria.toShortString()}',
+              ));
+
+      if (confimacao) {
+        vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
+      }
+    } catch (e) {
+      print(e.message);
+    }
   }
 }

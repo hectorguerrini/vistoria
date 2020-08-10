@@ -45,20 +45,23 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   validator: (val) =>
                       val.trim().isEmpty ? 'Insira sua senha' : null,
                 ),
-                Container(
-                  margin: EdgeInsets.all(20),
-                  child: Observer(builder: (_) {
-                    return RaisedButton(
-                      onPressed: controller.isValid ? controller.login : null,
-                      padding: EdgeInsets.all(0.0),
-                      textColor: Colors.blue,
-                      color: Colors.white,
-                      child: Text('Entrar'),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          side: BorderSide(color: Colors.blue)),
-                    );
-                  }),
+                ButtonBar(
+                  mainAxisSize: MainAxisSize.min,
+                  alignment: MainAxisAlignment.center,
+                  buttonMinWidth: 100,
+                  children: [
+                    Observer(builder: (_) {
+                      return FlatButton(
+                        onPressed: controller.isValid ? controller.login : null,
+                        textColor: Colors.blue,
+                        color: Colors.white,
+                        child: Text('Entrar'),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            side: BorderSide(color: Colors.blue)),
+                      );
+                    }),
+                  ],
                 )
               ],
             ),

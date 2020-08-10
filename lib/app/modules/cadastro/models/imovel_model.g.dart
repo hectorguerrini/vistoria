@@ -8,9 +8,8 @@ part of 'imovel_model.dart';
 
 ImovelModel _$ImovelModelFromJson(Map<String, dynamic> json) {
   return ImovelModel(
-    proprietario: json['proprietario'] == null
-        ? null
-        : ClienteModel.fromJson(json['proprietario'] as Map<String, dynamic>),
+    proprietario: ImovelModel._proprietarioFromJson(
+        json['proprietario'] as DocumentReference),
     tipoImovel: _$enumDecodeNullable(_$TipoImovelEnumMap, json['tipoImovel']),
     listAmbientes: (json['listAmbientes'] as List)
         ?.map((e) => e == null

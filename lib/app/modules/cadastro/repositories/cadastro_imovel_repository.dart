@@ -12,15 +12,9 @@ class CadastroImovelRepository {
     await _imoveisCollection.add(imovelModel.toJson());
   }
 
-  Future<List<ImovelModel>> getListImoveis() async {
-    var lista = await _imoveisCollection
-        .getDocuments()
-        .then((value) => value.documents);
-    List<Map> listImov = [];
-    lista.forEach((element) async {
-      (element.data['proprietario'] as DocumentReference)
-          .get()
-          .then((value) => value.data);
-    });
+  Stream<List<ImovelModel>> getListImoveis() {
+    return _imoveisCollection.snapshots().map((event) => event.documents
+        .map((e) => ImovelModel.fromJson(e.data)..reference = e.reference)
+        .toList());
   }
 }

@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:oktoast/oktoast.dart';
 
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Modular.navigatorKey,
-      title: 'Vistoria',
-      theme: ThemeData(
-          primarySwatch: Colors.green, primaryColor: Colors.green[500]),
-      initialRoute: '/',
-      onGenerateRoute: Modular.generateRoute,
+    return OKToast(
+      duration: Duration(seconds: 3),
+      dismissOtherOnShow: true,
+      position: ToastPosition.bottom,
+      child: MaterialApp(
+        navigatorKey: Modular.navigatorKey,
+        title: 'Vistoria',
+        theme: ThemeData(
+            primarySwatch: Colors.green, primaryColor: Colors.green[500]),
+        initialRoute: '/',
+        onGenerateRoute: Modular.generateRoute,
+      ),
     );
   }
 }

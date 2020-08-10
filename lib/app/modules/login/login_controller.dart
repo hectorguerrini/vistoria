@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/shared/auth/auth_controller.dart';
-
+import 'package:oktoast/oktoast.dart';
 import 'models/login_model.dart';
 
 part 'login_controller.g.dart';
@@ -11,6 +12,8 @@ class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
   final AuthController _authController = Modular.get();
+
+  String msg;
 
   @observable
   LoginModel loginModel;
@@ -32,19 +35,26 @@ abstract class _LoginControllerBase with Store {
     } on PlatformException catch (e) {
       switch (e.code) {
         case "ERROR_INVALID_EMAIL":
-          print("Seu email está invalido. (exemplo@email.com)");
+          msg = "Seu email está invalido. (exemplo@email.com)";
+          print(msg);
           break;
         case "ERROR_WRONG_PASSWORD":
-          print("Sua senha está incorreta. Tente novamente");
+          msg = "Sua senha está incorreta. Tente novamente";
+          print(msg);
           break;
         case "ERROR_USER_NOT_FOUND":
-          print(
-              "Email não cadastrado. Insira um email cadastrado ou se registre.");
+          msg =
+              "Email não cadastrado. Insira um email cadastrado ou se registre.";
+          print(msg);
           break;
         default:
-          print("Erro de conexão.");
+          msg = "Erro de conexão.";
+          print(msg);
           break;
       }
+      showToast(msg,
+          backgroundColor: Colors.red,
+          textStyle: TextStyle(color: Colors.white));
     }
   }
 

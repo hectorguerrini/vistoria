@@ -46,7 +46,8 @@ class ClienteModel extends BaseModel {
         cpf: cpf ?? this.cpf,
         rg: rg ?? this.rg,
         dtNascimento: dtNascimento ?? this.dtNascimento,
-        endereco: endereco ?? this.endereco);
+        endereco: endereco ?? this.endereco)
+      ..reference = this.reference;
   }
 
   factory ClienteModel.fromJson(Map<String, dynamic> json) =>

@@ -13,13 +13,13 @@ mixin _$ListaImoveisController on _ListaImoveisControllerBase, Store {
       Atom(name: '_ListaImoveisControllerBase.listImoveis');
 
   @override
-  ObservableFuture<List<ImovelModel>> get listImoveis {
+  ObservableStream<List<ImovelModel>> get listImoveis {
     _$listImoveisAtom.reportRead();
     return super.listImoveis;
   }
 
   @override
-  set listImoveis(ObservableFuture<List<ImovelModel>> value) {
+  set listImoveis(ObservableStream<List<ImovelModel>> value) {
     _$listImoveisAtom.reportWrite(value, super.listImoveis, () {
       super.listImoveis = value;
     });

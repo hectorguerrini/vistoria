@@ -70,9 +70,10 @@ abstract class _ItensAmbienteControllerBase with Store {
                   modoEdicao: true,
                 ))
         .then((value) {
-      listItens[index] = value;
-      itens = new ItensAmbienteModel();
-    }).catchError((onError) => itens = new ItensAmbienteModel());
+      if (value != null) {
+        listItens[index] = value;
+      }
+    }).whenComplete(() => itens = new ItensAmbienteModel());
   }
 
   @action
