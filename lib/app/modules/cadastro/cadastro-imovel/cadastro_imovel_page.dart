@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 import 'package:vistoria/app/modules/cadastro/components/cadastro_ambiente_dialog.dart';
 import 'package:vistoria/app/modules/cadastro/cadastro-imovel/cadastro_imovel_controller.dart';
 import 'package:vistoria/app/modules/cadastro/models/ambiente_model.dart';
@@ -69,10 +70,9 @@ class _CadastroImovelPageState
                         underline: Container(height: 0),
                         hint: Text('Tipo do Imovel'),
                         value: controller.getTipoImovel,
-                        items: controller.listTipoImovel
+                        items: TipoImovel.values
                             .map((e) => DropdownMenuItem(
-                                child: Text(e.toString().split('.')[1]),
-                                value: e))
+                                child: Text(e.toShortString()), value: e))
                             .toList(),
                         onChanged: controller.setTipoImovel),
                   );

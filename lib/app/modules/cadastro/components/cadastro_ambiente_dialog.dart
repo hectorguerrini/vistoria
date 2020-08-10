@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:vistoria/app/enumeration/ambientes_enum.dart';
 import 'package:vistoria/app/modules/cadastro/cadastro-imovel/cadastro_imovel_controller.dart';
 
 class CadastroAmbienteDialog extends StatefulWidget {
@@ -29,12 +30,14 @@ class _CadastroAmbienteDialogState extends State<CadastroAmbienteDialog> {
               isExpanded: true,
               hint: Text('Ambientes'),
               value: controller.getAmbiente,
-              items: controller.listAmbientes
+              items: Ambientes.values
                   .map((e) => DropdownMenuItem(
-                      child: Text(e.toString().split('.')[1]), value: e))
-                  .where((element) => !controller.imovelModel.listAmbientes
-                      .map((e) => e.ambiente)
-                      .contains(element.value))
+                      child: Text(e.toShortString()), value: e))
+                  .where((element) => widget.modoEdicao
+                      ? true
+                      : !controller.imovelModel.listAmbientes
+                          .map((e) => e.ambiente)
+                          .contains(element.value))
                   .toList(),
               onChanged: !widget.modoEdicao ? controller.setAmbiente : null);
         }),

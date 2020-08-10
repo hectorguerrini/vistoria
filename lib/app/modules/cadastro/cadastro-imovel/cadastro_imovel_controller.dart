@@ -20,8 +20,6 @@ abstract class _CadastroImovelControllerBase with Store {
   final AuthController _authController = Modular.get();
   Key formKey;
 
-  List<TipoImovel> listTipoImovel = TipoImovel.values;
-  List<Ambientes> listAmbientes = Ambientes.values;
   @observable
   AmbienteModel ambienteModel = new AmbienteModel(quantidade: 0);
   @observable
