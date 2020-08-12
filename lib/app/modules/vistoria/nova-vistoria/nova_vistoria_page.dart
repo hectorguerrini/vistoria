@@ -75,6 +75,7 @@ class _NovaVistoriaPageState
           isActive: controller.currentStep >= 0,
           title: Text("Selecionar Imovel"),
           content: Container(
+            alignment: Alignment.centerLeft,
             child: Card(child: Observer(builder: (_) {
               if (controller.getImovelModel == null) {
                 return FlatButton.icon(
@@ -129,8 +130,8 @@ class _NovaVistoriaPageState
         )
       ];
 
-      if (controller.vistoriaModel.listAmbientes != null) {
-        controller.vistoriaModel.listAmbientes.asMap().forEach((index, e) {
+      if (controller.listAmbientes != null) {
+        controller.listAmbientes.asMap().forEach((index, e) {
           Step step = new Step(
               subtitle: Text(e.descricao ?? 'Sem descrição'),
               state: controller.getStepState(index + 2, e.observacao),
@@ -214,28 +215,26 @@ class _NovaVistoriaPageState
         ),
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 20),
-            child: Observer(builder: (_) {
-              return Stepper(
-                  key: Key(Random.secure().nextDouble().toString()),
-                  onStepContinue: () {
-                    // setState(() {
+            child: Stepper(
+                key: Key(Random.secure().nextDouble().toString()),
+                onStepContinue: () {
+                  setState(() {
                     controller.setStep(controller.currentStep + 1);
-                    // });
-                  },
-                  onStepCancel: () {
-                    // setState(() {
+                  });
+                },
+                onStepCancel: () {
+                  setState(() {
                     controller.setStep(controller.currentStep - 1);
-                    // });
-                  },
-                  onStepTapped: (step) {
-                    // setState(() {
+                  });
+                },
+                onStepTapped: (step) {
+                  setState(() {
                     controller.setStep(step);
-                    // });
-                  },
-                  currentStep: controller.currentStep,
-                  type: StepperType.vertical,
-                  steps: getListStep());
-            })),
+                  });
+                },
+                currentStep: controller.currentStep,
+                type: StepperType.vertical,
+                steps: getListStep())),
         floatingActionButton: CustomFloatingButtonSave(f: controller.save),
       ),
     );

@@ -45,16 +45,13 @@ class _CadastroImovelPageState
                             style: TextStyle(color: Colors.black54)));
                   }
 
-                  return TextFormField(
-                    readOnly: true,
-                    initialValue: controller.getProprietario.nomeCompleto,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: controller.selectProprietario),
-                        labelText: 'Proprietario',
-                        border: OutlineInputBorder()),
+                  return ListTile(
+                    title: Text(controller.getProprietario.nomeCompleto),
+                    subtitle: Text(controller.getProprietario.celular),
+                    trailing: IconButton(
+                      onPressed: controller.selectProprietario,
+                      icon: Icon(FontAwesome.pencil),
+                    ),
                   );
                 }),
               ),

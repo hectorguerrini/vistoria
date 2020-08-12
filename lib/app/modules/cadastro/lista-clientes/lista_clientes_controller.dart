@@ -29,12 +29,6 @@ abstract class _ListaClientesControllerBase with Store {
 
   @action
   selecionarCliente(ClienteModel clienteModel) async {
-    var confimacao = await Modular.to.showDialog(
-        builder: (context) => ConfirmationDialog(
-              action: 'Selecionar Cliente',
-            ));
-    if (confimacao) {
-      Modular.to.pop(clienteModel);
-    }
+    Modular.to.pop(clienteModel);
   }
 }

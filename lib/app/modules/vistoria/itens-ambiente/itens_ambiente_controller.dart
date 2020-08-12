@@ -85,9 +85,11 @@ abstract class _ItensAmbienteControllerBase with Store {
   photoItens(ItensAmbienteModel value, int index) async {
     final photo = await picker.getImage(
         source: ImageSource.camera, maxWidth: 1024, maxHeight: 768);
-    value.fileImages.add(File(photo.path));
-    listItens[index] =
-        listItens.elementAt(index).copyWith(fileImages: value.fileImages);
+    if (photo != null) {
+      value.fileImages.add(File(photo.path));
+      listItens[index] =
+          listItens.elementAt(index).copyWith(fileImages: value.fileImages);
+    }
   }
 
   @action

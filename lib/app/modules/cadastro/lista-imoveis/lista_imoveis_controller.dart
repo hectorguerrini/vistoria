@@ -29,15 +29,9 @@ abstract class _ListaImoveisControllerBase with Store {
 
   @action
   selecionarImovel(ImovelModel imovelModel) async {
-    var confimacao = await Modular.to.showDialog(
-        builder: (context) => ConfirmationDialog(
-              action: 'Selecionar Imovel',
-            ));
-    if (confimacao) {
-      imovelModel = imovelModel.copyWith(
-          proprietario: await _clienteRepository
-              .getCliente(imovelModel.proprietario.reference));
-      Modular.to.pop(imovelModel);
-    }
+    imovelModel = imovelModel.copyWith(
+        proprietario: await _clienteRepository
+            .getCliente(imovelModel.proprietario.reference));
+    Modular.to.pop(imovelModel);
   }
 }

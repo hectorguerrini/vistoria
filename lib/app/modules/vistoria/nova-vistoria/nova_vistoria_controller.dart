@@ -104,7 +104,7 @@ abstract class _NovaVistoriaControllerBase with Store {
   addItensAmbientes(int index, {VistoriaAmbienteModel item}) {
     Modular.to
         .pushNamed('/vistoria/itens_ambiente',
-            arguments: item?.listItens ?? null)
+            arguments: listAmbientes[index].listItens ?? null)
         .then((value) {
       if (value != null) {
         var list = listAmbientes;

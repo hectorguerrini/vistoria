@@ -65,8 +65,11 @@ class _ItensAmbientePageState
                                       BoxDecoration(color: Colors.grey[400]),
                                   child: Observer(builder: (_) {
                                     if (controller
-                                            .listItens[index].fileImages ==
-                                        null) {
+                                                .listItens[index].fileImages ==
+                                            null ||
+                                        controller.listItens[index].fileImages
+                                                .length ==
+                                            0) {
                                       return Center(
                                         child: Icon(Icons.camera),
                                       );
@@ -109,7 +112,7 @@ class _ItensAmbientePageState
                                       onPressed: () =>
                                           controller.photoItens(item, index),
                                       icon: Icon(FontAwesome.camera),
-                                      label: Text('Tirar Foto')),
+                                      label: Text('Adicionar Foto')),
                                   FlatButton.icon(
                                       onPressed: () => controller
                                           .editItemAmbiente(item, index),
