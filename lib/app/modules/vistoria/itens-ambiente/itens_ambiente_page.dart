@@ -63,29 +63,24 @@ class _ItensAmbientePageState
                                       MediaQuery.of(context).size.height * 0.15,
                                   decoration:
                                       BoxDecoration(color: Colors.grey[400]),
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: <Widget>[
-                                      Image(
-                                          image:
-                                              AssetImage('assets/foto1.jpeg')),
-                                      Image(
-                                          image:
-                                              AssetImage('assets/foto2.jpeg')),
-                                      Image(
-                                          image:
-                                              AssetImage('assets/foto3.jpeg')),
-                                      Image(
-                                          image:
-                                              AssetImage('assets/foto1.jpeg')),
-                                      Image(
-                                          image:
-                                              AssetImage('assets/foto2.jpeg')),
-                                      Image(
-                                          image:
-                                              AssetImage('assets/foto3.jpeg')),
-                                    ],
-                                  )),
+                                  child: Observer(builder: (_) {
+                                    if (controller
+                                            .listItens[index].fileImages ==
+                                        null) {
+                                      return Center(
+                                        child: Icon(Icons.camera),
+                                      );
+                                    }
+
+                                    return ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: <Widget>[
+                                          ...List.generate(
+                                              item.fileImages.length,
+                                              (index) => Image.file(
+                                                  item.fileImages[index]))
+                                        ]);
+                                  })),
                               ListTile(
                                 title: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -111,7 +106,8 @@ class _ItensAmbientePageState
                               ButtonBar(
                                 children: <Widget>[
                                   FlatButton.icon(
-                                      onPressed: () {},
+                                      onPressed: () =>
+                                          controller.photoItens(item, index),
                                       icon: Icon(FontAwesome.camera),
                                       label: Text('Tirar Foto')),
                                   FlatButton.icon(

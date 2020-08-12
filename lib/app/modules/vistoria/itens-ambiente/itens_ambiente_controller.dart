@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/enumeration/estado_itens_enum.dart';
 import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
@@ -10,12 +13,14 @@ class ItensAmbienteController = _ItensAmbienteControllerBase
     with _$ItensAmbienteController;
 
 abstract class _ItensAmbienteControllerBase with Store {
+  final picker = ImagePicker();
+
   @observable
   ObservableList<ItensAmbienteModel> listItens =
       new ObservableList<ItensAmbienteModel>();
 
   @observable
-  ItensAmbienteModel itens = new ItensAmbienteModel();
+  ItensAmbienteModel itens = new ItensAmbienteModel(fileImages: []);
 
   _ItensAmbienteControllerBase() {
     if (Modular.args.data != null) {
@@ -74,6 +79,25 @@ abstract class _ItensAmbienteControllerBase with Store {
         listItens[index] = value;
       }
     }).whenComplete(() => itens = new ItensAmbienteModel());
+  }
+
+  @action
+  photoItens(ItensAmbienteModel value, int index) async {
+    final photo = await picker.getImage(
+        source: ImageSource.camera, maxWidth: 1024, maxHeight: 768);
+    value.fileImages.add(File(photo.path));
+    listItens[index] =
+        listItens.elementAt(index).copyWith(fileImages: value.fileImages);
+  }
+
+  @action
+  abrirGaleria(ItensAmbienteModel value, int index) {
+    Modular.to.pushNamed('/galeria', arguments: value.fileImages).then((value) {
+      if (value != null) {
+        print(value);
+        listItens[index] = value;
+      }
+    });
   }
 
   @action

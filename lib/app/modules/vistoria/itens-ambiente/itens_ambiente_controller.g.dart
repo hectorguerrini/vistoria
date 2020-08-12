@@ -61,6 +61,14 @@ mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
     });
   }
 
+  final _$photoItensAsyncAction =
+      AsyncAction('_ItensAmbienteControllerBase.photoItens');
+
+  @override
+  Future photoItens(ItensAmbienteModel value, int index) {
+    return _$photoItensAsyncAction.run(() => super.photoItens(value, index));
+  }
+
   final _$_ItensAmbienteControllerBaseActionController =
       ActionController(name: '_ItensAmbienteControllerBase');
 
@@ -125,6 +133,17 @@ mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
         .startAction(name: '_ItensAmbienteControllerBase.editItemAmbiente');
     try {
       return super.editItemAmbiente(value, index);
+    } finally {
+      _$_ItensAmbienteControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic abrirGaleria(ItensAmbienteModel value, int index) {
+    final _$actionInfo = _$_ItensAmbienteControllerBaseActionController
+        .startAction(name: '_ItensAmbienteControllerBase.abrirGaleria');
+    try {
+      return super.abrirGaleria(value, index);
     } finally {
       _$_ItensAmbienteControllerBaseActionController.endAction(_$actionInfo);
     }

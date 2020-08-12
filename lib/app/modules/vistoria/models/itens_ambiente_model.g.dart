@@ -14,6 +14,7 @@ ItensAmbienteModel _$ItensAmbienteModelFromJson(Map<String, dynamic> json) {
         _$enumDecodeNullable(_$EstadoItensEnumMap, json['estadoItens']),
     cor: json['cor'] as String,
     observacao: json['observacao'] as String,
+    photoUrl: json['photoUrl'] as String,
   );
 }
 
@@ -24,6 +25,7 @@ Map<String, dynamic> _$ItensAmbienteModelToJson(ItensAmbienteModel instance) =>
       'estadoItens': _$EstadoItensEnumMap[instance.estadoItens],
       'cor': instance.cor,
       'observacao': instance.observacao,
+      'photoUrl': instance.photoUrl,
     };
 
 T _$enumDecode<T>(

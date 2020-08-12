@@ -2,6 +2,8 @@ import 'package:vistoria/app/modules/vistoria/itens-ambiente/itens_ambiente_cont
 import 'package:vistoria/app/modules/vistoria/itens-ambiente/itens_ambiente_page.dart';
 import 'package:vistoria/app/modules/vistoria/nova-vistoria/nova_vistoria_controller.dart';
 import 'package:vistoria/app/modules/vistoria/nova-vistoria/nova_vistoria_page.dart';
+import 'package:vistoria/app/modules/vistoria/galeria-fotos/galeria_fotos_controller.dart';
+import 'package:vistoria/app/modules/vistoria/galeria-fotos/galeria_fotos_page.dart';
 import 'package:vistoria/app/modules/vistoria/repositories/nova_vistoria_repository.dart';
 import 'package:vistoria/app/shared/repositories/local_storage_hive.dart';
 
@@ -17,6 +19,7 @@ class VistoriaModule extends ChildModule {
         Bind((i) => NovaVistoriaController(i.get<NovaVistoriaRepository>())),
         Bind((i) => NovaVistoriaRepository(i.get<LocalStorageHive>())),
         Bind((i) => ItensAmbienteController()),
+        Bind((i) => GaleriaFotosController()),
         Bind((i) => LocalStorageHive()),
       ];
 
@@ -25,6 +28,7 @@ class VistoriaModule extends ChildModule {
         Router(Modular.initialRoute, child: (_, args) => VistoriaPage()),
         Router('/nova_vistoria', child: (_, args) => NovaVistoriaPage()),
         Router('/itens_ambiente', child: (_, args) => ItensAmbientePage()),
+        Router('/galeria', child: (_, args) => GaleriaFotosPage()),
       ];
 
   static Inject get to => Inject<VistoriaModule>.of();
