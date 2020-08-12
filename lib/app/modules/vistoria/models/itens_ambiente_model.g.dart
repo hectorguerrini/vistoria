@@ -14,7 +14,7 @@ ItensAmbienteModel _$ItensAmbienteModelFromJson(Map<String, dynamic> json) {
         _$enumDecodeNullable(_$EstadoItensEnumMap, json['estadoItens']),
     cor: json['cor'] as String,
     observacao: json['observacao'] as String,
-    photoUrl: json['photoUrl'] as String,
+    photoUrl: (json['photoUrl'] as List)?.map((e) => e as String)?.toList(),
   );
 }
 

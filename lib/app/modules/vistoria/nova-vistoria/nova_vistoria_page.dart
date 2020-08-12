@@ -130,8 +130,8 @@ class _NovaVistoriaPageState
         )
       ];
 
-      if (controller.listAmbientes != null) {
-        controller.listAmbientes.asMap().forEach((index, e) {
+      if (controller.vistoriaModel.listAmbientes != null) {
+        controller.vistoriaModel.listAmbientes.asMap().forEach((index, e) {
           Step step = new Step(
               subtitle: Text(e.descricao ?? 'Sem descrição'),
               state: controller.getStepState(index + 2, e.observacao),
@@ -207,36 +207,35 @@ class _NovaVistoriaPageState
       return listSteps;
     }
 
-    return WillPopScope(
-      onWillPop: controller.willPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Stepper(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: Observer(builder: (_) {
+            return Stepper(
                 key: Key(Random.secure().nextDouble().toString()),
                 onStepContinue: () {
-                  setState(() {
-                    controller.setStep(controller.currentStep + 1);
-                  });
+                  // setState(() {
+                  controller.setStep(controller.currentStep + 1);
+                  // });
                 },
                 onStepCancel: () {
-                  setState(() {
-                    controller.setStep(controller.currentStep - 1);
-                  });
+                  // setState(() {
+                  controller.setStep(controller.currentStep - 1);
+                  // });
                 },
                 onStepTapped: (step) {
-                  setState(() {
-                    controller.setStep(step);
-                  });
+                  // setState(() {
+                  controller.setStep(step);
+                  // });
                 },
                 currentStep: controller.currentStep,
                 type: StepperType.vertical,
-                steps: getListStep())),
-        floatingActionButton: CustomFloatingButtonSave(f: controller.save),
-      ),
+                steps: getListStep());
+          })),
+      floatingActionButton: CustomFloatingButtonSave(f: controller.save),
     );
   }
 }

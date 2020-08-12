@@ -12,7 +12,7 @@ class ItensAmbienteModel {
   final EstadoItens estadoItens;
   final String cor;
   final String observacao;
-  final String photoUrl;
+  final List<String> photoUrl;
   @JsonKey(ignore: true)
   final List<File> fileImages;
   ItensAmbienteModel(

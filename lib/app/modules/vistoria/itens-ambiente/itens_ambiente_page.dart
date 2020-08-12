@@ -64,9 +64,9 @@ class _ItensAmbientePageState
                                   decoration:
                                       BoxDecoration(color: Colors.grey[400]),
                                   child: Observer(builder: (_) {
-                                    if (controller
-                                                .listItens[index].fileImages ==
-                                            null ||
+                                    if (controller.listItens[index].photoUrl
+                                                .length ==
+                                            0 &&
                                         controller.listItens[index].fileImages
                                                 .length ==
                                             0) {
@@ -78,6 +78,10 @@ class _ItensAmbientePageState
                                     return ListView(
                                         scrollDirection: Axis.horizontal,
                                         children: <Widget>[
+                                          ...List.generate(
+                                              item.photoUrl.length,
+                                              (index) => Image.network(
+                                                  item.photoUrl[index])),
                                           ...List.generate(
                                               item.fileImages.length,
                                               (index) => Image.file(

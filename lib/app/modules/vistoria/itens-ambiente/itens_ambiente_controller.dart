@@ -20,7 +20,8 @@ abstract class _ItensAmbienteControllerBase with Store {
       new ObservableList<ItensAmbienteModel>();
 
   @observable
-  ItensAmbienteModel itens = new ItensAmbienteModel(fileImages: []);
+  ItensAmbienteModel itens =
+      new ItensAmbienteModel(fileImages: [], photoUrl: []);
 
   _ItensAmbienteControllerBase() {
     if (Modular.args.data != null) {
@@ -63,7 +64,8 @@ abstract class _ItensAmbienteControllerBase with Store {
       if (value != null) {
         listItens.add(value);
       }
-    }).whenComplete(() => itens = new ItensAmbienteModel());
+    }).whenComplete(
+            () => itens = new ItensAmbienteModel(fileImages: [], photoUrl: []));
   }
 
   @action
@@ -78,17 +80,22 @@ abstract class _ItensAmbienteControllerBase with Store {
       if (value != null) {
         listItens[index] = value;
       }
-    }).whenComplete(() => itens = new ItensAmbienteModel());
+    }).whenComplete(
+            () => itens = new ItensAmbienteModel(fileImages: [], photoUrl: []));
   }
 
   @action
   photoItens(ItensAmbienteModel value, int index) async {
-    final photo = await picker.getImage(
-        source: ImageSource.camera, maxWidth: 1024, maxHeight: 768);
-    if (photo != null) {
-      value.fileImages.add(File(photo.path));
-      listItens[index] =
-          listItens.elementAt(index).copyWith(fileImages: value.fileImages);
+    try {
+      final photo = await picker.getImage(
+          source: ImageSource.camera, maxWidth: 1024, maxHeight: 768);
+      if (photo != null) {
+        value.fileImages.add(File(photo.path));
+        listItens[index] =
+            listItens.elementAt(index).copyWith(fileImages: value.fileImages);
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 

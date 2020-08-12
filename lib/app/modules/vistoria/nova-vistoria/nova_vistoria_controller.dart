@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/enumeration/status_vistoria_enum.dart';
+import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
+import 'package:vistoria/app/enumeration/ambientes_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_ambiente_model.dart';
@@ -159,6 +161,23 @@ abstract class _NovaVistoriaControllerBase with Store {
               ));
 
       if (confimacao) {
+        vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
+        await Future.wait(vistoriaModel.listAmbientes.map((e) async {
+          e.listItens.forEach((element) async {
+            var lista = element.fileImages;
+            int saveds = element.photoUrl.length;
+            lista.asMap().forEach((n, el) async {
+              String uri = await _repository.uploadImages(
+                  el,
+                  vistoriaModel.reference.documentID,
+                  e.ambiente.toShortString(),
+                  element.item.toShortString(),
+                  n + saveds);
+              element.photoUrl.add(uri);
+              element.fileImages.remove(el);
+            });
+          });
+        }));
         vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
       }
     } catch (e) {
