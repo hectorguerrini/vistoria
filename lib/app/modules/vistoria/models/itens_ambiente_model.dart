@@ -30,7 +30,7 @@ class ItensAmbienteModel {
       EstadoItens estadoItens,
       String cor,
       String observacao,
-      String photoUrl,
+      List<String> photoUrl,
       List<File> fileImages}) {
     return ItensAmbienteModel(
       item: item ?? this.item,

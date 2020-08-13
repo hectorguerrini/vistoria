@@ -45,7 +45,7 @@ class VistoriaModel extends BaseModel {
       ImovelModel()..reference = ref;
 
   static DocumentReference _locatarioToJson(ClienteModel locatario) =>
-      locatario.reference;
+      locatario.reference ?? null;
   static ClienteModel _locatarioFromJson(DocumentReference ref) =>
       ClienteModel()..reference = ref;
 

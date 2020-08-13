@@ -11,6 +11,7 @@ import 'package:vistoria/app/modules/vistoria/models/vistoria_model.dart';
 import 'package:vistoria/app/modules/vistoria/repositories/nova_vistoria_repository.dart';
 import 'package:vistoria/app/shared/auth/auth_controller.dart';
 import 'package:vistoria/app/shared/components/confirmation_dialog.dart';
+import 'package:vistoria/app/shared/components/confirmation_saved_dialog.dart';
 part 'nova_vistoria_controller.g.dart';
 
 class NovaVistoriaController = _NovaVistoriaControllerBase
@@ -170,7 +171,8 @@ abstract class _NovaVistoriaControllerBase with Store {
               String uri = await _repository.uploadImages(
                   el,
                   vistoriaModel.reference.documentID,
-                  e.ambiente.toShortString(),
+                  vistoriaModel.listAmbientes.indexOf(e).toString() +
+                      e.ambiente.toShortString(),
                   element.item.toShortString(),
                   n + saveds);
               element.photoUrl.add(uri);
@@ -181,21 +183,19 @@ abstract class _NovaVistoriaControllerBase with Store {
         vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
       }
     } catch (e) {
-      print(e.message);
+      print(e);
     }
   }
 
   @action
   Future<bool> willPop() async {
-    var confimacao = await Modular.to.showDialog(
-        builder: (context) => ConfirmationDialog(
-              action: 'Sair da Vistoria, Deseja salvar os Dados?',
-            ));
-
-    if (confimacao) {
-      await save();
-      return true;
+    var confirmacao = await Modular.to
+        .showDialog(builder: (context) => ConfirmationSavedDialog());
+    if (confirmacao) {
+      save();
     }
-    return false;
+    Modular.to.pop();
+
+    return true;
   }
 }

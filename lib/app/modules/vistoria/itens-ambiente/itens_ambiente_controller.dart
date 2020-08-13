@@ -7,6 +7,7 @@ import 'package:vistoria/app/enumeration/estado_itens_enum.dart';
 import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
 import 'package:vistoria/app/modules/vistoria/components/cadastro_itens_ambiente_dialog.dart';
 import 'package:vistoria/app/modules/vistoria/models/itens_ambiente_model.dart';
+import 'package:vistoria/app/shared/components/confirmation_saved_dialog.dart';
 part 'itens_ambiente_controller.g.dart';
 
 class ItensAmbienteController = _ItensAmbienteControllerBase
@@ -101,10 +102,11 @@ abstract class _ItensAmbienteControllerBase with Store {
 
   @action
   abrirGaleria(ItensAmbienteModel value, int index) {
-    Modular.to.pushNamed('/galeria', arguments: value.fileImages).then((value) {
-      if (value != null) {
-        print(value);
-        listItens[index] = value;
+    Modular.to.pushNamed('/vistoria/galeria', arguments: value).then((value) {
+      if (value is ItensAmbienteModel) {
+        listItens[index] = listItens
+            .elementAt(index)
+            .copyWith(fileImages: value.fileImages, photoUrl: value.photoUrl);
       }
     });
   }
@@ -112,5 +114,17 @@ abstract class _ItensAmbienteControllerBase with Store {
   @action
   save() {
     Modular.to.pop(listItens.toList());
+  }
+
+  @action
+  Future<bool> willPop() async {
+    var confirmacao = await Modular.to
+        .showDialog(builder: (context) => ConfirmationSavedDialog());
+    if (confirmacao) {
+      save();
+    } else {
+      Modular.to.pop();
+    }
+    return true;
   }
 }

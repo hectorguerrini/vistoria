@@ -21,121 +21,129 @@ class _ItensAmbientePageState
     extends ModularState<ItensAmbientePage, ItensAmbienteController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: <Widget>[
-            Card(
-              child: FlatButton.icon(
-                  onPressed: controller.addItem,
-                  icon: Icon(Icons.add),
-                  label: Text('Adicionar Item')),
-            ),
-            Divider(),
-            Observer(builder: (_) {
-              if (controller.listItens.length == 0) {
-                return Center(
-                    child: Text(
-                  "Nenhum item",
-                  style: TextStyle(color: Colors.black54),
-                ));
-              }
-              List<ItensAmbienteModel> list = controller.listItens.toList();
-              return Expanded(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: list.length,
-                    itemBuilder: (context, index) {
-                      ItensAmbienteModel item = list[index];
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.15,
-                                  decoration:
-                                      BoxDecoration(color: Colors.grey[400]),
-                                  child: Observer(builder: (_) {
-                                    if (controller.listItens[index].photoUrl
-                                                .length ==
-                                            0 &&
-                                        controller.listItens[index].fileImages
-                                                .length ==
-                                            0) {
-                                      return Center(
-                                        child: Icon(Icons.camera),
-                                      );
-                                    }
-
-                                    return ListView(
-                                        scrollDirection: Axis.horizontal,
-                                        children: <Widget>[
-                                          ...List.generate(
-                                              item.photoUrl.length,
-                                              (index) => Image.network(
-                                                  item.photoUrl[index])),
-                                          ...List.generate(
-                                              item.fileImages.length,
-                                              (index) => Image.file(
-                                                  item.fileImages[index]))
-                                        ]);
-                                  })),
-                              ListTile(
-                                title: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text.rich(TextSpan(
-                                      style: TextStyle(fontSize: 14),
-                                      children: [
-                                        TextSpan(
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                            text:
-                                                "${index + 1}. ${item.item.toShortString()}\n"),
-                                        TextSpan(
-                                            text:
-                                                "- Estado ${item.estadoItens.toShortString()}"),
-                                      ])),
-                                ),
-                                subtitle: Text('Obs: ' +
-                                    (item.observacao != null
-                                        ? item.observacao
-                                        : '')),
-                              ),
-                              ButtonBar(
-                                children: <Widget>[
-                                  FlatButton.icon(
-                                      onPressed: () =>
-                                          controller.photoItens(item, index),
-                                      icon: Icon(FontAwesome.camera),
-                                      label: Text('Adicionar Foto')),
-                                  FlatButton.icon(
-                                      onPressed: () => controller
-                                          .editItemAmbiente(item, index),
-                                      icon: Icon(FontAwesome.pencil),
-                                      label: Text('Editar')),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-              );
-            })
-          ],
+    return WillPopScope(
+      onWillPop: controller.willPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
-      floatingActionButton: CustomFloatingButtonSave(
-        f: controller.save,
+        body: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: <Widget>[
+              Card(
+                child: FlatButton.icon(
+                    onPressed: controller.addItem,
+                    icon: Icon(Icons.add),
+                    label: Text('Adicionar Item')),
+              ),
+              Divider(),
+              Observer(builder: (_) {
+                if (controller.listItens.length == 0) {
+                  return Center(
+                      child: Text(
+                    "Nenhum item",
+                    style: TextStyle(color: Colors.black54),
+                  ));
+                }
+                List<ItensAmbienteModel> list = controller.listItens.toList();
+                return Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        ItensAmbienteModel item = list[index];
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Column(
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () =>
+                                      controller.abrirGaleria(item, index),
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.15,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey[400]),
+                                      child: Observer(builder: (_) {
+                                        if (controller.listItens[index].photoUrl
+                                                    .length ==
+                                                0 &&
+                                            controller.listItens[index]
+                                                    .fileImages.length ==
+                                                0) {
+                                          return Center(
+                                            child: Icon(Icons.camera),
+                                          );
+                                        }
+
+                                        return ListView(
+                                            scrollDirection: Axis.horizontal,
+                                            children: <Widget>[
+                                              ...List.generate(
+                                                  item.photoUrl.length,
+                                                  (index) => Image.network(
+                                                      item.photoUrl[index])),
+                                              ...List.generate(
+                                                  item.fileImages.length,
+                                                  (index) => Image.file(
+                                                      item.fileImages[index]))
+                                            ]);
+                                      })),
+                                ),
+                                ListTile(
+                                  title: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text.rich(TextSpan(
+                                        style: TextStyle(fontSize: 14),
+                                        children: [
+                                          TextSpan(
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16),
+                                              text:
+                                                  "${index + 1}. ${item.item.toShortString()}\n"),
+                                          TextSpan(
+                                              text:
+                                                  "- Estado ${item.estadoItens.toShortString()}"),
+                                        ])),
+                                  ),
+                                  subtitle: Text('Obs: ' +
+                                      (item.observacao != null
+                                          ? item.observacao
+                                          : '')),
+                                ),
+                                ButtonBar(
+                                  children: <Widget>[
+                                    FlatButton.icon(
+                                        onPressed: () =>
+                                            controller.photoItens(item, index),
+                                        icon: Icon(FontAwesome.camera),
+                                        label: Text('Adicionar Foto')),
+                                    FlatButton.icon(
+                                        onPressed: () => controller
+                                            .editItemAmbiente(item, index),
+                                        icon: Icon(FontAwesome.pencil),
+                                        label: Text('Editar')),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                );
+              })
+            ],
+          ),
+        ),
+        floatingActionButton: CustomFloatingButtonSave(
+          f: controller.save,
+        ),
       ),
     );
   }

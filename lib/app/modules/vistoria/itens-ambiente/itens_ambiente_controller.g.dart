@@ -69,6 +69,14 @@ mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
     return _$photoItensAsyncAction.run(() => super.photoItens(value, index));
   }
 
+  final _$willPopAsyncAction =
+      AsyncAction('_ItensAmbienteControllerBase.willPop');
+
+  @override
+  Future<bool> willPop() {
+    return _$willPopAsyncAction.run(() => super.willPop());
+  }
+
   final _$_ItensAmbienteControllerBaseActionController =
       ActionController(name: '_ItensAmbienteControllerBase');
 

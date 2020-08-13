@@ -43,4 +43,17 @@ class NovaVistoriaRepository {
       return null;
     }
   }
+
+  Future<bool> deleteImage(String photoUrl) async {
+    try {
+      StorageReference fileReference =
+          await _firebaseStorage.getReferenceFromUrl(photoUrl);
+      await fileReference.delete();
+
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 }
