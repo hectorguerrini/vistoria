@@ -8,6 +8,8 @@ part of 'vistoria_model.dart';
 
 VistoriaModel _$VistoriaModelFromJson(Map<String, dynamic> json) {
   return VistoriaModel(
+    tipoVistoria:
+        _$enumDecodeNullable(_$TipoVistoriaEnumMap, json['tipoVistoria']),
     imovelModel: VistoriaModel._imovelModelFromJson(
         json['imovelModel'] as DocumentReference),
     locatario: VistoriaModel._locatarioFromJson(
@@ -31,6 +33,7 @@ Map<String, dynamic> _$VistoriaModelToJson(VistoriaModel instance) =>
     <String, dynamic>{
       'createUid': instance.createUid,
       'updateUid': instance.updateUid,
+      'tipoVistoria': _$TipoVistoriaEnumMap[instance.tipoVistoria],
       'imovelModel': VistoriaModel._imovelModelToJson(instance.imovelModel),
       'locatario': VistoriaModel._locatarioToJson(instance.locatario),
       'fiador': instance.fiador?.toJson(),
@@ -70,6 +73,11 @@ T _$enumDecodeNullable<T>(
   }
   return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
 }
+
+const _$TipoVistoriaEnumMap = {
+  TipoVistoria.ENTRADA: 'ENTRADA',
+  TipoVistoria.SAIDA: 'SAIDA',
+};
 
 const _$StatusVistoriaEnumMap = {
   StatusVistoria.RASCUNHO: 'RASCUNHO',

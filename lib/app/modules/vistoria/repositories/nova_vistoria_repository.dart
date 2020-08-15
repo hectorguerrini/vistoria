@@ -12,6 +12,11 @@ class NovaVistoriaRepository {
       Firestore.instance.collection('vistorias');
   NovaVistoriaRepository(this._storage);
 
+  Stream<List<VistoriaModel>> getVistorias() {
+    return _vistoriasCollection.snapshots().map((event) => event.documents
+        .map((e) => VistoriaModel.fromJson(e.data)..reference = e.reference));
+  }
+
   Future<DocumentReference> saveVistoria(VistoriaModel vistoriaModel) async {
     if (vistoriaModel.reference != null) {
       await vistoriaModel.reference.updateData(vistoriaModel.toJson());

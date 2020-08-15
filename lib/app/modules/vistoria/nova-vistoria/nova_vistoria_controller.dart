@@ -194,7 +194,7 @@ abstract class _NovaVistoriaControllerBase with Store {
     if (confirmacao) {
       save();
     }
-    Modular.to.pop();
+    Modular.to.pop(true);
 
     return true;
   }
