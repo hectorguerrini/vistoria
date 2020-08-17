@@ -25,6 +25,29 @@ mixin _$ListaVistoriasController on _ListaVistoriasControllerBase, Store {
     });
   }
 
+  final _$selectVistoriaAsyncAction =
+      AsyncAction('_ListaVistoriasControllerBase.selectVistoria');
+
+  @override
+  Future selectVistoria(VistoriaModel vistoriaModel) {
+    return _$selectVistoriaAsyncAction
+        .run(() => super.selectVistoria(vistoriaModel));
+  }
+
+  final _$_ListaVistoriasControllerBaseActionController =
+      ActionController(name: '_ListaVistoriasControllerBase');
+
+  @override
+  dynamic getListaVistoria() {
+    final _$actionInfo = _$_ListaVistoriasControllerBaseActionController
+        .startAction(name: '_ListaVistoriasControllerBase.getListaVistoria');
+    try {
+      return super.getListaVistoria();
+    } finally {
+      _$_ListaVistoriasControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

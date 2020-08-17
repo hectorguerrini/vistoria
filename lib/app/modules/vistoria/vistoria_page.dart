@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:vistoria/app/shared/components/card_menu_widget.dart';
 import 'vistoria_controller.dart';
 
 class VistoriaPage extends StatefulWidget {
@@ -25,46 +26,22 @@ class _VistoriaPageState
         crossAxisCount: 2,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(8),
         children: <Widget>[
-          Container(
-            child: Card(
-                child: ListTile(
-              onTap: () {
-                Modular.to.pushNamed('/vistoria/nova_vistoria');
-              },
-              contentPadding: EdgeInsets.all(8.0),
-              title: Text(
-                "Realizar Vistoria",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, color: Colors.black87),
-              ),
-              subtitle: Icon(
-                FontAwesome5.wpforms,
-                color: Colors.black54,
-                size: 72,
-              ),
-            )),
+          CardMenuWidget(
+            title: 'Cadastro de Vistoria',
+            icon: FontAwesome5.wpforms,
+            onTap: () {
+              Modular.to.pushNamed('/vistoria/nova_vistoria');
+            },
           ),
-          Container(
-            child: Card(
-                child: ListTile(
-              onTap: () {
-                Modular.to.pushNamed('/vistoria/lista_vistorias');
-              },
-              contentPadding: EdgeInsets.all(8.0),
-              title: Text(
-                "Lista de Vistoria",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, color: Colors.black87),
-              ),
-              subtitle: Icon(
-                FontAwesome5.list,
-                color: Colors.black54,
-                size: 72,
-              ),
-            )),
-          )
+          CardMenuWidget(
+            title: 'Vistorias Cadastradas',
+            icon: FontAwesome5.clipboard_list,
+            onTap: () {
+              Modular.to.pushNamed('/vistoria/lista_vistorias');
+            },
+          ),
         ],
       ),
     );

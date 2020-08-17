@@ -16,6 +16,13 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
           Computed<ImovelModel>(() => super.getImovelModel,
               name: '_NovaVistoriaControllerBase.getImovelModel'))
       .value;
+  Computed<TipoVistoria> _$getTipoVistoriaComputed;
+
+  @override
+  TipoVistoria get getTipoVistoria => (_$getTipoVistoriaComputed ??=
+          Computed<TipoVistoria>(() => super.getTipoVistoria,
+              name: '_NovaVistoriaControllerBase.getTipoVistoria'))
+      .value;
   Computed<ClienteModel> _$getLocatarioComputed;
 
   @override
@@ -30,6 +37,13 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
       (_$getListAmbientesComputed ??= Computed<List<VistoriaAmbienteModel>>(
               () => super.getListAmbientes,
               name: '_NovaVistoriaControllerBase.getListAmbientes'))
+          .value;
+  Computed<bool> _$isCompleteComputed;
+
+  @override
+  bool get isComplete =>
+      (_$isCompleteComputed ??= Computed<bool>(() => super.isComplete,
+              name: '_NovaVistoriaControllerBase.isComplete'))
           .value;
 
   final _$currentStepAtom =
@@ -173,6 +187,17 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
   }
 
   @override
+  dynamic setTipoVistoria(TipoVistoria value) {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.setTipoVistoria');
+    try {
+      return super.setTipoVistoria(value);
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic selectImovel() {
     final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
         .startAction(name: '_NovaVistoriaControllerBase.selectImovel');
@@ -258,8 +283,10 @@ listAmbientes: ${listAmbientes},
 obsCtrl: ${obsCtrl},
 descCtrl: ${descCtrl},
 getImovelModel: ${getImovelModel},
+getTipoVistoria: ${getTipoVistoria},
 getLocatario: ${getLocatario},
-getListAmbientes: ${getListAmbientes}
+getListAmbientes: ${getListAmbientes},
+isComplete: ${isComplete}
     ''';
   }
 }

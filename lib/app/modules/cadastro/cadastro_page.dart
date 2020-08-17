@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:vistoria/app/shared/components/card_menu_widget.dart';
 import 'cadastro_controller.dart';
 
 class CadastroPage extends StatefulWidget {
@@ -26,83 +29,34 @@ class _CadastroPageState
         mainAxisSpacing: 10,
         padding: const EdgeInsets.all(10),
         children: <Widget>[
-          Container(
-            child: Card(
-                child: ListTile(
-              onTap: () {
-                Modular.to.pushNamed('/cadastro/cliente');
-              },
-              contentPadding: EdgeInsets.all(8.0),
-              title: Text(
-                "Cadastro de Cliente",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, color: Colors.black87),
-              ),
-              subtitle: Icon(
-                Icons.person,
-                color: Colors.black54,
-                size: 72,
-              ),
-            )),
+          CardMenuWidget(
+            title: 'Cadastro de Cliente',
+            icon: Icons.person,
+            onTap: () {
+              Modular.to.pushNamed('/cadastro/cliente');
+            },
           ),
-          Container(
-            child: Card(
-                child: ListTile(
-              onTap: () {
-                Modular.to.pushNamed('/cadastro/imovel');
-              },
-              contentPadding: EdgeInsets.all(8.0),
-              title: Text(
-                "Cadastro de Imovel",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, color: Colors.black87),
-              ),
-              subtitle: Icon(
-                Icons.home,
-                color: Colors.black54,
-                size: 72,
-              ),
-            )),
+          CardMenuWidget(
+            title: 'Cadastro de Imóvel',
+            icon: FontAwesome5.house_user,
+            onTap: () {
+              Modular.to.pushNamed('/cadastro/imovel');
+            },
           ),
-          Container(
-            child: Card(
-                child: ListTile(
-              onTap: () {
-                Modular.to
-                    .pushNamed('/cadastro/lista_clientes', arguments: false);
-              },
-              contentPadding: EdgeInsets.all(8.0),
-              title: Text(
-                "Clientes Cadastrados",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, color: Colors.black87),
-              ),
-              subtitle: Icon(
-                Icons.group,
-                color: Colors.black54,
-                size: 72,
-              ),
-            )),
+          CardMenuWidget(
+            title: 'Clientes Cadastrados',
+            icon: FontAwesome5.users,
+            onTap: () {
+              Modular.to
+                  .pushNamed('/cadastro/lista_clientes', arguments: false);
+            },
           ),
-          Container(
-            child: Card(
-                child: ListTile(
-              onTap: () {
-                Modular.to
-                    .pushNamed('/cadastro/lista_imoveis', arguments: false);
-              },
-              contentPadding: EdgeInsets.all(8.0),
-              title: Text(
-                "Imoveis Cadastrados",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, color: Colors.black87),
-              ),
-              subtitle: Icon(
-                Icons.list,
-                color: Colors.black54,
-                size: 72,
-              ),
-            )),
+          CardMenuWidget(
+            title: 'Imoveis Cadastrados',
+            icon: FontAwesome5.home,
+            onTap: () {
+              Modular.to.pushNamed('/cadastro/lista_imoveis', arguments: false);
+            },
           ),
         ],
       ),

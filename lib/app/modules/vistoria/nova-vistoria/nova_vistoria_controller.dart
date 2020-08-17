@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/enumeration/status_vistoria_enum.dart';
 import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
 import 'package:vistoria/app/enumeration/ambientes_enum.dart';
+import 'package:vistoria/app/enumeration/tipo_vistoria_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_ambiente_model.dart';
@@ -24,12 +25,10 @@ abstract class _NovaVistoriaControllerBase with Store {
   int currentStep;
 
   @observable
-  VistoriaModel vistoriaModel =
-      new VistoriaModel(statusVistoria: StatusVistoria.RASCUNHO);
+  VistoriaModel vistoriaModel;
 
   @observable
-  ObservableList<VistoriaAmbienteModel> listAmbientes =
-      new ObservableList<VistoriaAmbienteModel>();
+  ObservableList<VistoriaAmbienteModel> listAmbientes;
   @observable
   TextEditingController obsCtrl = new TextEditingController();
   @observable
@@ -37,6 +36,10 @@ abstract class _NovaVistoriaControllerBase with Store {
 
   _NovaVistoriaControllerBase(this._repository) {
     currentStep = 0;
+    vistoriaModel = Modular.args.data ??
+        new VistoriaModel(statusVistoria: StatusVistoria.RASCUNHO);
+    listAmbientes = vistoriaModel.listAmbientes?.asObservable() ??
+        new ObservableList<VistoriaAmbienteModel>();
   }
 
   @action
@@ -62,6 +65,13 @@ abstract class _NovaVistoriaControllerBase with Store {
 
   @computed
   ImovelModel get getImovelModel => vistoriaModel.imovelModel;
+
+  @action
+  setTipoVistoria(TipoVistoria value) =>
+      vistoriaModel = vistoriaModel.copyWith(tipoVistoria: value);
+
+  @computed
+  TipoVistoria get getTipoVistoria => vistoriaModel.tipoVistoria;
 
   @action
   selectImovel() {
@@ -131,9 +141,9 @@ abstract class _NovaVistoriaControllerBase with Store {
     currentStep = step;
     if (step >= 2) {
       obsCtrl = new TextEditingController(
-          text: listAmbientes[currentStep - 2].observacao);
+          text: listAmbientes[currentStep - 3].observacao);
       descCtrl = new TextEditingController(
-          text: listAmbientes[currentStep - 2].descricao);
+          text: listAmbientes[currentStep - 3].descricao);
     }
   }
 
@@ -148,9 +158,22 @@ abstract class _NovaVistoriaControllerBase with Store {
     return StepState.indexed;
   }
 
+  @computed
+  bool get isComplete =>
+      getImovelModel != null &&
+      getLocatario != null &&
+      listAmbientes.any((element) =>
+          element.descricao != null &&
+          element.observacao != null &&
+          element.listItens.length > 0);
+
   @action
   save() async {
     try {
+      if (isComplete)
+        vistoriaModel =
+            vistoriaModel.copyWith(statusVistoria: StatusVistoria.FINALIZADO);
+
       vistoriaModel =
           vistoriaModel.copyWith(listAmbientes: listAmbientes.toList());
       vistoriaModel.createUid = _authController.user.uid;

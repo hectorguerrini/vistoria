@@ -73,9 +73,12 @@ class _ItensAmbientePageState
                                         if (controller.listItens[index].photoUrl
                                                     .length ==
                                                 0 &&
-                                            controller.listItens[index]
-                                                    .fileImages.length ==
-                                                0) {
+                                            (controller.listItens[index]
+                                                        .fileImages ==
+                                                    null ||
+                                                controller.listItens[index]
+                                                        .fileImages?.length ==
+                                                    0)) {
                                           return Center(
                                             child: Icon(Icons.camera),
                                           );

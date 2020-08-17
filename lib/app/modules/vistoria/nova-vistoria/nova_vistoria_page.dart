@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/octicons_icons.dart';
 import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 import 'package:vistoria/app/enumeration/ambientes_enum.dart';
 import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
+import 'package:vistoria/app/enumeration/tipo_vistoria_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/nova-vistoria/nova_vistoria_controller.dart';
+import 'package:vistoria/app/shared/components/card_menu_widget.dart';
 import 'package:vistoria/app/shared/components/custom_floating_button_save.dart';
 
 class NovaVistoriaPage extends StatefulWidget {
@@ -71,8 +74,76 @@ class _NovaVistoriaPageState
     getListStep() {
       List<Step> listSteps = [
         Step(
-          state: controller.getStepState(0, controller.getImovelModel),
-          isActive: controller.currentStep >= 0,
+            state: controller.getStepState(0, controller.getTipoVistoria),
+            isActive: controller.currentStep >= 0,
+            title: Text("Tipo da Vistoria"),
+            content: GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    controller.setTipoVistoria(TipoVistoria.ENTRADA);
+                  },
+                  child: Card(
+                      shape: controller.getTipoVistoria == TipoVistoria.ENTRADA
+                          ? RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0),
+                              side: BorderSide(color: Colors.green[700]))
+                          : null,
+                      child: Center(
+                        child: ListTile(
+                          title: Icon(Octicons.sign_in,
+                              color: controller.getTipoVistoria ==
+                                      TipoVistoria.ENTRADA
+                                  ? Colors.green[700]
+                                  : null),
+                          subtitle: Text(
+                            'ENTRADA',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: controller.getTipoVistoria ==
+                                        TipoVistoria.ENTRADA
+                                    ? Colors.green[700]
+                                    : null),
+                          ),
+                        ),
+                      )),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    controller.setTipoVistoria(TipoVistoria.SAIDA);
+                  },
+                  child: Card(
+                      shape: controller.getTipoVistoria == TipoVistoria.SAIDA
+                          ? RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0),
+                              side: BorderSide(color: Colors.green[700]))
+                          : null,
+                      child: Center(
+                        child: ListTile(
+                          title: Icon(Octicons.sign_out,
+                              color: controller.getTipoVistoria ==
+                                      TipoVistoria.SAIDA
+                                  ? Colors.green[700]
+                                  : null),
+                          subtitle: Text(
+                            'SAIDA',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: controller.getTipoVistoria ==
+                                        TipoVistoria.SAIDA
+                                    ? Colors.green[700]
+                                    : null),
+                          ),
+                        ),
+                      )),
+                ),
+              ],
+            )),
+        Step(
+          state: controller.getStepState(1, controller.getImovelModel),
+          isActive: controller.currentStep >= 1,
           title: Text("Selecionar Imovel"),
           content: Container(
             alignment: Alignment.centerLeft,
@@ -91,12 +162,12 @@ class _NovaVistoriaPageState
                 children: <Widget>[
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(imovel.tipoImovel.toShortString()),
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text.rich(TextSpan(children: [
                       TextSpan(text: imovel.enderecoModel.logradouro),
                       TextSpan(text: ' Nº ${imovel.enderecoModel.numero}\n'),
@@ -107,7 +178,7 @@ class _NovaVistoriaPageState
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(16.0),
                     child:
                         Text.rich(TextSpan(text: "Proprietario:\n", children: [
                       TextSpan(text: "${imovel.proprietario.nomeCompleto}\n"),
@@ -121,8 +192,8 @@ class _NovaVistoriaPageState
           ),
         ),
         Step(
-          state: controller.getStepState(1, controller.getLocatario),
-          isActive: controller.currentStep >= 1,
+          state: controller.getStepState(2, controller.getLocatario),
+          isActive: controller.currentStep >= 2,
           title: Text("Selecionar Locatario"),
           content: Observer(builder: (_) {
             return Card(child: stepLocatario());
@@ -134,8 +205,8 @@ class _NovaVistoriaPageState
         controller.vistoriaModel.listAmbientes.asMap().forEach((index, e) {
           Step step = new Step(
               subtitle: Text(e.descricao ?? 'Sem descrição'),
-              state: controller.getStepState(index + 2, e.observacao),
-              isActive: controller.currentStep >= index + 2,
+              state: controller.getStepState(index + 3, e.observacao),
+              isActive: controller.currentStep >= index + 3,
               title: Text("${e.ambiente.toShortString()}"),
               content: Card(
                 child: Column(
@@ -204,6 +275,21 @@ class _NovaVistoriaPageState
           listSteps.add(step);
         });
       }
+      if (controller.isComplete) {
+        listSteps.add(Step(
+            state: StepState.complete,
+            isActive:
+                controller.currentStep == controller.listAmbientes.length + 3,
+            title: Text('Finalizar Vistoria'),
+            content: GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              children: [
+                CardMenuWidget(
+                    title: 'Finalizar Vistoria', icon: FontAwesome5.check)
+              ],
+            )));
+      }
       return listSteps;
     }
 
@@ -214,30 +300,54 @@ class _NovaVistoriaPageState
           title: Text(widget.title),
         ),
         body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 24),
             child: Observer(builder: (_) {
               return Stepper(
-                  key: Key(Random.secure().nextDouble().toString()),
-                  onStepContinue: () {
-                    // setState(() {
-                    controller.setStep(controller.currentStep + 1);
-                    // });
-                  },
-                  onStepCancel: () {
-                    // setState(() {
-                    controller.setStep(controller.currentStep - 1);
-                    // });
-                  },
-                  onStepTapped: (step) {
-                    // setState(() {
-                    controller.setStep(step);
-                    // });
-                  },
-                  currentStep: controller.currentStep,
-                  type: StepperType.vertical,
-                  steps: getListStep());
+                key: Key(Random.secure().nextDouble().toString()),
+                onStepContinue: () {
+                  // setState(() {
+                  controller.setStep(controller.currentStep + 1);
+                  // });
+                },
+                onStepCancel: () {
+                  // setState(() {
+                  controller.setStep(controller.currentStep - 1);
+                  // });
+                },
+                onStepTapped: (step) {
+                  // setState(() {
+                  controller.setStep(step);
+                  // });
+                },
+                currentStep: controller.currentStep,
+                type: StepperType.vertical,
+                steps: getListStep(),
+                controlsBuilder: (context, {onStepCancel, onStepContinue}) {
+                  return ButtonBar(
+                    alignment: MainAxisAlignment.center,
+                    children: [
+                      if (controller.currentStep > 0)
+                        FlatButton(
+                          child: Text('ANTERIOR'),
+                          onPressed: onStepCancel,
+                        ),
+                      if (controller.currentStep !=
+                          controller.listAmbientes.length + 3)
+                        RaisedButton(
+                          color: Colors.green,
+                          child: Text('PROXIMO'),
+                          onPressed: onStepContinue,
+                        ),
+                    ],
+                  );
+                },
+              );
             })),
-        floatingActionButton: CustomFloatingButtonSave(f: controller.save),
+        floatingActionButton: Observer(builder: (_) {
+          return controller.currentStep != controller.listAmbientes.length + 3
+              ? CustomFloatingButtonSave(f: controller.save)
+              : Container();
+        }),
       ),
     );
   }

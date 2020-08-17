@@ -27,6 +27,7 @@ abstract class _ItensAmbienteControllerBase with Store {
   _ItensAmbienteControllerBase() {
     if (Modular.args.data != null) {
       List<ItensAmbienteModel> list = Modular.args.data;
+      list = list.map((e) => e.copyWith(fileImages: [])).toList();
       listItens = list.asObservable();
     }
   }

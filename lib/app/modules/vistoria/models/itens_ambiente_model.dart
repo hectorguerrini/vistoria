@@ -13,7 +13,7 @@ class ItensAmbienteModel {
   final String cor;
   final String observacao;
   final List<String> photoUrl;
-  @JsonKey(ignore: true)
+  @JsonKey(ignore: true, defaultValue: [])
   final List<File> fileImages;
   ItensAmbienteModel(
       {this.item,
@@ -24,7 +24,7 @@ class ItensAmbienteModel {
       this.photoUrl,
       this.fileImages});
 
-  copyWith(
+  ItensAmbienteModel copyWith(
       {ItensAmbiente item,
       int quantidade,
       EstadoItens estadoItens,

@@ -60,7 +60,7 @@ class _ListaVistoriasPageState
               }
 
               return ListView.separated(
-                padding: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(top: 16),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   VistoriaModel item = list[index];
@@ -75,9 +75,7 @@ class _ListaVistoriasPageState
                   }
                   return ListTile(
                     onTap: () async {
-                      // if (widget.modoSelecao) {
-                      //   controller.selecionarImovel(item);
-                      // }
+                      controller.selectVistoria(item);
                     },
                     leading: Icon(
                       icone,
