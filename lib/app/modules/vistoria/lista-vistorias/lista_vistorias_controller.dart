@@ -8,17 +8,22 @@ class ListaVistoriasController = _ListaVistoriasControllerBase
 
 abstract class _ListaVistoriasControllerBase with Store {
   final NovaVistoriaRepository _repository;
+  
 
   @observable
-  ObservableStream<List<VistoriaModel>> listVistoria;
+  ObservableFuture<List<VistoriaModel>> listVistoria;
 
   _ListaVistoriasControllerBase(this._repository) {
-    if (listVistoria != null) {
+    if (listVistoria == null) {
       getListaVistoria();
     }
   }
 
   getListaVistoria() {
     listVistoria = _repository.getVistorias().asObservable();
+  }
+
+  selectVistoria(VistoriaModel vistoriaModel) {
+    vistoriaModel.locatario.reference.
   }
 }

@@ -23,8 +23,8 @@ class _VistoriaPageState
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
         padding: const EdgeInsets.all(10),
         children: <Widget>[
           Container(
@@ -37,10 +37,29 @@ class _VistoriaPageState
               title: Text(
                 "Realizar Vistoria",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, color: Colors.black87),
+                style: TextStyle(fontSize: 24, color: Colors.black87),
               ),
               subtitle: Icon(
                 FontAwesome5.wpforms,
+                color: Colors.black54,
+                size: 72,
+              ),
+            )),
+          ),
+          Container(
+            child: Card(
+                child: ListTile(
+              onTap: () {
+                Modular.to.pushNamed('/vistoria/lista_vistorias');
+              },
+              contentPadding: EdgeInsets.all(8.0),
+              title: Text(
+                "Lista de Vistoria",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 24, color: Colors.black87),
+              ),
+              subtitle: Icon(
+                FontAwesome5.list,
                 color: Colors.black54,
                 size: 72,
               ),
