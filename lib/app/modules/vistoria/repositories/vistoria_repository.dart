@@ -2,30 +2,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_model.dart';
 import 'package:vistoria/app/shared/interfaces/local_storage_interface.dart';
 
-class NovaVistoriaRepository {
+class VistoriaRepository {
   final ILocalStorage _storage;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   final CollectionReference _vistoriasCollection =
       Firestore.instance.collection('vistorias');
-  NovaVistoriaRepository(this._storage);
-
-  Future<List<VistoriaModel>> getVistorias() async {
-    var lista = await _vistoriasCollection.getDocuments().then((value) => value
-        .documents
-        .map((e) => VistoriaModel.fromJson(e.data)..reference = e.reference)
-        .toList());
-    var res = await Future.wait(lista.map((e) async {
-      e = e.copyWith(
-          imovelModel: await e.imovelModel.reference.get().then((value) =>
-              ImovelModel.fromJson(value.data)..reference = value.reference));
-      return e;
-    }));
-    return res;
-  }
+  VistoriaRepository(this._storage);
 
   Future<DocumentReference> saveVistoria(VistoriaModel vistoriaModel) async {
     if (vistoriaModel.reference != null) {

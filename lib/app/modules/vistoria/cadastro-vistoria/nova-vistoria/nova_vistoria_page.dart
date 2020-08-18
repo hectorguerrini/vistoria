@@ -11,7 +11,7 @@ import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
 import 'package:vistoria/app/enumeration/tipo_vistoria_enum.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
-import 'package:vistoria/app/modules/vistoria/nova-vistoria/nova_vistoria_controller.dart';
+import 'package:vistoria/app/modules/vistoria/cadastro-vistoria/nova-vistoria/nova_vistoria_controller.dart';
 import 'package:vistoria/app/shared/components/card_menu_widget.dart';
 import 'package:vistoria/app/shared/components/custom_floating_button_save.dart';
 
@@ -286,7 +286,10 @@ class _NovaVistoriaPageState
               shrinkWrap: true,
               children: [
                 CardMenuWidget(
-                    title: 'Finalizar Vistoria', icon: FontAwesome5.check)
+                  title: 'Finalizar Vistoria',
+                  icon: FontAwesome5.check,
+                  onTap: controller.save,
+                )
               ],
             )));
       }

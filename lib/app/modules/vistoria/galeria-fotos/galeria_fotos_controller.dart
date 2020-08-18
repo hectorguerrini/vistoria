@@ -5,14 +5,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:vistoria/app/modules/vistoria/models/itens_ambiente_model.dart';
-import 'package:vistoria/app/modules/vistoria/repositories/nova_vistoria_repository.dart';
+import 'package:vistoria/app/modules/vistoria/repositories/vistoria_repository.dart';
 part 'galeria_fotos_controller.g.dart';
 
 class GaleriaFotosController = _GaleriaFotosControllerBase
     with _$GaleriaFotosController;
 
 abstract class _GaleriaFotosControllerBase with Store {
-  final NovaVistoriaRepository _repository = Modular.get();
+  final VistoriaRepository _repository = Modular.get();
 
   @observable
   ItensAmbienteModel itens;

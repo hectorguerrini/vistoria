@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:vistoria/app/enumeration/estado_itens_enum.dart';
 import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
-import 'package:vistoria/app/modules/vistoria/itens-ambiente/itens_ambiente_controller.dart';
+import 'package:vistoria/app/modules/vistoria/cadastro-vistoria/itens-ambiente/itens_ambiente_controller.dart';
 
 class CadastroItensAmbienteDialog extends StatefulWidget {
   final String title;

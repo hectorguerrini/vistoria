@@ -32,14 +32,14 @@ class _VistoriaPageState
             title: 'Cadastro de Vistoria',
             icon: FontAwesome5.wpforms,
             onTap: () {
-              Modular.to.pushNamed('/vistoria/nova_vistoria');
+              Modular.to.pushNamed('/vistoria/cadastro');
             },
           ),
           CardMenuWidget(
             title: 'Vistorias Cadastradas',
             icon: FontAwesome5.clipboard_list,
             onTap: () {
-              Modular.to.pushNamed('/vistoria/lista_vistorias');
+              Modular.to.pushNamed('/vistoria/lista');
             },
           ),
         ],

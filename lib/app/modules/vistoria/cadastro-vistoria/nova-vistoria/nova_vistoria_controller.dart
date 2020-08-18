@@ -9,7 +9,7 @@ import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_ambiente_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_model.dart';
-import 'package:vistoria/app/modules/vistoria/repositories/nova_vistoria_repository.dart';
+import 'package:vistoria/app/modules/vistoria/repositories/vistoria_repository.dart';
 import 'package:vistoria/app/shared/auth/auth_controller.dart';
 import 'package:vistoria/app/shared/components/confirmation_dialog.dart';
 import 'package:vistoria/app/shared/components/confirmation_saved_dialog.dart';
@@ -20,7 +20,7 @@ class NovaVistoriaController = _NovaVistoriaControllerBase
 
 abstract class _NovaVistoriaControllerBase with Store {
   final AuthController _authController = Modular.get();
-  final NovaVistoriaRepository _repository;
+  final VistoriaRepository _repository;
   @observable
   int currentStep;
 
@@ -116,7 +116,7 @@ abstract class _NovaVistoriaControllerBase with Store {
   @action
   addItensAmbientes(int index, {VistoriaAmbienteModel item}) {
     Modular.to
-        .pushNamed('/vistoria/itens_ambiente',
+        .pushNamed('/vistoria/cadastro/itens_ambiente',
             arguments: listAmbientes[index].listItens ?? null)
         .then((value) {
       if (value != null) {
@@ -139,7 +139,7 @@ abstract class _NovaVistoriaControllerBase with Store {
   @action
   setStep(int step) {
     currentStep = step;
-    if (step >= 2) {
+    if (step >= 3 && currentStep - 3 < listAmbientes.length) {
       obsCtrl = new TextEditingController(
           text: listAmbientes[currentStep - 3].observacao);
       descCtrl = new TextEditingController(
@@ -189,21 +189,24 @@ abstract class _NovaVistoriaControllerBase with Store {
         await Future.wait(vistoriaModel.listAmbientes.map((e) async {
           e.listItens.forEach((element) async {
             var lista = element.fileImages;
-            int saveds = element.photoUrl.length;
-            lista.asMap().forEach((n, el) async {
-              String uri = await _repository.uploadImages(
-                  el,
-                  vistoriaModel.reference.documentID,
-                  vistoriaModel.listAmbientes.indexOf(e).toString() +
-                      e.ambiente.toShortString(),
-                  element.item.toShortString(),
-                  n + saveds);
-              element.photoUrl.add(uri);
-              element.fileImages.remove(el);
-            });
+            if (lista != null) {
+              int saveds = element.photoUrl.length;
+              lista.asMap().forEach((n, el) async {
+                String uri = await _repository.uploadImages(
+                    el,
+                    vistoriaModel.reference.documentID,
+                    vistoriaModel.listAmbientes.indexOf(e).toString() +
+                        e.ambiente.toShortString(),
+                    element.item.toShortString(),
+                    n + saveds);
+                element.photoUrl.add(uri);
+                element.fileImages.remove(el);
+              });
+            }
           });
         }));
         vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
+        Modular.to.pop(true);
       }
     } catch (e) {
       print(e);
@@ -216,8 +219,9 @@ abstract class _NovaVistoriaControllerBase with Store {
         .showDialog(builder: (context) => ConfirmationSavedDialog());
     if (confirmacao) {
       save();
+    } else {
+      Modular.to.pop(false);
     }
-    Modular.to.pop(true);
 
     return true;
   }

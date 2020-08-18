@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/enumeration/estado_itens_enum.dart';
 import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
-import 'package:vistoria/app/modules/vistoria/components/cadastro_itens_ambiente_dialog.dart';
+import 'package:vistoria/app/modules/vistoria/cadastro-vistoria/components/cadastro_itens_ambiente_dialog.dart';
 import 'package:vistoria/app/modules/vistoria/models/itens_ambiente_model.dart';
 import 'package:vistoria/app/shared/components/confirmation_saved_dialog.dart';
 part 'itens_ambiente_controller.g.dart';
