@@ -24,6 +24,21 @@ mixin _$GaleriaFotosController on _GaleriaFotosControllerBase, Store {
     });
   }
 
+  final _$listaAtom = Atom(name: '_GaleriaFotosControllerBase.lista');
+
+  @override
+  ObservableList<dynamic> get lista {
+    _$listaAtom.reportRead();
+    return super.lista;
+  }
+
+  @override
+  set lista(ObservableList<dynamic> value) {
+    _$listaAtom.reportWrite(value, super.lista, () {
+      super.lista = value;
+    });
+  }
+
   final _$deleteImageAsyncAction =
       AsyncAction('_GaleriaFotosControllerBase.deleteImage');
 
@@ -43,7 +58,8 @@ mixin _$GaleriaFotosController on _GaleriaFotosControllerBase, Store {
   @override
   String toString() {
     return '''
-itens: ${itens}
+itens: ${itens},
+lista: ${lista}
     ''';
   }
 }

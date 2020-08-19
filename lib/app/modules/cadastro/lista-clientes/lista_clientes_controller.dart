@@ -31,4 +31,9 @@ abstract class _ListaClientesControllerBase with Store {
   selecionarCliente(ClienteModel clienteModel) async {
     Modular.to.pop(clienteModel);
   }
+
+  @action
+  editarCliente(ClienteModel clienteModel) async {
+    Modular.to.pushNamed('/cadastro/cliente', arguments: clienteModel);
+  }
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'detalhe_controller.dart';
+part of 'pdf_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,8 @@ part of 'detalhe_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$DetalheController on _DetalheControllerBase, Store {
-  final _$vistoriaModelAtom =
-      Atom(name: '_DetalheControllerBase.vistoriaModel');
+mixin _$PdfController on _PdfControllerBase, Store {
+  final _$vistoriaModelAtom = Atom(name: '_PdfControllerBase.vistoriaModel');
 
   @override
   VistoriaModel get vistoriaModel {
@@ -25,18 +24,12 @@ mixin _$DetalheController on _DetalheControllerBase, Store {
     });
   }
 
-  final _$_DetalheControllerBaseActionController =
-      ActionController(name: '_DetalheControllerBase');
+  final _$generatePdfAsyncAction =
+      AsyncAction('_PdfControllerBase.generatePdf');
 
   @override
-  dynamic verFotos(VistoriaAmbienteModel item) {
-    final _$actionInfo = _$_DetalheControllerBaseActionController.startAction(
-        name: '_DetalheControllerBase.verFotos');
-    try {
-      return super.verFotos(item);
-    } finally {
-      _$_DetalheControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future<Uint8List> generatePdf(PdfPageFormat format) {
+    return _$generatePdfAsyncAction.run(() => super.generatePdf(format));
   }
 
   @override

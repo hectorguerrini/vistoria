@@ -33,8 +33,11 @@ class _GaleriaFotosPageState
                         if (e is File)
                           Image.file(e, width: size.width, fit: BoxFit.cover),
                         if (e is String)
-                          Image.network(e,
-                              width: size.width, fit: BoxFit.cover),
+                          Image(
+                            image: NetworkImage(e),
+                            fit: BoxFit.cover,
+                            width: size.width,
+                          ),
                         if (controller.itens != null)
                           Container(
                               margin: EdgeInsets.only(top: 20),

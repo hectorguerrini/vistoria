@@ -76,5 +76,5 @@ const _$EstadoItensEnumMap = {
   EstadoItens.NOVO: 'NOVO',
   EstadoItens.BOM: 'BOM',
   EstadoItens.REGULAR: 'REGULAR',
-  EstadoItens.MAU: 'MAU',
+  EstadoItens.RUIM: 'RUIM',
 };

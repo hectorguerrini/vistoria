@@ -33,6 +33,7 @@ class _CadastroClientePageState
                 child: TextFormField(
                   onChanged: controller.setNomeCompleto,
                   keyboardType: TextInputType.text,
+                  initialValue: controller.getNomeCompleto,
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: 'Nome Completo',
@@ -43,6 +44,7 @@ class _CadastroClientePageState
               Card(
                 child: TextFormField(
                   onChanged: controller.setEmail,
+                  initialValue: controller.getEmail,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       labelText: 'Email', border: OutlineInputBorder()),
@@ -79,6 +81,7 @@ class _CadastroClientePageState
               Card(
                 child: TextFormField(
                   onChanged: controller.setTelefone,
+                  initialValue: controller.getTelefone,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       labelText: 'Telefone', border: OutlineInputBorder()),
@@ -102,6 +105,7 @@ class _CadastroClientePageState
               Card(
                 child: TextFormField(
                   onChanged: controller.setRg,
+                  initialValue: controller.getRg,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: 'RG', border: OutlineInputBorder()),

@@ -7,6 +7,7 @@ import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
 import 'package:vistoria/app/shared/auth/auth_controller.dart';
 import 'package:vistoria/app/shared/components/message_dialog.dart';
+import 'package:intl/intl.dart';
 part 'cadastro_cliente_controller.g.dart';
 
 class CadastroClienteController = _CadastroClienteControllerBase
@@ -27,7 +28,14 @@ abstract class _CadastroClienteControllerBase with Store {
   ClienteModel clienteModel;
 
   _CadastroClienteControllerBase(this._repository) {
-    clienteModel = new ClienteModel(isWhatsapp: false);
+    if (Modular.args.data != null) {
+      clienteModel = Modular.args.data;
+      celularCtrl.text = clienteModel.celular;
+      cpfCtrl.text = clienteModel.cpf;
+      dtCtrl.text = DateFormat('dd/MM/yyyy').format(clienteModel.dtNascimento);
+    } else {
+      clienteModel = new ClienteModel(isWhatsapp: false);
+    }
   }
   @action
   setNomeCompleto(String value) =>
@@ -65,6 +73,21 @@ abstract class _CadastroClienteControllerBase with Store {
 
   @computed
   bool get isWhatsapp => clienteModel.isWhatsapp;
+
+  @computed
+  String get getNomeCompleto => clienteModel.nomeCompleto;
+
+  @computed
+  String get getEmail => clienteModel.email;
+
+  @computed
+  String get getTelefone => clienteModel.telefone;
+
+  @computed
+  String get getCpf => clienteModel.cpf;
+
+  @computed
+  String get getRg => clienteModel.rg;
 
   @action
   addEndereco() {

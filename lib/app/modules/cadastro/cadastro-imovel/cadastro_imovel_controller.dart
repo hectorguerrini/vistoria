@@ -23,20 +23,10 @@ abstract class _CadastroImovelControllerBase with Store {
   @observable
   AmbienteModel ambienteModel = new AmbienteModel(quantidade: 0);
   @observable
-  ImovelModel imovelModel = new ImovelModel(listAmbientes: []);
+  ImovelModel imovelModel;
 
   _CadastroImovelControllerBase(this._repository) {
-    // List<AmbienteModel> _lista = [];
-    // _lista.add(new AmbienteModel(ambiente: Ambientes.SALA, quantidade: 1));
-    // _lista.add(new AmbienteModel(ambiente: Ambientes.BANHEIROS, quantidade: 2));
-    // _lista.add(new AmbienteModel(ambiente: Ambientes.COZINHA, quantidade: 1));
-    // _lista.add(new AmbienteModel(ambiente: Ambientes.QUARTOS, quantidade: 3));
-    // _lista.add(new AmbienteModel(ambiente: Ambientes.SUITES, quantidade: 2));
-    // _lista.add(new AmbienteModel(ambiente: Ambientes.VARANDA, quantidade: 1));
-    // _lista.add(
-    //     new AmbienteModel(ambiente: Ambientes.AREA_SERVICO, quantidade: 1));
-    // _lista.add(
-    //     new AmbienteModel(ambiente: Ambientes.CHURRASQUEIRA, quantidade: 1));
+    imovelModel = Modular.args.data ?? new ImovelModel(listAmbientes: []);
   }
   @action
   selectProprietario() {

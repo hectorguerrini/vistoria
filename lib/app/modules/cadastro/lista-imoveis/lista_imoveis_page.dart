@@ -68,6 +68,8 @@ class _ListaImoveisPageState
                       onTap: () async {
                         if (widget.modoSelecao) {
                           controller.selecionarImovel(item);
+                        } else {
+                          controller.editarImovel(item);
                         }
                       },
                       title: Text.rich(TextSpan(children: [
@@ -78,6 +80,8 @@ class _ListaImoveisPageState
                                 "${item.enderecoModel.logradouro} ${item.enderecoModel.numero}")
                       ])),
                       subtitle: Text.rich(TextSpan(children: [
+                        if (item.enderecoModel.complemento != '')
+                          TextSpan(text: item.enderecoModel.complemento + '\n'),
                         TextSpan(text: "Cep: "),
                         TextSpan(text: item.enderecoModel.cep)
                       ])),

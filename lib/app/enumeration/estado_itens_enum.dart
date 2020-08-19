@@ -1,4 +1,4 @@
-enum EstadoItens { NOVO, BOM, REGULAR, MAU }
+enum EstadoItens { NOVO, BOM, REGULAR, RUIM }
 
 extension ParseToString on EstadoItens {
   String toShortString() {

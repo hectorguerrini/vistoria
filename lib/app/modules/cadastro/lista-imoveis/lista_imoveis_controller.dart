@@ -34,4 +34,12 @@ abstract class _ListaImoveisControllerBase with Store {
             .getCliente(imovelModel.proprietario.reference));
     Modular.to.pop(imovelModel);
   }
+
+  @action
+  editarImovel(ImovelModel imovelModel) async {
+    imovelModel = imovelModel.copyWith(
+        proprietario: await _clienteRepository
+            .getCliente(imovelModel.proprietario.reference));
+    Modular.to.pushNamed('/cadastro/imovel', arguments: imovelModel);
+  }
 }

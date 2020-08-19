@@ -8,8 +8,13 @@ class CadastroImovelRepository {
       Firestore.instance.collection('imoveis');
   CadastroImovelRepository(this._storage);
 
-  Future saveImovel(ImovelModel imovelModel) async {
-    await _imoveisCollection.add(imovelModel.toJson());
+  Future<DocumentReference> saveImovel(ImovelModel imovelModel) async {
+    if (imovelModel.reference != null) {
+      await imovelModel.reference.updateData(imovelModel.toJson());
+      return imovelModel.reference;
+    } else {
+      return await _imoveisCollection.add(imovelModel.toJson());
+    }
   }
 
   Stream<List<ImovelModel>> getListImoveis() {

@@ -70,6 +70,8 @@ class _ListaClientesPageState
                       onTap: () async {
                         if (widget.modoSelecao) {
                           controller.selecionarCliente(item);
+                        } else {
+                          controller.editarCliente(item);
                         }
                       },
                       title: Text(item.nomeCompleto),

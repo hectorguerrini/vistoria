@@ -34,6 +34,15 @@ mixin _$ListaClientesController on _ListaClientesControllerBase, Store {
         .run(() => super.selecionarCliente(clienteModel));
   }
 
+  final _$editarClienteAsyncAction =
+      AsyncAction('_ListaClientesControllerBase.editarCliente');
+
+  @override
+  Future editarCliente(ClienteModel clienteModel) {
+    return _$editarClienteAsyncAction
+        .run(() => super.editarCliente(clienteModel));
+  }
+
   final _$_ListaClientesControllerBaseActionController =
       ActionController(name: '_ListaClientesControllerBase');
 

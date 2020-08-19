@@ -16,6 +16,40 @@ mixin _$CadastroClienteController on _CadastroClienteControllerBase, Store {
       (_$isWhatsappComputed ??= Computed<bool>(() => super.isWhatsapp,
               name: '_CadastroClienteControllerBase.isWhatsapp'))
           .value;
+  Computed<String> _$getNomeCompletoComputed;
+
+  @override
+  String get getNomeCompleto => (_$getNomeCompletoComputed ??= Computed<String>(
+          () => super.getNomeCompleto,
+          name: '_CadastroClienteControllerBase.getNomeCompleto'))
+      .value;
+  Computed<String> _$getEmailComputed;
+
+  @override
+  String get getEmail =>
+      (_$getEmailComputed ??= Computed<String>(() => super.getEmail,
+              name: '_CadastroClienteControllerBase.getEmail'))
+          .value;
+  Computed<String> _$getTelefoneComputed;
+
+  @override
+  String get getTelefone =>
+      (_$getTelefoneComputed ??= Computed<String>(() => super.getTelefone,
+              name: '_CadastroClienteControllerBase.getTelefone'))
+          .value;
+  Computed<String> _$getCpfComputed;
+
+  @override
+  String get getCpf =>
+      (_$getCpfComputed ??= Computed<String>(() => super.getCpf,
+              name: '_CadastroClienteControllerBase.getCpf'))
+          .value;
+  Computed<String> _$getRgComputed;
+
+  @override
+  String get getRg => (_$getRgComputed ??= Computed<String>(() => super.getRg,
+          name: '_CadastroClienteControllerBase.getRg'))
+      .value;
   Computed<EnderecoModel> _$getEnderecoComputed;
 
   @override
@@ -165,6 +199,11 @@ mixin _$CadastroClienteController on _CadastroClienteControllerBase, Store {
     return '''
 clienteModel: ${clienteModel},
 isWhatsapp: ${isWhatsapp},
+getNomeCompleto: ${getNomeCompleto},
+getEmail: ${getEmail},
+getTelefone: ${getTelefone},
+getCpf: ${getCpf},
+getRg: ${getRg},
 getEndereco: ${getEndereco}
     ''';
   }

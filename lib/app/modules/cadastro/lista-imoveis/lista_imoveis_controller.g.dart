@@ -42,6 +42,14 @@ mixin _$ListaImoveisController on _ListaImoveisControllerBase, Store {
         .run(() => super.selecionarImovel(imovelModel));
   }
 
+  final _$editarImovelAsyncAction =
+      AsyncAction('_ListaImoveisControllerBase.editarImovel');
+
+  @override
+  Future editarImovel(ImovelModel imovelModel) {
+    return _$editarImovelAsyncAction.run(() => super.editarImovel(imovelModel));
+  }
+
   @override
   String toString() {
     return '''

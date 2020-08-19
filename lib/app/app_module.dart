@@ -1,5 +1,6 @@
 import 'package:vistoria/app/modules/cadastro/cadastro_module.dart';
 import 'package:vistoria/app/modules/login/login_module.dart';
+import 'package:vistoria/app/modules/pdf/pdf_module.dart';
 import 'package:vistoria/app/modules/vistoria/vistoria_module.dart';
 import 'package:vistoria/app/shared/auth/auth_controller.dart';
 import 'package:vistoria/app/shared/auth/repositories/auth_reposiroty_interface.dart';
@@ -30,6 +31,7 @@ class AppModule extends MainModule {
         Router('/login', module: LoginModule()),
         Router('/cadastro', module: CadastroModule()),
         Router('/vistoria', module: VistoriaModule()),
+        Router('/pdf', module: PdfModule()),
       ];
 
   @override
