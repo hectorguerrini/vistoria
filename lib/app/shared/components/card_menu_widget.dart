@@ -13,7 +13,7 @@ class CardMenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Card(
-          color: Colors.green[700],
+          color: Colors.green,
           child: Center(
             child: ListTile(
               onTap: onTap,

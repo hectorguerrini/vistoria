@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:vistoria/app/modules/vistoria/models/itens_ambiente_model.dart';
+import 'package:vistoria/app/modules/vistoria/models/vistoria_ambiente_model.dart';
 import 'package:vistoria/app/modules/vistoria/repositories/vistoria_repository.dart';
 part 'galeria_fotos_controller.g.dart';
 
@@ -17,8 +18,20 @@ abstract class _GaleriaFotosControllerBase with Store {
   @observable
   ItensAmbienteModel itens;
 
+  @observable
+  ObservableList lista = [].asObservable();
+
   _GaleriaFotosControllerBase() {
-    itens = Modular.args.data;
+    if (Modular.args.data is ItensAmbienteModel) {
+      itens = Modular.args.data;
+      lista.add(itens.photoUrl);
+      lista.add(itens.fileImages);
+    } else if (Modular.args.data is VistoriaAmbienteModel) {
+      VistoriaAmbienteModel ambiente = Modular.args.data;
+      ambiente.listItens.forEach((element) {
+        lista.addAll(element.photoUrl);
+      });
+    }
   }
 
   @action

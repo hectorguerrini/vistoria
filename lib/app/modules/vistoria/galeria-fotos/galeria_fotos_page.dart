@@ -35,28 +35,29 @@ class _GaleriaFotosPageState
                         if (e is String)
                           Image.network(e,
                               width: size.width, fit: BoxFit.cover),
-                        Container(
-                            margin: EdgeInsets.only(top: 20),
-                            alignment: Alignment.center,
-                            width: size.width,
-                            child: ButtonBar(
-                              alignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      shape: BoxShape.circle),
-                                  child: IconButton(
-                                      color: Colors.red,
-                                      icon: Icon(
-                                        FontAwesome.trash,
-                                        color: Colors.white,
-                                      ),
-                                      onPressed: () =>
-                                          controller.deleteImage(e)),
-                                )
-                              ],
-                            ))
+                        if (controller.itens != null)
+                          Container(
+                              margin: EdgeInsets.only(top: 20),
+                              alignment: Alignment.center,
+                              width: size.width,
+                              child: ButtonBar(
+                                alignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle),
+                                    child: IconButton(
+                                        color: Colors.red,
+                                        icon: Icon(
+                                          FontAwesome.trash,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () =>
+                                            controller.deleteImage(e)),
+                                  )
+                                ],
+                              ))
                       ],
                     ),
                   ),
@@ -70,13 +71,12 @@ class _GaleriaFotosPageState
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Observer(builder: (_) {
-          List lista = [
-            ...controller.itens.fileImages,
-            ...controller.itens.photoUrl
-          ];
+          if (controller.lista.length == 0) {
+            return Container();
+          }
           return CarouselSlider(
             items: [
-              ...buildImages(lista),
+              ...buildImages(controller.lista),
             ],
             options: CarouselOptions(
               height: size.height,

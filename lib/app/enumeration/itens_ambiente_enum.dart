@@ -12,6 +12,7 @@ enum ItensAmbiente {
 
 extension ParseToString on ItensAmbiente {
   String toShortString() {
-    return this.toString().split('.').last.replaceAll('_', ' ');
+    var caps = this.toString().split('.').last.replaceAll('_', ' ');
+    return "${caps[0]}${caps.substring(1).toLowerCase()}";
   }
 }

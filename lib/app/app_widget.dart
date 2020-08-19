@@ -12,8 +12,8 @@ class AppWidget extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: Modular.navigatorKey,
         title: 'Vistoria',
-        theme: ThemeData(
-            primarySwatch: Colors.green, primaryColor: Colors.green[500]),
+        theme:
+            ThemeData(primarySwatch: Colors.green, primaryColor: Colors.green),
         initialRoute: '/',
         onGenerateRoute: Modular.generateRoute,
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:vistoria/app/modules/vistoria/models/vistoria_ambiente_model.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_model.dart';
 part 'detalhe_controller.g.dart';
 
@@ -10,6 +11,9 @@ abstract class _DetalheControllerBase with Store {
   VistoriaModel vistoriaModel;
   _DetalheControllerBase() {
     vistoriaModel = Modular.args.data;
-    print(vistoriaModel.toString());
+  }
+  @action
+  verFotos(VistoriaAmbienteModel item) {
+    Modular.to.pushNamed('/vistoria/galeria', arguments: item);
   }
 }
