@@ -2,6 +2,7 @@ enum TipoImovel { CASA, APARTAMENTO, SALA, GALPAO }
 
 extension ParseToString on TipoImovel {
   String toShortString() {
-    return this.toString().split('.').last;
+    var caps = this.toString().split('.').last;
+    return "${caps[0]}${caps.substring(1).toLowerCase()}";
   }
 }

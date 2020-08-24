@@ -2,6 +2,7 @@ enum StatusVistoria { RASCUNHO, FINALIZADO }
 
 extension ParseToString on StatusVistoria {
   String toShortString() {
-    return this.toString().split('.').last.replaceAll('_', ' ');
+    var caps = this.toString().split('.').last;
+    return "${caps[0]}${caps.substring(1).toLowerCase()}";
   }
 }

@@ -37,7 +37,8 @@ abstract class _NovaVistoriaControllerBase with Store {
   _NovaVistoriaControllerBase(this._repository) {
     currentStep = 0;
     vistoriaModel = Modular.args.data ??
-        new VistoriaModel(statusVistoria: StatusVistoria.RASCUNHO);
+        new VistoriaModel(
+            statusVistoria: StatusVistoria.RASCUNHO, locatarios: []);
     listAmbientes = vistoriaModel.listAmbientes?.asObservable() ??
         new ObservableList<VistoriaAmbienteModel>();
   }
@@ -94,18 +95,22 @@ abstract class _NovaVistoriaControllerBase with Store {
   }
 
   @action
-  setLocatario(ClienteModel value) =>
-      vistoriaModel = vistoriaModel.copyWith(locatario: value);
+  setLocatario(List<ClienteModel> value) =>
+      vistoriaModel = vistoriaModel.copyWith(locatarios: value);
 
   @computed
-  ClienteModel get getLocatario => vistoriaModel.locatario;
+  List<ClienteModel> get getLocatario => vistoriaModel.locatarios;
 
   @action
   selectLocatario() {
     Modular.to
         .pushNamed('/cadastro/lista_clientes', arguments: true)
         .then((value) {
-      if (value != null) setLocatario(value);
+      if (value != null) {
+        List<ClienteModel> list = vistoriaModel.locatarios;
+        list.add(value);
+        setLocatario(list);
+      }
     });
   }
 

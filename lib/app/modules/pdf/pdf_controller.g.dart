@@ -24,6 +24,13 @@ mixin _$PdfController on _PdfControllerBase, Store {
     });
   }
 
+  final _$getFotosAsyncAction = AsyncAction('_PdfControllerBase.getFotos');
+
+  @override
+  Future<dynamic> getFotos() {
+    return _$getFotosAsyncAction.run(() => super.getFotos());
+  }
+
   final _$generatePdfAsyncAction =
       AsyncAction('_PdfControllerBase.generatePdf');
 

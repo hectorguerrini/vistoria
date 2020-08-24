@@ -31,44 +31,24 @@ class _NovaVistoriaPageState
   @override
   Widget build(BuildContext context) {
     Widget stepLocatario() {
-      if (controller.getLocatario == null) {
-        return FlatButton.icon(
-            onPressed: controller.selectLocatario,
-            icon: Icon(Icons.add, color: Colors.black54),
-            label: Text('Adicionar Locatario',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black54)));
-      }
-      ClienteModel locatario = controller.getLocatario;
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            title: Text(locatario.nomeCompleto),
-            subtitle: Text.rich(TextSpan(children: [
-              TextSpan(text: "${locatario.cpf}\n"),
-              TextSpan(text: "Cel: ${locatario.celular}")
-            ])),
-          ),
-          Divider(),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            title: Text(
-                "${locatario.endereco.logradouro} Nº${locatario.endereco.numero}"),
-            subtitle: Text.rich(
-              TextSpan(children: [
-                if (locatario.endereco.complemento != '')
-                  TextSpan(text: '${locatario.endereco.complemento}\n'),
-                TextSpan(
-                    text:
-                        '${locatario.endereco.cidade}/${locatario.endereco.uf}\n'),
-                TextSpan(text: 'CEP: ${locatario.endereco.cep}'),
-              ]),
-            ),
-          )
-        ],
-      );
+      List<ClienteModel> locatarios = controller.getLocatario;
+      return ListView.separated(
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: locatarios.length + 1,
+          itemBuilder: (context, index) {
+            if (locatarios.length - 1 < index)
+              return FlatButton.icon(
+                  onPressed: controller.selectLocatario,
+                  icon: Icon(Icons.add, color: Colors.black54),
+                  label: Text('Adicionar Locatario',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black54)));
+            return ListTile(
+              title: Text(locatarios[index].nomeCompleto),
+              subtitle: Text(locatarios[index].cpf),
+            );
+          });
     }
 
     getListStep() {
@@ -275,24 +255,24 @@ class _NovaVistoriaPageState
           listSteps.add(step);
         });
       }
-      if (controller.isComplete) {
-        listSteps.add(Step(
-            state: StepState.complete,
-            isActive:
-                controller.currentStep == controller.listAmbientes.length + 3,
-            title: Text('Finalizar Vistoria'),
-            content: GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              children: [
-                CardMenuWidget(
-                  title: 'Finalizar Vistoria',
-                  icon: FontAwesome5.check,
-                  onTap: controller.save,
-                )
-              ],
-            )));
-      }
+
+      listSteps.add(Step(
+          state: StepState.complete,
+          isActive:
+              controller.currentStep == controller.listAmbientes.length + 3,
+          title: Text('Finalizar Vistoria'),
+          content: GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            children: [
+              CardMenuWidget(
+                title: 'Finalizar Vistoria',
+                icon: FontAwesome5.check,
+                onTap: controller.save,
+              )
+            ],
+          )));
+
       return listSteps;
     }
 

@@ -14,15 +14,15 @@ class VistoriaModel extends BaseModel {
   final TipoVistoria tipoVistoria;
   @JsonKey(toJson: _imovelModelToJson, fromJson: _imovelModelFromJson)
   final ImovelModel imovelModel;
-  @JsonKey(toJson: _locatarioToJson, fromJson: _locatarioFromJson)
-  final ClienteModel locatario;
-  final ClienteModel fiador;
+  @JsonKey(toJson: _locatariosToJson, fromJson: _locatariosFromJson)
+  final List<ClienteModel> locatarios;
+  final List<ClienteModel> fiador;
   final List<VistoriaAmbienteModel> listAmbientes;
   final StatusVistoria statusVistoria;
   VistoriaModel(
       {this.tipoVistoria,
       this.imovelModel,
-      this.locatario,
+      this.locatarios,
       this.fiador,
       this.listAmbientes,
       this.statusVistoria});
@@ -30,14 +30,14 @@ class VistoriaModel extends BaseModel {
   copyWith(
       {TipoVistoria tipoVistoria,
       ImovelModel imovelModel,
-      ClienteModel locatario,
-      ClienteModel fiador,
+      List<ClienteModel> locatarios,
+      List<ClienteModel> fiador,
       List<VistoriaAmbienteModel> listAmbientes,
       StatusVistoria statusVistoria}) {
     return VistoriaModel(
         tipoVistoria: tipoVistoria ?? this.tipoVistoria,
         imovelModel: imovelModel ?? this.imovelModel,
-        locatario: locatario ?? this.locatario,
+        locatarios: locatarios ?? this.locatarios,
         fiador: fiador ?? this.fiador,
         listAmbientes: listAmbientes ?? this.listAmbientes,
         statusVistoria: statusVistoria ?? this.statusVistoria)
@@ -49,10 +49,14 @@ class VistoriaModel extends BaseModel {
   static ImovelModel _imovelModelFromJson(DocumentReference ref) =>
       ImovelModel()..reference = ref;
 
-  static DocumentReference _locatarioToJson(ClienteModel locatario) =>
-      locatario.reference ?? null;
-  static ClienteModel _locatarioFromJson(DocumentReference ref) =>
-      ClienteModel()..reference = ref;
+  static List<DocumentReference> _locatariosToJson(
+          List<ClienteModel> locatarios) =>
+      locatarios.map((e) => e.reference).toList() ?? null;
+  static List<ClienteModel> _locatariosFromJson(List ref) => ref != null
+      ? ref
+          .map((e) => ClienteModel()..reference = (e as DocumentReference))
+          .toList()
+      : [];
 
   factory VistoriaModel.fromJson(Map<String, dynamic> json) =>
       _$VistoriaModelFromJson(json);

@@ -12,11 +12,11 @@ VistoriaModel _$VistoriaModelFromJson(Map<String, dynamic> json) {
         _$enumDecodeNullable(_$TipoVistoriaEnumMap, json['tipoVistoria']),
     imovelModel: VistoriaModel._imovelModelFromJson(
         json['imovelModel'] as DocumentReference),
-    locatario: VistoriaModel._locatarioFromJson(
-        json['locatario'] as DocumentReference),
-    fiador: json['fiador'] == null
-        ? null
-        : ClienteModel.fromJson(json['fiador'] as Map<String, dynamic>),
+    locatarios: VistoriaModel._locatariosFromJson(json['locatarios'] as List),
+    fiador: (json['fiador'] as List)
+        ?.map((e) =>
+            e == null ? null : ClienteModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     listAmbientes: (json['listAmbientes'] as List)
         ?.map((e) => e == null
             ? null
@@ -35,8 +35,8 @@ Map<String, dynamic> _$VistoriaModelToJson(VistoriaModel instance) =>
       'updateUid': instance.updateUid,
       'tipoVistoria': _$TipoVistoriaEnumMap[instance.tipoVistoria],
       'imovelModel': VistoriaModel._imovelModelToJson(instance.imovelModel),
-      'locatario': VistoriaModel._locatarioToJson(instance.locatario),
-      'fiador': instance.fiador?.toJson(),
+      'locatarios': VistoriaModel._locatariosToJson(instance.locatarios),
+      'fiador': instance.fiador?.map((e) => e?.toJson())?.toList(),
       'listAmbientes':
           instance.listAmbientes?.map((e) => e?.toJson())?.toList(),
       'statusVistoria': _$StatusVistoriaEnumMap[instance.statusVistoria],

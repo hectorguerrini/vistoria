@@ -23,11 +23,11 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
           Computed<TipoVistoria>(() => super.getTipoVistoria,
               name: '_NovaVistoriaControllerBase.getTipoVistoria'))
       .value;
-  Computed<ClienteModel> _$getLocatarioComputed;
+  Computed<List<ClienteModel>> _$getLocatarioComputed;
 
   @override
-  ClienteModel get getLocatario => (_$getLocatarioComputed ??=
-          Computed<ClienteModel>(() => super.getLocatario,
+  List<ClienteModel> get getLocatario => (_$getLocatarioComputed ??=
+          Computed<List<ClienteModel>>(() => super.getLocatario,
               name: '_NovaVistoriaControllerBase.getLocatario'))
       .value;
   Computed<List<VistoriaAmbienteModel>> _$getListAmbientesComputed;
@@ -209,7 +209,7 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
   }
 
   @override
-  dynamic setLocatario(ClienteModel value) {
+  dynamic setLocatario(List<ClienteModel> value) {
     final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
         .startAction(name: '_NovaVistoriaControllerBase.setLocatario');
     try {

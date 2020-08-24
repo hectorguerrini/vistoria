@@ -12,6 +12,7 @@ enum Ambientes {
 
 extension ParseToString on Ambientes {
   String toShortString() {
-    return this.toString().split('.').last;
+    var caps = this.toString().split('.').last;
+    return "${caps[0]}${caps.substring(1).toLowerCase()}";
   }
 }

@@ -32,7 +32,7 @@ class _DetalhePageState extends ModularState<DetalhePage, DetalheController> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(8, 16, 8, 16),
+            padding: EdgeInsets.only(bottom: 16),
             decoration: BoxDecoration(color: Colors.green),
             child: Column(
               children: [
@@ -126,37 +126,34 @@ class _DetalhePageState extends ModularState<DetalhePage, DetalheController> {
                     Container(
                       padding: EdgeInsets.only(left: 16, top: 16),
                       alignment: Alignment.centerLeft,
-                      child: Text('Locatario',
+                      child: Text('Locatarios',
                           style: TextStyle(
                             fontSize: 24,
                           )),
                     ),
-                    ListTile(
-                      title: Text(
-                        controller.vistoriaModel.locatario.nomeCompleto,
-                      ),
-                      subtitle: Text.rich(TextSpan(
-                          text: controller.vistoriaModel.locatario.email + '\n',
-                          children: [
-                            if (controller.vistoriaModel.locatario.isWhatsapp)
-                              WidgetSpan(
-                                  child: Icon(
-                                FontAwesome5.whatsapp,
-                                size: 16,
-                                color: Colors.green,
-                              )),
-                            TextSpan(
-                                text:
-                                    controller.vistoriaModel.locatario.celular),
-                            if (controller.vistoriaModel.locatario.telefone !=
-                                null)
-                              TextSpan(
-                                  text: '/' +
-                                      controller
-                                          .vistoriaModel.locatario.telefone),
-                            TextSpan(text: '\n'),
-                          ])),
-                    ),
+                    ...controller.vistoriaModel.locatarios
+                        .map(
+                          (e) => ListTile(
+                            title: Text(
+                              e.nomeCompleto,
+                            ),
+                            subtitle: Text.rich(
+                                TextSpan(text: e.email + '\n', children: [
+                              if (e.isWhatsapp)
+                                WidgetSpan(
+                                    child: Icon(
+                                  FontAwesome5.whatsapp,
+                                  size: 16,
+                                  color: Colors.green,
+                                )),
+                              TextSpan(text: e.celular),
+                              if (e.telefone != null)
+                                TextSpan(text: '/' + e.telefone),
+                              TextSpan(text: '\n'),
+                            ])),
+                          ),
+                        )
+                        .toList(),
                     Divider(
                       thickness: 2,
                     ),
