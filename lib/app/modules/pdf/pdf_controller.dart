@@ -38,15 +38,17 @@ abstract class _PdfControllerBase with Store {
   Future getFotos() async {
     await Future.wait(vistoriaModel.listAmbientes.map((amb) async {
       await Future.wait(amb.listItens.map((item) async {
-        item.photoUrl.asMap().forEach((index, e) async {
+        await Future.wait(item.photoUrl.map((e) async {
           fotos[amb.ambiente.toShortString()] =
               fotos[amb.ambiente.toShortString()] ?? new Map();
+
           fotos[amb.ambiente.toShortString()][item.item.toShortString()] =
               fotos[amb.ambiente.toShortString()][item.item.toShortString()] ??
                   new Map();
+
           fotos[amb.ambiente.toShortString()][item.item.toShortString()]
-              [index] = (await _repository.getImage(e));
-        });
+              [item.photoUrl.indexOf(e)] = (await _repository.getImage(e));
+        }));
       }));
     }));
   }
@@ -65,7 +67,9 @@ abstract class _PdfControllerBase with Store {
     final pw.Document doc = pw.Document(theme: myTheme);
     final PdfImage image = await pdfImageFromImageProvider(
         pdf: doc.document, image: imageProvider);
+    int index = 0;
     doc.addPage(pw.MultiPage(
+      margin: pw.EdgeInsets.symmetric(horizontal: 32, vertical: 16),
       header: (context) => pw.Container(
           child: pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -86,10 +90,13 @@ abstract class _PdfControllerBase with Store {
         pw.Container(
             alignment: pw.Alignment.center,
             child: pw.Text('Relatorio de Vistoria',
-                style: pw.TextStyle(fontSize: 16))),
+                style: pw.TextStyle(
+                    fontSize: 16, fontWeight: pw.FontWeight.bold))),
         pw.Container(
             alignment: pw.Alignment.center,
-            child: pw.Text('20/08/2020', style: pw.TextStyle(fontSize: 16))),
+            child: pw.Text('20/08/2020',
+                style: pw.TextStyle(
+                    fontSize: 16, fontWeight: pw.FontWeight.bold))),
         pw.RichText(
             text: pw.TextSpan(children: [
           pw.TextSpan(
@@ -158,12 +165,19 @@ abstract class _PdfControllerBase with Store {
         pw.Divider(),
         pw.Header(level: 0, text: 'Ambientes'),
         ...vistoriaModel.listAmbientes.map((amb) {
+          index += 1;
           return pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Header(
                     level: 3,
-                    text: amb.ambiente.toShortString() + ' - ' + amb.descricao),
+                    decoration: pw.BoxDecoration(),
+                    text: '$index.' +
+                        amb.ambiente.toShortString() +
+                        ' - ' +
+                        amb.descricao,
+                    textStyle: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold, fontSize: 16)),
                 pw.Paragraph(text: '- ' + amb.observacao),
                 ...amb.listItens.map((e) {
                   var c = 0;
@@ -175,14 +189,23 @@ abstract class _PdfControllerBase with Store {
                                 ' - ' +
                                 e.estadoItens.toShortString()),
                         pw.Paragraph(text: e.observacao ?? ''),
-                        ...e.photoUrl.map((uri) {
+                        pw.Row(
+                            children: e.photoUrl.map((uri) {
                           var _image = fotos[amb.ambiente.toShortString()]
                               [e.item.toShortString()][c];
                           c += 1;
                           print(_image);
-                          return pw.Image(PdfImage(doc.document,
-                              image: _image, width: 100, height: 100));
-                        }).toList()
+                          return pw.UrlLink(
+                              child: pw.Container(
+                                  margin:
+                                      pw.EdgeInsets.symmetric(horizontal: 8),
+                                  child: pw.Image(
+                                      PdfImage.file(doc.document,
+                                          bytes: _image),
+                                      width: 100,
+                                      height: 100)),
+                              destination: uri);
+                        }).toList())
                       ]);
                 })
               ]);
