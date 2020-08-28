@@ -13,10 +13,21 @@ class CadastroClienteRepository {
     await _clienteCollection.add(clienteModel.toJson());
   }
 
+  Future<List<ClienteModel>> getSearchClientes({String search}) async {
+    return await _clienteCollection
+        .where('nomeCompleto', isGreaterThanOrEqualTo: search.toUpperCase())
+        .where('nomeCompleto', isLessThan: search.toLowerCase() + "\uf8ff")
+        .getDocuments()
+        .then((value) => value.documents
+            .map((e) => ClienteModel.fromJson(e.data)..reference = e.reference)
+            .toList());
+  }
+
   Stream<List<ClienteModel>> getListClientes() {
-    return _clienteCollection.snapshots().map((event) => event.documents
-        .map((e) => ClienteModel.fromJson(e.data)..reference = e.reference)
-        .toList());
+    return _clienteCollection.orderBy('nomeCompleto').snapshots().map((event) =>
+        event.documents
+            .map((e) => ClienteModel.fromJson(e.data)..reference = e.reference)
+            .toList());
   }
 
   Future<ClienteModel> getCliente(DocumentReference ref) async {

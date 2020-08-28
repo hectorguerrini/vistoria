@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
-import 'package:vistoria/app/shared/components/message_dialog.dart';
+
 import 'cadastro_cliente_controller.dart';
 
 class CadastroClientePage extends StatefulWidget {

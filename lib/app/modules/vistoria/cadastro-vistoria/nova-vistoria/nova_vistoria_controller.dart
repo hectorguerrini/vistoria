@@ -192,11 +192,12 @@ abstract class _NovaVistoriaControllerBase with Store {
       if (confimacao) {
         vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
         await Future.wait(vistoriaModel.listAmbientes.map((e) async {
-          e.listItens.forEach((element) async {
+          await Future.wait(e.listItens.map((element) async {
             var lista = element.fileImages;
             if (lista != null) {
               int saveds = element.photoUrl.length;
-              lista.asMap().forEach((n, el) async {
+              await Future.wait(lista.map((el) async {
+                int n = lista.indexOf(el);
                 String uri = await _repository.uploadImages(
                     el,
                     vistoriaModel.reference.documentID,
@@ -206,9 +207,9 @@ abstract class _NovaVistoriaControllerBase with Store {
                     n + saveds);
                 element.photoUrl.add(uri);
                 element.fileImages.remove(el);
-              });
+              }));
             }
-          });
+          }));
         }));
         vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
         Modular.to.pop(true);

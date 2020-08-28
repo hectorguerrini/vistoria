@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+
 import 'package:vistoria/app/shared/components/card_menu_widget.dart';
 import 'cadastro_controller.dart';
 

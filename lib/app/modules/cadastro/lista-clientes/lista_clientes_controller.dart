@@ -14,14 +14,34 @@ abstract class _ListaClientesControllerBase with Store {
   @observable
   ObservableStream<List<ClienteModel>> listClientes;
 
+  @observable
+  ObservableFuture<List<ClienteModel>> listClientesFiltered =
+      new ObservableFuture.value([]);
+
+  @observable
+  String searchBar = '';
+
   _ListaClientesControllerBase(this._repository) {
     getListaClientes();
   }
 
   @action
+  getListaSearch(String value) {
+    try {
+      searchBar = value;
+      listClientesFiltered =
+          _repository.getSearchClientes(search: searchBar).asObservable();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @action
   getListaClientes() {
     try {
-      listClientes = _repository.getListClientes().asObservable();
+      if (listClientes != null) {
+        listClientes = _repository.getListClientes().asObservable();
+      }
     } catch (e) {
       print(e);
     }

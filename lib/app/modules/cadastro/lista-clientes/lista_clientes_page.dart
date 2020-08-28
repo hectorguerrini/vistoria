@@ -23,19 +23,21 @@ class _ListaClientesPageState
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(widget.modoSelecao ? 'Selecionar Cliente' : widget.title),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Column(
             children: <Widget>[
-              TextField(
+              TextFormField(
+                onFieldSubmitted: controller.getListaSearch,
+                textInputAction: TextInputAction.search,
                 decoration: InputDecoration(
                     labelText: 'Buscar',
                     hintText: 'Buscar por nome, cpf.',
                     prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0))),
+                    border: OutlineInputBorder()),
               ),
               Observer(builder: (_) {
                 if (controller.listClientes.hasError) {
@@ -47,8 +49,58 @@ class _ListaClientesPageState
                 if (controller.listClientes.data == null) {
                   return Center(child: CircularProgressIndicator());
                 }
-
+                List<ClienteModel> listFilter =
+                    controller.listClientesFiltered.value;
                 List<ClienteModel> list = controller.listClientes.value;
+
+                if (controller.searchBar.length > 0) {
+                  if (listFilter == null) {
+                    return Expanded(
+                        child: Center(child: CircularProgressIndicator()));
+                  }
+                  if (listFilter.length == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(
+                          child: Text(
+                        "Nenhum cliente encontrado.",
+                        style: TextStyle(color: Colors.black54),
+                      )),
+                    );
+                  }
+
+                  return Expanded(
+                    child: ListView.separated(
+                      padding: EdgeInsets.only(top: 10),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        ClienteModel item = listFilter[index];
+                        return ListTile(
+                          onTap: () async {
+                            if (widget.modoSelecao) {
+                              controller.selecionarCliente(item);
+                            } else {
+                              controller.editarCliente(item);
+                            }
+                          },
+                          title: Text(item.nomeCompleto),
+                          subtitle: Text(
+                              "${item.cpf}\nCel:${item.celular}\n${item.telefone != null ? "Tel:" + item.telefone : ""}"),
+                          trailing: item.isWhatsapp
+                              ? Icon(
+                                  FontAwesome.whatsapp,
+                                  color: Colors.green,
+                                )
+                              : Icon(Icons.phone),
+                        );
+                      },
+                      separatorBuilder: (context, index) => Divider(
+                        thickness: 1.0,
+                      ),
+                      itemCount: listFilter.length,
+                    ),
+                  );
+                }
 
                 if (list.length == 0) {
                   return Padding(
@@ -61,34 +113,36 @@ class _ListaClientesPageState
                   );
                 }
 
-                return ListView.separated(
-                  padding: EdgeInsets.only(top: 10),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    ClienteModel item = list[index];
-                    return ListTile(
-                      onTap: () async {
-                        if (widget.modoSelecao) {
-                          controller.selecionarCliente(item);
-                        } else {
-                          controller.editarCliente(item);
-                        }
-                      },
-                      title: Text(item.nomeCompleto),
-                      subtitle: Text(
-                          "${item.cpf}\nCel:${item.celular}\n${item.telefone != null ? "Tel:" + item.telefone : ""}"),
-                      trailing: item.isWhatsapp
-                          ? Icon(
-                              FontAwesome.whatsapp,
-                              color: Colors.green,
-                            )
-                          : Icon(Icons.phone),
-                    );
-                  },
-                  separatorBuilder: (context, index) => Divider(
-                    thickness: 1.0,
+                return Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.only(top: 10),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      ClienteModel item = list[index];
+                      return ListTile(
+                        onTap: () async {
+                          if (widget.modoSelecao) {
+                            controller.selecionarCliente(item);
+                          } else {
+                            controller.editarCliente(item);
+                          }
+                        },
+                        title: Text(item.nomeCompleto),
+                        subtitle: Text(
+                            "${item.cpf}\nCel:${item.celular}\n${item.telefone != null ? "Tel:" + item.telefone : ""}"),
+                        trailing: item.isWhatsapp
+                            ? Icon(
+                                FontAwesome.whatsapp,
+                                color: Colors.green,
+                              )
+                            : Icon(Icons.phone),
+                      );
+                    },
+                    separatorBuilder: (context, index) => Divider(
+                      thickness: 1.0,
+                    ),
+                    itemCount: list.length,
                   ),
-                  itemCount: list.length,
                 );
               }),
             ],

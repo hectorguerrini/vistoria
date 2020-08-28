@@ -25,6 +25,38 @@ mixin _$ListaClientesController on _ListaClientesControllerBase, Store {
     });
   }
 
+  final _$listClientesFilteredAtom =
+      Atom(name: '_ListaClientesControllerBase.listClientesFiltered');
+
+  @override
+  ObservableFuture<List<ClienteModel>> get listClientesFiltered {
+    _$listClientesFilteredAtom.reportRead();
+    return super.listClientesFiltered;
+  }
+
+  @override
+  set listClientesFiltered(ObservableFuture<List<ClienteModel>> value) {
+    _$listClientesFilteredAtom.reportWrite(value, super.listClientesFiltered,
+        () {
+      super.listClientesFiltered = value;
+    });
+  }
+
+  final _$searchBarAtom = Atom(name: '_ListaClientesControllerBase.searchBar');
+
+  @override
+  String get searchBar {
+    _$searchBarAtom.reportRead();
+    return super.searchBar;
+  }
+
+  @override
+  set searchBar(String value) {
+    _$searchBarAtom.reportWrite(value, super.searchBar, () {
+      super.searchBar = value;
+    });
+  }
+
   final _$selecionarClienteAsyncAction =
       AsyncAction('_ListaClientesControllerBase.selecionarCliente');
 
@@ -47,6 +79,17 @@ mixin _$ListaClientesController on _ListaClientesControllerBase, Store {
       ActionController(name: '_ListaClientesControllerBase');
 
   @override
+  dynamic getListaSearch(String value) {
+    final _$actionInfo = _$_ListaClientesControllerBaseActionController
+        .startAction(name: '_ListaClientesControllerBase.getListaSearch');
+    try {
+      return super.getListaSearch(value);
+    } finally {
+      _$_ListaClientesControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic getListaClientes() {
     final _$actionInfo = _$_ListaClientesControllerBaseActionController
         .startAction(name: '_ListaClientesControllerBase.getListaClientes');
@@ -60,7 +103,9 @@ mixin _$ListaClientesController on _ListaClientesControllerBase, Store {
   @override
   String toString() {
     return '''
-listClientes: ${listClientes}
+listClientes: ${listClientes},
+listClientesFiltered: ${listClientesFiltered},
+searchBar: ${searchBar}
     ''';
   }
 }
