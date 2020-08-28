@@ -24,16 +24,20 @@ class _ListaImoveisPageState
           title: Text(widget.title),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
           child: Column(
             children: <Widget>[
-              TextField(
-                decoration: InputDecoration(
-                    labelText: 'Buscar',
-                    hintText: 'Buscar por nome, cpf.',
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0))),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextFormField(
+                  onFieldSubmitted: controller.getListaSearch,
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                      labelText: 'Buscar',
+                      hintText: 'Buscar por nome, cpf.',
+                      prefixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder()),
+                ),
               ),
               Observer(builder: (_) {
                 if (controller.listImoveis.hasError) {
@@ -43,10 +47,65 @@ class _ListaImoveisPageState
                           child: Text('Carregar')));
                 }
                 if (controller.listImoveis.value == null) {
-                  return Center(child: CircularProgressIndicator());
+                  return Expanded(
+                      child: Center(child: CircularProgressIndicator()));
                 }
-
+                List<ImovelModel> listFilter =
+                    controller.listImoveisFiltered.value;
                 List<ImovelModel> list = controller.listImoveis.value;
+
+                if (controller.searchBar.length > 0) {
+                  if (listFilter == null) {
+                    return Expanded(
+                        child: Center(child: CircularProgressIndicator()));
+                  }
+                  if (listFilter.length == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(
+                          child: Text(
+                        "Nenhum Imovel encontrado.",
+                        style: TextStyle(color: Colors.black54),
+                      )),
+                    );
+                  }
+                  return Expanded(
+                    child: ListView.separated(
+                      padding: EdgeInsets.only(top: 10),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        ImovelModel item = listFilter[index];
+                        return ListTile(
+                          onTap: () async {
+                            if (widget.modoSelecao) {
+                              controller.selecionarImovel(item);
+                            } else {
+                              controller.editarImovel(item);
+                            }
+                          },
+                          title: Text.rich(TextSpan(children: [
+                            TextSpan(text: item.tipoImovel.toShortString()),
+                            TextSpan(text: ' - '),
+                            TextSpan(
+                                text:
+                                    "${item.enderecoModel.logradouro} ${item.enderecoModel.numero}")
+                          ])),
+                          subtitle: Text.rich(TextSpan(children: [
+                            if (item.enderecoModel.complemento != '')
+                              TextSpan(
+                                  text: item.enderecoModel.complemento + '\n'),
+                            TextSpan(text: "Cep: "),
+                            TextSpan(text: item.enderecoModel.cep)
+                          ])),
+                        );
+                      },
+                      separatorBuilder: (context, index) => Divider(
+                        thickness: 1.0,
+                      ),
+                      itemCount: listFilter.length,
+                    ),
+                  );
+                }
 
                 if (list.length == 0) {
                   return Padding(
@@ -59,38 +118,41 @@ class _ListaImoveisPageState
                   );
                 }
 
-                return ListView.separated(
-                  padding: EdgeInsets.only(top: 10),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    ImovelModel item = list[index];
-                    return ListTile(
-                      onTap: () async {
-                        if (widget.modoSelecao) {
-                          controller.selecionarImovel(item);
-                        } else {
-                          controller.editarImovel(item);
-                        }
-                      },
-                      title: Text.rich(TextSpan(children: [
-                        TextSpan(text: item.tipoImovel.toShortString()),
-                        TextSpan(text: ' - '),
-                        TextSpan(
-                            text:
-                                "${item.enderecoModel.logradouro} ${item.enderecoModel.numero}")
-                      ])),
-                      subtitle: Text.rich(TextSpan(children: [
-                        if (item.enderecoModel.complemento != '')
-                          TextSpan(text: item.enderecoModel.complemento + '\n'),
-                        TextSpan(text: "Cep: "),
-                        TextSpan(text: item.enderecoModel.cep)
-                      ])),
-                    );
-                  },
-                  separatorBuilder: (context, index) => Divider(
-                    thickness: 1.0,
+                return Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.only(top: 10),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      ImovelModel item = list[index];
+                      return ListTile(
+                        onTap: () async {
+                          if (widget.modoSelecao) {
+                            controller.selecionarImovel(item);
+                          } else {
+                            controller.editarImovel(item);
+                          }
+                        },
+                        title: Text.rich(TextSpan(children: [
+                          TextSpan(text: item.tipoImovel.toShortString()),
+                          TextSpan(text: ' - '),
+                          TextSpan(
+                              text:
+                                  "${item.enderecoModel.logradouro} ${item.enderecoModel.numero}")
+                        ])),
+                        subtitle: Text.rich(TextSpan(children: [
+                          if (item.enderecoModel.complemento != '')
+                            TextSpan(
+                                text: item.enderecoModel.complemento + '\n'),
+                          TextSpan(text: "Cep: "),
+                          TextSpan(text: item.enderecoModel.cep)
+                        ])),
+                      );
+                    },
+                    separatorBuilder: (context, index) => Divider(
+                      thickness: 1.0,
+                    ),
+                    itemCount: list.length,
                   ),
-                  itemCount: list.length,
                 );
               }),
             ],

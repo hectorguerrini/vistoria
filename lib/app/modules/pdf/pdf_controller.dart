@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -14,7 +13,7 @@ import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
 import 'package:vistoria/app/enumeration/tipo_vistoria_enum.dart';
 import 'package:vistoria/app/enumeration/tipo_imovel_enum.dart';
 import 'package:vistoria/app/modules/pdf/repositories/pdf_repository.dart';
-import 'package:vistoria/app/modules/vistoria/models/vistoria_ambiente_model.dart';
+
 import 'package:vistoria/app/modules/vistoria/models/vistoria_model.dart';
 import 'package:vistoria/app/shared/auth/auth_controller.dart';
 

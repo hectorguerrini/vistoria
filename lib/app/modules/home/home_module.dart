@@ -2,7 +2,7 @@ import 'package:vistoria/app/shared/repositories/local_storage_hive.dart';
 
 import 'home_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:dio/dio.dart';
+
 import 'home_page.dart';
 
 class HomeModule extends ChildModule {

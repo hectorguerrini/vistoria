@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/enumeration/status_vistoria_enum.dart';
-import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
+
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
 import 'package:vistoria/app/modules/vistoria/models/vistoria_model.dart';
 

@@ -2,7 +2,7 @@ import 'package:vistoria/app/modules/pdf/repositories/pdf_repository.dart';
 
 import 'pdf_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:dio/dio.dart';
+
 import 'pdf_page.dart';
 
 class PdfModule extends ChildModule {

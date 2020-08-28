@@ -2,7 +2,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/modules/cadastro/models/cliente_model.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
-import 'package:vistoria/app/shared/components/confirmation_dialog.dart';
+
 part 'lista_clientes_controller.g.dart';
 
 class ListaClientesController = _ListaClientesControllerBase
@@ -22,7 +22,9 @@ abstract class _ListaClientesControllerBase with Store {
   String searchBar = '';
 
   _ListaClientesControllerBase(this._repository) {
-    getListaClientes();
+    if (listClientes == null) {
+      getListaClientes();
+    }
   }
 
   @action
@@ -39,9 +41,7 @@ abstract class _ListaClientesControllerBase with Store {
   @action
   getListaClientes() {
     try {
-      if (listClientes != null) {
-        listClientes = _repository.getListClientes().asObservable();
-      }
+      listClientes = _repository.getListClientes().asObservable();
     } catch (e) {
       print(e);
     }

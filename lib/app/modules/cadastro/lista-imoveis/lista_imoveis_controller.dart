@@ -1,9 +1,9 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_cliente_repository.dart';
 import 'package:vistoria/app/modules/cadastro/repositories/cadastro_imovel_repository.dart';
 import 'package:vistoria/app/modules/cadastro/models/imovel_model.dart';
-import 'package:vistoria/app/shared/components/confirmation_dialog.dart';
 part 'lista_imoveis_controller.g.dart';
 
 class ListaImoveisController = _ListaImoveisControllerBase
@@ -16,9 +16,28 @@ abstract class _ListaImoveisControllerBase with Store {
   @observable
   ObservableStream<List<ImovelModel>> listImoveis;
 
+  @observable
+  ObservableFuture<List<ImovelModel>> listImoveisFiltered =
+      new ObservableFuture.value([]);
+
+  @observable
+  String searchBar = '';
   _ListaImoveisControllerBase(this._repository) {
     if (listImoveis == null) {
       getListaImoveis();
+    }
+  }
+
+  @action
+  getListaSearch(String value) {
+    try {
+      if (value != '') {
+        searchBar = value;
+        listImoveisFiltered =
+            _repository.getSearchImoveis(search: searchBar).asObservable();
+      }
+    } on PlatformException catch (e) {
+      print(e.message);
     }
   }
 

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:vistoria/app/modules/cadastro/models/endereco_model.dart';
 import 'package:vistoria/app/shared/models/base_model.dart';

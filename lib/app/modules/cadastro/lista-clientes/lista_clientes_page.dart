@@ -47,7 +47,7 @@ class _ListaClientesPageState
                           child: Text('Carregar')));
                 }
                 if (controller.listClientes.data == null) {
-                  return Center(child: CircularProgressIndicator());
+                  return Expanded(child: Center(child: CircularProgressIndicator()));
                 }
                 List<ClienteModel> listFilter =
                     controller.listClientesFiltered.value;

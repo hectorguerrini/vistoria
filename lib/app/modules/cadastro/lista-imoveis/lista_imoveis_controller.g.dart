@@ -25,6 +25,37 @@ mixin _$ListaImoveisController on _ListaImoveisControllerBase, Store {
     });
   }
 
+  final _$listImoveisFilteredAtom =
+      Atom(name: '_ListaImoveisControllerBase.listImoveisFiltered');
+
+  @override
+  ObservableFuture<List<ImovelModel>> get listImoveisFiltered {
+    _$listImoveisFilteredAtom.reportRead();
+    return super.listImoveisFiltered;
+  }
+
+  @override
+  set listImoveisFiltered(ObservableFuture<List<ImovelModel>> value) {
+    _$listImoveisFilteredAtom.reportWrite(value, super.listImoveisFiltered, () {
+      super.listImoveisFiltered = value;
+    });
+  }
+
+  final _$searchBarAtom = Atom(name: '_ListaImoveisControllerBase.searchBar');
+
+  @override
+  String get searchBar {
+    _$searchBarAtom.reportRead();
+    return super.searchBar;
+  }
+
+  @override
+  set searchBar(String value) {
+    _$searchBarAtom.reportWrite(value, super.searchBar, () {
+      super.searchBar = value;
+    });
+  }
+
   final _$getListaImoveisAsyncAction =
       AsyncAction('_ListaImoveisControllerBase.getListaImoveis');
 
@@ -50,10 +81,26 @@ mixin _$ListaImoveisController on _ListaImoveisControllerBase, Store {
     return _$editarImovelAsyncAction.run(() => super.editarImovel(imovelModel));
   }
 
+  final _$_ListaImoveisControllerBaseActionController =
+      ActionController(name: '_ListaImoveisControllerBase');
+
+  @override
+  dynamic getListaSearch(String value) {
+    final _$actionInfo = _$_ListaImoveisControllerBaseActionController
+        .startAction(name: '_ListaImoveisControllerBase.getListaSearch');
+    try {
+      return super.getListaSearch(value);
+    } finally {
+      _$_ListaImoveisControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-listImoveis: ${listImoveis}
+listImoveis: ${listImoveis},
+listImoveisFiltered: ${listImoveisFiltered},
+searchBar: ${searchBar}
     ''';
   }
 }

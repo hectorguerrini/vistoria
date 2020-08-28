@@ -16,7 +16,6 @@ class _PdfPageState extends ModularState<PdfPage, PdfController> {
   PrintingInfo printingInfo;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }

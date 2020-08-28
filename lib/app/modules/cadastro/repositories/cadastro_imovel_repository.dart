@@ -17,6 +17,18 @@ class CadastroImovelRepository {
     }
   }
 
+  Future<List<ImovelModel>> getSearchImoveis({String search}) async {
+    return await _imoveisCollection
+        .where('enderecoModel.logradouro',
+            isGreaterThanOrEqualTo: search.toUpperCase())
+        .where('enderecoModel.logradouro',
+            isLessThan: search.toLowerCase() + "\uf8ff")
+        .getDocuments()
+        .then((value) => value.documents
+            .map((e) => ImovelModel.fromJson(e.data)..reference = e.reference)
+            .toList());
+  }
+
   Stream<List<ImovelModel>> getListImoveis() {
     return _imoveisCollection.snapshots().map((event) => event.documents
         .map((e) => ImovelModel.fromJson(e.data)..reference = e.reference)
