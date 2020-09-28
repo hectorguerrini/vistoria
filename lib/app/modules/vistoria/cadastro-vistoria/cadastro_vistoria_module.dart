@@ -15,9 +15,11 @@ class CadastroVistoriaModule extends ChildModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => NovaVistoriaPage()),
-        Router('/itens_ambiente', child: (_, args) => ItensAmbientePage()),
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute,
+            child: (_, args) => NovaVistoriaPage()),
+        ModularRouter('/itens_ambiente',
+            child: (_, args) => ItensAmbientePage()),
       ];
 
   static Inject get to => Inject<CadastroVistoriaModule>.of();

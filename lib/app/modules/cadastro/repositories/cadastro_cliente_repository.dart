@@ -5,7 +5,7 @@ import 'package:vistoria/app/shared/interfaces/local_storage_interface.dart';
 class CadastroClienteRepository {
   final ILocalStorage _storage;
   final CollectionReference _clienteCollection =
-      Firestore.instance.collection('clientes');
+      FirebaseFirestore.instance.collection('clientes');
 
   CadastroClienteRepository(this._storage);
 
@@ -17,22 +17,24 @@ class CadastroClienteRepository {
     return await _clienteCollection
         .where('nomeCompleto', isGreaterThanOrEqualTo: search.toUpperCase())
         .where('nomeCompleto', isLessThan: search.toLowerCase() + "\uf8ff")
-        .getDocuments()
-        .then((value) => value.documents
-            .map((e) => ClienteModel.fromJson(e.data)..reference = e.reference)
+        .get()
+        .then((value) => value.docs
+            .map(
+                (e) => ClienteModel.fromJson(e.data())..reference = e.reference)
             .toList());
   }
 
   Stream<List<ClienteModel>> getListClientes() {
     return _clienteCollection.orderBy('nomeCompleto').snapshots().map((event) =>
-        event.documents
-            .map((e) => ClienteModel.fromJson(e.data)..reference = e.reference)
+        event.docs
+            .map(
+                (e) => ClienteModel.fromJson(e.data())..reference = e.reference)
             .toList());
   }
 
   Future<ClienteModel> getCliente(DocumentReference ref) async {
     return await ref
         .get()
-        .then((value) => ClienteModel.fromJson(value.data)..reference = ref);
+        .then((value) => ClienteModel.fromJson(value.data())..reference = ref);
   }
 }

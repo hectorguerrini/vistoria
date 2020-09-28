@@ -13,8 +13,8 @@ class PdfModule extends ChildModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => PdfPage()),
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute, child: (_, args) => PdfPage()),
       ];
 
   static Inject get to => Inject<PdfModule>.of();

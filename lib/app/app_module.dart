@@ -15,7 +15,6 @@ import 'package:vistoria/app/app_widget.dart';
 import 'package:vistoria/app/modules/home/home_module.dart';
 
 class AppModule extends MainModule {
-  List<Router<dynamic>> rotas = [];
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
@@ -25,13 +24,13 @@ class AppModule extends MainModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => SplashScreen()),
-        Router('/home', module: HomeModule()),
-        Router('/login', module: LoginModule()),
-        Router('/cadastro', module: CadastroModule()),
-        Router('/vistoria', module: VistoriaModule()),
-        Router('/pdf', module: PdfModule()),
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute, child: (_, args) => SplashScreen()),
+        ModularRouter('/home', module: HomeModule()),
+        ModularRouter('/login', module: LoginModule()),
+        ModularRouter('/cadastro', module: CadastroModule()),
+        ModularRouter('/vistoria', module: VistoriaModule()),
+        ModularRouter('/pdf', module: PdfModule()),
       ];
 
   @override

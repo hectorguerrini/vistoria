@@ -9,12 +9,12 @@ class VistoriaRepository {
   final ILocalStorage _storage;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
   final CollectionReference _vistoriasCollection =
-      Firestore.instance.collection('vistorias');
+      FirebaseFirestore.instance.collection('vistorias');
   VistoriaRepository(this._storage);
 
   Future<DocumentReference> saveVistoria(VistoriaModel vistoriaModel) async {
     if (vistoriaModel.reference != null) {
-      await vistoriaModel.reference.updateData(vistoriaModel.toJson());
+      await vistoriaModel.reference.update(vistoriaModel.toJson());
 
       return vistoriaModel.reference;
     } else {

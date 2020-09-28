@@ -39,16 +39,16 @@ class CadastroModule extends ChildModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => CadastroPage()),
-        Router('/cliente', child: (_, args) => CadastroClientePage()),
-        Router('/imovel', child: (_, args) => CadastroImovelPage()),
-        Router('/endereco', child: (_, args) => CadastroEnderecoPage()),
-        Router('/lista_clientes',
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute, child: (_, args) => CadastroPage()),
+        ModularRouter('/cliente', child: (_, args) => CadastroClientePage()),
+        ModularRouter('/imovel', child: (_, args) => CadastroImovelPage()),
+        ModularRouter('/endereco', child: (_, args) => CadastroEnderecoPage()),
+        ModularRouter('/lista_clientes',
             child: (_, args) => ListaClientesPage(
                   modoSelecao: args.data,
                 )),
-        Router('/lista_imoveis',
+        ModularRouter('/lista_imoveis',
             child: (_, args) => ListaImoveisPage(
                   modoSelecao: args.data,
                 )),

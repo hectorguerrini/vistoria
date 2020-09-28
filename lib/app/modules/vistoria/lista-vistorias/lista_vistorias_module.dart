@@ -16,9 +16,10 @@ class ListaVistoriasModule extends ChildModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => ListaVistoriasPage()),
-        Router('/detalhe', child: (_, args) => DetalhePage()),
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute,
+            child: (_, args) => ListaVistoriasPage()),
+        ModularRouter('/detalhe', child: (_, args) => DetalhePage()),
       ];
 
   static Inject get to => Inject<ListaVistoriasModule>.of();

@@ -23,11 +23,11 @@ class VistoriaModule extends ChildModule {
       ];
 
   @override
-  List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => VistoriaPage()),
-        Router('/cadastro', module: CadastroVistoriaModule()),
-        Router('/galeria', child: (_, args) => GaleriaFotosPage()),
-        Router('/lista', module: ListaVistoriasModule()),
+  List<ModularRouter> get routers => [
+        ModularRouter(Modular.initialRoute, child: (_, args) => VistoriaPage()),
+        ModularRouter('/cadastro', module: CadastroVistoriaModule()),
+        ModularRouter('/galeria', child: (_, args) => GaleriaFotosPage()),
+        ModularRouter('/lista', module: ListaVistoriasModule()),
       ];
 
   static Inject get to => Inject<VistoriaModule>.of();

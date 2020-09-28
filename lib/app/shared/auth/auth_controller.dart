@@ -10,13 +10,10 @@ abstract class _AuthControllerBase with Store {
   final IAuthRepository _repository = Modular.get();
 
   @observable
-  FirebaseUser user;
-
-  @action
-  setUser(FirebaseUser value) => user = value;
+  User user;
 
   _AuthControllerBase() {
-    _repository.getUser().then(setUser);
+    user = _repository.getUser();
   }
 
   @action
