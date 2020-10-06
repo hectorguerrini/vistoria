@@ -22,25 +22,25 @@ environment:
 
 dependencies:
   http: ^0.12.2
-  printing: ^3.6.0
-  pdf: ^1.11.0
+  printing: ^3.6.1
+  pdf: ^1.11.2
   intl: ^0.16.1
-  carousel_slider: ^2.2.1
-  firebase_storage: ^4.0.0
-  image_picker: ^0.6.7+7
+  carousel_slider: ^2.3.1
+  firebase_storage: ^4.0.1
+  image_picker: ^0.6.7+11
   firebase_core: ^0.5.0
-  firebase_auth: ^0.18.0+1
+  firebase_auth: ^0.18.1+1
   oktoast: ^2.3.2
-  cloud_firestore: ^0.14.0+2
-  json_annotation: ^3.0.1
-  path_provider: ^1.6.14
-  hive: ^1.4.4
+  cloud_firestore: ^0.14.1+2
+  json_annotation: ^3.1.0
+  path_provider: ^1.6.18
+  hive: ^1.4.4+1
   fluttericon: ^1.0.7
   flutter_masked_text: ^0.8.0
   dio: ^3.0.10
   flutter_mobx: ^1.1.0+2
   mobx: ^1.2.1+2
-  flutter_modular: ^2.0.0+1
+  flutter_modular: ^2.0.1
 
   font_awesome_flutter: ^8.8.1
   
@@ -52,8 +52,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
 
 dev_dependencies:
-  json_serializable: ^3.4.1
-  mockito: ^4.1.1
+  json_serializable: ^3.5.0
+  mockito: ^4.1.2
   mobx_codegen: ^1.1.0+1
   build_runner: ^1.10.0
   flutter_test:
