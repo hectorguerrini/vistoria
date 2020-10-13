@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/meteocons_icons.dart';
+import 'package:fluttericon/rpg_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
+import 'package:fluttericon/rpg_awesome_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:vistoria/app/enumeration/ambientes_enum.dart';
@@ -50,6 +52,15 @@ class AmbienteModel {
         break;
       case Ambientes.CORREDOR:
         icon = Icon(FontAwesomeIcons.houseUser);
+        break;
+      case Ambientes.EDICULA:
+        icon = Icon(Icons.home_filled);
+        break;
+      case Ambientes.GARAGEM:
+        icon = Icon(FontAwesome5.warehouse);
+        break;
+      case Ambientes.QUINTAL:
+        icon = Icon(RpgAwesome.flowers);
         break;
     }
     return icon;
