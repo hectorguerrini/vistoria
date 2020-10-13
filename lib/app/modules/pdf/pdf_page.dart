@@ -5,7 +5,7 @@ import 'pdf_controller.dart';
 
 class PdfPage extends StatefulWidget {
   final String title;
-  const PdfPage({Key key, this.title = "Pdf"}) : super(key: key);
+  const PdfPage({Key key, this.title = "PDF"}) : super(key: key);
 
   @override
   _PdfPageState createState() => _PdfPageState();
