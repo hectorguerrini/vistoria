@@ -22,25 +22,29 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           title: Text(widget.title),
         ),
         bottomNavigationBar: BottomNavigationBar(
-            onTap: (value) {
-              switch (value) {
-                case 0:
-                  Modular.to.pushNamed('/cadastro');
-                  break;
-                case 1:
-                  Modular.to.pushNamed('/vistoria');
-                  break;
-                default:
-              }
-            },
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person_add), title: Text('Cadastros')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.note_add), title: Text('Vistorias')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), title: Text('Configuração')),
-            ]),
+          onTap: (value) {
+            switch (value) {
+              case 0:
+                Modular.to.pushNamed('/cadastro');
+                break;
+              case 1:
+                Modular.to.pushNamed('/vistoria');
+                break;
+              case 2:
+                Modular.to.pushNamed('/configuracao');
+                break;
+              default:
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_add), label: 'Cadastros'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.note_add), label: 'Vistorias'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: 'Configuração'),
+          ],
+        ),
         body: DashboardPage());
   }
 }
