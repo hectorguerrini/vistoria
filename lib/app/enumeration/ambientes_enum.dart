@@ -1,13 +1,16 @@
 enum Ambientes {
-  SALA,
-  COZINHA,
   AREA_SERVICO,
-  QUARTO,
-  SUITES,
   BANHEIROS,
-  VARANDA,
   CHURRASQUEIRA,
-  CORREDOR
+  CORREDOR,
+  COZINHA,
+  EDICULA,
+  GARAGEM,
+  QUARTO,
+  QUINTAL,
+  SALA,
+  SUITES,
+  VARANDA,
 }
 
 extension ParseToString on Ambientes {
