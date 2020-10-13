@@ -21,8 +21,21 @@ class _ConfiguracaoPageState
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[],
+      body: Form(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Card(
+                  child: TextFormField(
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                    labelText: 'Nome Completo', border: OutlineInputBorder()),
+              )),
+            ],
+          ),
+        ),
       ),
     );
   }

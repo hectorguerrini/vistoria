@@ -1,4 +1,5 @@
 import 'package:vistoria/app/modules/cadastro/cadastro_module.dart';
+import 'package:vistoria/app/modules/configuracao/configuracao_module.dart';
 import 'package:vistoria/app/modules/login/login_module.dart';
 import 'package:vistoria/app/modules/pdf/pdf_module.dart';
 import 'package:vistoria/app/modules/vistoria/vistoria_module.dart';
@@ -31,6 +32,7 @@ class AppModule extends MainModule {
         ModularRouter('/cadastro', module: CadastroModule()),
         ModularRouter('/vistoria', module: VistoriaModule()),
         ModularRouter('/pdf', module: PdfModule()),
+        ModularRouter('/configuracao', module: ConfiguracaoModule()),
       ];
 
   @override

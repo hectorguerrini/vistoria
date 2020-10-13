@@ -1,18 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:dio/native_imp.dart';
+import 'package:vistoria/app/modules/configuracao/models/corretor_model.dart';
+import 'package:vistoria/app/shared/auth/auth_controller.dart';
 
-class ConfiguracaoRepository extends Disposable {
-  final DioForNative client;
-
-  ConfiguracaoRepository(this.client);
-
-  Future fetchPost() async {
-    final response =
-        await client.get('https://jsonplaceholder.typicode.com/posts/1');
-    return response.data;
+class ConfiguracaoRepository {
+  final CollectionReference _corretorCollection =
+      FirebaseFirestore.instance.collection('corretores');
+  final AuthController _authController = Modular.get();
+  Future saveCorreto(CorretorModel corretorModel) async {
+    await _corretorCollection
+        .doc(_authController.user.uid)
+        .set(corretorModel.toJson());
   }
-
-  //dispose will be called automatically
-  @override
-  void dispose() {}
 }
