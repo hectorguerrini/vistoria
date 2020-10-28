@@ -157,6 +157,40 @@ class _DetalhePageState extends ModularState<DetalhePage, DetalheController> {
                     Divider(
                       thickness: 2,
                     ),
+                    Container(
+                      padding: EdgeInsets.only(left: 16, top: 16),
+                      alignment: Alignment.centerLeft,
+                      child: Text('Fiadores',
+                          style: TextStyle(
+                            fontSize: 24,
+                          )),
+                    ),
+                    ...controller.vistoriaModel.fiador
+                        .map(
+                          (e) => ListTile(
+                            title: Text(
+                              e.nomeCompleto,
+                            ),
+                            subtitle: Text.rich(
+                                TextSpan(text: e.email + '\n', children: [
+                              if (e.isWhatsapp)
+                                WidgetSpan(
+                                    child: Icon(
+                                  FontAwesome5.whatsapp,
+                                  size: 16,
+                                  color: Colors.green,
+                                )),
+                              TextSpan(text: e.celular),
+                              if (e.telefone != null)
+                                TextSpan(text: '/' + e.telefone),
+                              TextSpan(text: '\n'),
+                            ])),
+                          ),
+                        )
+                        .toList(),
+                    Divider(
+                      thickness: 2,
+                    ),
                     ...controller.vistoriaModel.listAmbientes
                         .map((e) => Card(
                               child: Container(
