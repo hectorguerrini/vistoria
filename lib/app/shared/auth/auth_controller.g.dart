@@ -33,6 +33,15 @@ mixin _$AuthController on _AuthControllerBase, Store {
         .run(() => super.loginWithEmail(email, senha));
   }
 
+  final _$updateDisplayNameAsyncAction =
+      AsyncAction('_AuthControllerBase.updateDisplayName');
+
+  @override
+  Future<dynamic> updateDisplayName(String displayName) {
+    return _$updateDisplayNameAsyncAction
+        .run(() => super.updateDisplayName(displayName));
+  }
+
   @override
   String toString() {
     return '''

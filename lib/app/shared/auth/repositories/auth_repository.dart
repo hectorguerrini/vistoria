@@ -15,4 +15,9 @@ class AuthRepository implements IAuthRepository {
   User getUser() {
     return _auth.currentUser;
   }
+
+  @override
+  Future updateDisplayName(String displayName) {
+    return _auth.currentUser.updateProfile(displayName: displayName);
+  }
 }

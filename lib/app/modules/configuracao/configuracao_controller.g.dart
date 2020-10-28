@@ -9,18 +9,26 @@ part of 'configuracao_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ConfiguracaoController on _ConfiguracaoControllerBase, Store {
-  final _$valueAtom = Atom(name: '_ConfiguracaoControllerBase.value');
+  Computed<bool> _$isValidComputed;
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  bool get isValid => (_$isValidComputed ??= Computed<bool>(() => super.isValid,
+          name: '_ConfiguracaoControllerBase.isValid'))
+      .value;
+
+  final _$nomeCompletoAtom =
+      Atom(name: '_ConfiguracaoControllerBase.nomeCompleto');
+
+  @override
+  String get nomeCompleto {
+    _$nomeCompletoAtom.reportRead();
+    return super.nomeCompleto;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set nomeCompleto(String value) {
+    _$nomeCompletoAtom.reportWrite(value, super.nomeCompleto, () {
+      super.nomeCompleto = value;
     });
   }
 
@@ -28,11 +36,22 @@ mixin _$ConfiguracaoController on _ConfiguracaoControllerBase, Store {
       ActionController(name: '_ConfiguracaoControllerBase');
 
   @override
-  void increment() {
+  dynamic setNome(String value) {
     final _$actionInfo = _$_ConfiguracaoControllerBaseActionController
-        .startAction(name: '_ConfiguracaoControllerBase.increment');
+        .startAction(name: '_ConfiguracaoControllerBase.setNome');
     try {
-      return super.increment();
+      return super.setNome(value);
+    } finally {
+      _$_ConfiguracaoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic save() {
+    final _$actionInfo = _$_ConfiguracaoControllerBaseActionController
+        .startAction(name: '_ConfiguracaoControllerBase.save');
+    try {
+      return super.save();
     } finally {
       _$_ConfiguracaoControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +60,8 @@ mixin _$ConfiguracaoController on _ConfiguracaoControllerBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+nomeCompleto: ${nomeCompleto},
+isValid: ${isValid}
     ''';
   }
 }

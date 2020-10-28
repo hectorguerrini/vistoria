@@ -20,4 +20,10 @@ abstract class _AuthControllerBase with Store {
   Future loginWithEmail(String email, String senha) async {
     user = await _repository.loginWithEmailAndPassword(email, senha);
   }
+
+  @action
+  Future updateDisplayName(String displayName) async {
+    await _repository.updateDisplayName(displayName);
+    user = _repository.getUser();
+  }
 }

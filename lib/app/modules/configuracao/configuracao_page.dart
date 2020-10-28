@@ -28,6 +28,8 @@ class _ConfiguracaoPageState
             children: [
               Card(
                   child: TextFormField(
+                onChanged: controller.setNome,
+                initialValue: controller.nomeCompleto,
                 keyboardType: TextInputType.text,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
@@ -36,6 +38,12 @@ class _ConfiguracaoPageState
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await controller.save();
+        },
+        child: Icon(Icons.save),
       ),
     );
   }
