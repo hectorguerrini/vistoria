@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -24,6 +24,8 @@ class PdfController = _PdfControllerBase with _$PdfController;
 abstract class _PdfControllerBase with Store {
   final AuthController _authController = Modular.get();
   final PdfRepository _repository = Modular.get();
+  final DateTime _dateTime = new DateTime.now();
+
   @observable
   VistoriaModel vistoriaModel;
 
@@ -93,7 +95,7 @@ abstract class _PdfControllerBase with Store {
                     fontSize: 16, fontWeight: pw.FontWeight.bold))),
         pw.Container(
             alignment: pw.Alignment.center,
-            child: pw.Text('20/08/2020',
+            child: pw.Text(new DateFormat('dd/MM/yyyy').format(_dateTime),
                 style: pw.TextStyle(
                     fontSize: 16, fontWeight: pw.FontWeight.bold))),
         pw.RichText(
@@ -161,7 +163,21 @@ abstract class _PdfControllerBase with Store {
                       pw.Text('CPF: ' + e.cpf),
                     ]))
             .toList(),
+        pw.Text('Fiadores: ',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+        ...vistoriaModel.fiador
+            .map((e) => pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text(e.nomeCompleto),
+                      pw.Text('CPF: ' + e.cpf),
+                    ]))
+            .toList(),
         pw.Divider(),
+        pw.Header(level: 1, text: 'Introdução'),
+        pw.Paragraph(
+            text:
+                """Este relatório retrata fidefignamente o estado do imóvel no momento da vistoria.Caso Algo não esteja relatado na forma de texto. mas esteja visível nas fotos que acompanham esta vistoria, as mesmas poderão ser utilizadas para efeitos de comprovação das características e estado de conservação"""),
         pw.Header(level: 0, text: 'Ambientes'),
         ...vistoriaModel.listAmbientes.map((amb) {
           index += 1;
@@ -208,7 +224,60 @@ abstract class _PdfControllerBase with Store {
                       ]);
                 })
               ]);
-        }).toList()
+        }).toList(),
+        pw.SizedBox(height: 50),
+        pw.Column(mainAxisSize: pw.MainAxisSize.min, children: [
+          pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+              children: [
+                pw.Container(
+                    width: 200,
+                    alignment: pw.Alignment.center,
+                    decoration:
+                        pw.BoxDecoration(border: pw.BoxBorder(top: true)),
+                    child: pw.Text('LOCADOR')),
+                pw.Container(
+                    width: 200,
+                    alignment: pw.Alignment.center,
+                    decoration:
+                        pw.BoxDecoration(border: pw.BoxBorder(top: true)),
+                    child: pw.Text('LOCATÁRIO')),
+              ]),
+          pw.SizedBox(height: 50),
+          pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+              children: [
+                pw.Container(
+                    width: 200,
+                    alignment: pw.Alignment.center,
+                    decoration:
+                        pw.BoxDecoration(border: pw.BoxBorder(top: true)),
+                    child: pw.Text('VISTORIADOR')),
+                pw.Container(
+                    width: 200,
+                    alignment: pw.Alignment.center,
+                    decoration:
+                        pw.BoxDecoration(border: pw.BoxBorder(top: true)),
+                    child: pw.Text('CORRETOR')),
+              ]),
+          pw.SizedBox(height: 50),
+          pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+              children: [
+                pw.Container(
+                    width: 200,
+                    alignment: pw.Alignment.center,
+                    decoration:
+                        pw.BoxDecoration(border: pw.BoxBorder(top: true)),
+                    child: pw.Text('TESTEMUNHA')),
+                pw.Container(
+                    width: 200,
+                    alignment: pw.Alignment.center,
+                    decoration:
+                        pw.BoxDecoration(border: pw.BoxBorder(top: true)),
+                    child: pw.Text('TESTEMUNHA')),
+              ])
+        ])
       ],
     ));
     return doc.save();
