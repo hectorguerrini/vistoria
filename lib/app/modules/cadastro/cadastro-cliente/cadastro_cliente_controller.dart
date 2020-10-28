@@ -118,7 +118,6 @@ abstract class _CadastroClienteControllerBase with Store {
                     mensagem: 'Cadastrado com Sucesso',
                   ))
           .then((value) => Modular.to.pop());
-      print('Cliente cadastrado');
     } catch (e) {
       print(e);
     }
