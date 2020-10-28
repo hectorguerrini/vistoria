@@ -68,8 +68,11 @@ const _$ItensAmbienteEnumMap = {
   ItensAmbiente.TOMADAS_E_INTERRUPTORES: 'TOMADAS_E_INTERRUPTORES',
   ItensAmbiente.AR_CONDICIONADO: 'AR_CONDICIONADO',
   ItensAmbiente.PORTA: 'PORTA',
-  ItensAmbiente.TORNEIRA: 'TORNEIRA',
+  ItensAmbiente.JANELA: 'JANELA',
   ItensAmbiente.ARMARIO: 'ARMARIO',
+  ItensAmbiente.PIA: 'PIA',
+  ItensAmbiente.BOX_E_CHUVEIRO: 'BOX_E_CHUVEIRO',
+  ItensAmbiente.PRIVADA_E_BIDE: 'PRIVADA_E_BIDE',
 };
 
 const _$EstadoItensEnumMap = {

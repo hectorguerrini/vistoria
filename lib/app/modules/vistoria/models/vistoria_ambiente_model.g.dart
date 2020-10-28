@@ -74,4 +74,5 @@ const _$AmbientesEnumMap = {
   Ambientes.SALA: 'SALA',
   Ambientes.SUITES: 'SUITES',
   Ambientes.VARANDA: 'VARANDA',
+  Ambientes.AREA_EXTERNA: 'AREA_EXTERNA',
 };

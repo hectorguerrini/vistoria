@@ -64,6 +64,7 @@ class _CadastroItensAmbienteDialogState
           onChanged: controller.setObservacoes,
           textCapitalization: TextCapitalization.sentences,
           maxLines: null,
+          initialValue: controller.getObservacoes,
           decoration: InputDecoration(labelText: 'Observações'),
         ),
         ButtonBar(

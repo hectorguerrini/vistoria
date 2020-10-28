@@ -23,6 +23,13 @@ mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
       (_$getEstadoComputed ??= Computed<EstadoItens>(() => super.getEstado,
               name: '_ItensAmbienteControllerBase.getEstado'))
           .value;
+  Computed<String> _$getObservacoesComputed;
+
+  @override
+  String get getObservacoes =>
+      (_$getObservacoesComputed ??= Computed<String>(() => super.getObservacoes,
+              name: '_ItensAmbienteControllerBase.getObservacoes'))
+          .value;
   Computed<bool> _$isFieldsValidComputed;
 
   @override
@@ -175,6 +182,7 @@ listItens: ${listItens},
 itens: ${itens},
 getItemAmbiente: ${getItemAmbiente},
 getEstado: ${getEstado},
+getObservacoes: ${getObservacoes},
 isFieldsValid: ${isFieldsValid}
     ''';
   }

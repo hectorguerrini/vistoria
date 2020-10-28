@@ -96,8 +96,12 @@ class _DetalhePageState extends ModularState<DetalhePage, DetalheController> {
                       ),
                       subtitle: Text.rich(TextSpan(
                           text: controller.vistoriaModel.imovelModel
-                                  .proprietario.email +
-                              '\n',
+                                      .proprietario.email !=
+                                  null
+                              ? controller.vistoriaModel.imovelModel
+                                      .proprietario.email +
+                                  '\n'
+                              : '',
                           children: [
                             if (controller.vistoriaModel.imovelModel
                                 .proprietario.isWhatsapp)

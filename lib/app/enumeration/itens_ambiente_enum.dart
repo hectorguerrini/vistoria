@@ -6,8 +6,11 @@ enum ItensAmbiente {
   TOMADAS_E_INTERRUPTORES,
   AR_CONDICIONADO,
   PORTA,
-  TORNEIRA,
-  ARMARIO
+  JANELA,
+  ARMARIO,
+  PIA,
+  BOX_E_CHUVEIRO,
+  PRIVADA_E_BIDE,
 }
 
 extension ParseToString on ItensAmbiente {

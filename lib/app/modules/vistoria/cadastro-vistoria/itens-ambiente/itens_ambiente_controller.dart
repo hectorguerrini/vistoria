@@ -46,6 +46,8 @@ abstract class _ItensAmbienteControllerBase with Store {
 
   @computed
   EstadoItens get getEstado => itens.estadoItens;
+  @computed
+  String get getObservacoes => itens.observacao;
 
   @computed
   bool get isFieldsValid => itens.item != null && itens.estadoItens != null;
