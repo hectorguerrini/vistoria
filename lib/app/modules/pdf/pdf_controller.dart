@@ -177,7 +177,7 @@ abstract class _PdfControllerBase with Store {
         pw.Header(level: 1, text: 'Introdução'),
         pw.Paragraph(
             text:
-                """Este relatório retrata fidefignamente o estado do imóvel no momento da vistoria.Caso Algo não esteja relatado na forma de texto. mas esteja visível nas fotos que acompanham esta vistoria, as mesmas poderão ser utilizadas para efeitos de comprovação das características e estado de conservação"""),
+                """Este relatório retrata fidefignamente o estado do imóvel no momento da vistoria. Caso Algo não esteja relatado na forma de texto. mas esteja visível nas fotos que acompanham esta vistoria, as mesmas poderão ser utilizadas para efeitos de comprovação das características e estado de conservação"""),
         pw.Header(level: 0, text: 'Ambientes'),
         ...vistoriaModel.listAmbientes.map((amb) {
           index += 1;
