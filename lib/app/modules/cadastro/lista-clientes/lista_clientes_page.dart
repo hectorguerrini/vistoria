@@ -47,7 +47,8 @@ class _ListaClientesPageState
                           child: Text('Carregar')));
                 }
                 if (controller.listClientes.data == null) {
-                  return Expanded(child: Center(child: CircularProgressIndicator()));
+                  return Expanded(
+                      child: Center(child: CircularProgressIndicator()));
                 }
                 List<ClienteModel> listFilter =
                     controller.listClientesFiltered.value;
@@ -128,8 +129,14 @@ class _ListaClientesPageState
                           }
                         },
                         title: Text(item.nomeCompleto),
-                        subtitle: Text(
-                            "${item.cpf}\nCel:${item.celular}\n${item.telefone != null ? "Tel:" + item.telefone : ""}"),
+                        subtitle: Text.rich(TextSpan(children: [
+                          if (item.cpf != null && item.cpf.isNotEmpty)
+                            TextSpan(text: item.cpf + '\n'),
+                          if (item.celular != null && item.celular.isNotEmpty)
+                            TextSpan(text: 'Cel:' + item.celular + '\n'),
+                          if (item.telefone != null && item.telefone.isNotEmpty)
+                            TextSpan(text: 'Tel:' + item.telefone + '\n'),
+                        ])),
                         trailing: item.isWhatsapp
                             ? Icon(
                                 FontAwesome.whatsapp,
