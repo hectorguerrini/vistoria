@@ -62,13 +62,16 @@ T _$enumDecodeNullable<T>(
 }
 
 const _$AmbientesEnumMap = {
-  Ambientes.SALA: 'SALA',
-  Ambientes.COZINHA: 'COZINHA',
   Ambientes.AREA_SERVICO: 'AREA_SERVICO',
-  Ambientes.QUARTO: 'QUARTO',
-  Ambientes.SUITES: 'SUITES',
   Ambientes.BANHEIROS: 'BANHEIROS',
-  Ambientes.VARANDA: 'VARANDA',
   Ambientes.CHURRASQUEIRA: 'CHURRASQUEIRA',
   Ambientes.CORREDOR: 'CORREDOR',
+  Ambientes.COZINHA: 'COZINHA',
+  Ambientes.EDICULA: 'EDICULA',
+  Ambientes.GARAGEM: 'GARAGEM',
+  Ambientes.QUARTO: 'QUARTO',
+  Ambientes.QUINTAL: 'QUINTAL',
+  Ambientes.SALA: 'SALA',
+  Ambientes.SUITES: 'SUITES',
+  Ambientes.VARANDA: 'VARANDA',
 };

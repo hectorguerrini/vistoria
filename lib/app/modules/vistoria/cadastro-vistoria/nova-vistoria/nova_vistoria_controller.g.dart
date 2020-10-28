@@ -30,6 +30,13 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
           Computed<List<ClienteModel>>(() => super.getLocatario,
               name: '_NovaVistoriaControllerBase.getLocatario'))
       .value;
+  Computed<List<ClienteModel>> _$getFiadorComputed;
+
+  @override
+  List<ClienteModel> get getFiador => (_$getFiadorComputed ??=
+          Computed<List<ClienteModel>>(() => super.getFiador,
+              name: '_NovaVistoriaControllerBase.getFiador'))
+      .value;
   Computed<List<VistoriaAmbienteModel>> _$getListAmbientesComputed;
 
   @override
@@ -231,6 +238,28 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
   }
 
   @override
+  dynamic setFiador(List<ClienteModel> value) {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.setFiador');
+    try {
+      return super.setFiador(value);
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic selectFiador() {
+    final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
+        .startAction(name: '_NovaVistoriaControllerBase.selectFiador');
+    try {
+      return super.selectFiador();
+    } finally {
+      _$_NovaVistoriaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic addItensAmbientes(int index, {VistoriaAmbienteModel item}) {
     final _$actionInfo = _$_NovaVistoriaControllerBaseActionController
         .startAction(name: '_NovaVistoriaControllerBase.addItensAmbientes');
@@ -285,6 +314,7 @@ descCtrl: ${descCtrl},
 getImovelModel: ${getImovelModel},
 getTipoVistoria: ${getTipoVistoria},
 getLocatario: ${getLocatario},
+getFiador: ${getFiador},
 getListAmbientes: ${getListAmbientes},
 isComplete: ${isComplete}
     ''';

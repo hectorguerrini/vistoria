@@ -51,6 +51,27 @@ class _NovaVistoriaPageState
           });
     }
 
+    Widget stepFiador() {
+      List<ClienteModel> fiadores = controller.getFiador;
+      return ListView.separated(
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: fiadores.length + 1,
+          itemBuilder: (context, index) {
+            if (fiadores.length - 1 < index)
+              return FlatButton.icon(
+                  onPressed: controller.selectFiador,
+                  icon: Icon(Icons.add, color: Colors.black54),
+                  label: Text('Adicionar Locatario',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black54)));
+            return ListTile(
+              title: Text(fiadores[index].nomeCompleto),
+              subtitle: Text(fiadores[index].cpf),
+            );
+          });
+    }
+
     getListStep() {
       List<Step> listSteps = [
         Step(
@@ -178,6 +199,14 @@ class _NovaVistoriaPageState
           content: Observer(builder: (_) {
             return Card(child: stepLocatario());
           }),
+        ),
+        Step(
+          state: controller.getStepState(3, controller.getFiador),
+          isActive: controller.currentStep >= 3,
+          title: Text("Selecionar Fiador"),
+          content: Observer(builder: (_) {
+            return Card(child: stepFiador());
+          }),
         )
       ];
 
@@ -185,8 +214,8 @@ class _NovaVistoriaPageState
         controller.vistoriaModel.listAmbientes.asMap().forEach((index, e) {
           Step step = new Step(
               subtitle: Text(e.descricao ?? 'Sem descrição'),
-              state: controller.getStepState(index + 3, e.observacao),
-              isActive: controller.currentStep >= index + 3,
+              state: controller.getStepState(index + 4, e.observacao),
+              isActive: controller.currentStep >= index + 4,
               title: Text("${e.ambiente.toShortString()}"),
               content: Card(
                 child: Column(
@@ -208,8 +237,8 @@ class _NovaVistoriaPageState
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
-                        onChanged: (value) =>
-                            controller.setObservacaoAmbiente(value, index),
+                        // onChanged: (value) =>
+                        //     controller.setObservacaoAmbiente(value, index),
                         controller: controller.obsCtrl,
                         maxLines: null,
                         textCapitalization: TextCapitalization.sentences,
@@ -258,8 +287,8 @@ class _NovaVistoriaPageState
 
       listSteps.add(Step(
           state: StepState.complete,
-          isActive:
-              controller.currentStep == controller.listAmbientes.length + 3,
+          isActive: controller.currentStep ==
+              controller.vistoriaModel.listAmbientes.length + 4,
           title: Text('Finalizar Vistoria'),
           content: GridView.count(
             crossAxisCount: 2,
@@ -315,7 +344,7 @@ class _NovaVistoriaPageState
                           onPressed: onStepCancel,
                         ),
                       if (controller.currentStep !=
-                          controller.listAmbientes.length + 3)
+                          controller.vistoriaModel.listAmbientes.length + 4)
                         RaisedButton(
                           color: Colors.green,
                           child: Text('PROXIMO'),
@@ -327,7 +356,7 @@ class _NovaVistoriaPageState
               );
             })),
         floatingActionButton: Observer(builder: (_) {
-          return controller.currentStep != controller.listAmbientes.length + 3
+          return controller.currentStep != controller.listAmbientes.length + 4
               ? CustomFloatingButtonSave(f: controller.save)
               : Container();
         }),

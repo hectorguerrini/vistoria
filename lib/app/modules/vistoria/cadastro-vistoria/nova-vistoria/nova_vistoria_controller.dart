@@ -38,7 +38,10 @@ abstract class _NovaVistoriaControllerBase with Store {
     currentStep = 0;
     vistoriaModel = Modular.args.data ??
         new VistoriaModel(
-            statusVistoria: StatusVistoria.RASCUNHO, locatarios: []);
+            statusVistoria: StatusVistoria.RASCUNHO,
+            locatarios: [],
+            fiador: [],
+            listAmbientes: []);
     listAmbientes = vistoriaModel.listAmbientes?.asObservable() ??
         new ObservableList<VistoriaAmbienteModel>();
   }
@@ -114,6 +117,26 @@ abstract class _NovaVistoriaControllerBase with Store {
     });
   }
 
+  @action
+  setFiador(List<ClienteModel> value) =>
+      vistoriaModel = vistoriaModel.copyWith(fiador: value);
+
+  @computed
+  List<ClienteModel> get getFiador => vistoriaModel.fiador;
+
+  @action
+  selectFiador() {
+    Modular.to
+        .pushNamed('/cadastro/lista_clientes', arguments: true)
+        .then((value) {
+      if (value != null) {
+        List<ClienteModel> list = vistoriaModel.fiador;
+        list.add(value);
+        setFiador(list);
+      }
+    });
+  }
+
   @computed
   List<VistoriaAmbienteModel> get getListAmbientes =>
       vistoriaModel.listAmbientes;
@@ -144,11 +167,11 @@ abstract class _NovaVistoriaControllerBase with Store {
   @action
   setStep(int step) {
     currentStep = step;
-    if (step >= 3 && currentStep - 3 < listAmbientes.length) {
+    if (step >= 4 && currentStep - 4 < listAmbientes.length) {
       obsCtrl = new TextEditingController(
-          text: listAmbientes[currentStep - 3].observacao);
+          text: listAmbientes[currentStep - 4].observacao);
       descCtrl = new TextEditingController(
-          text: listAmbientes[currentStep - 3].descricao);
+          text: listAmbientes[currentStep - 4].descricao);
     }
   }
 
@@ -200,7 +223,7 @@ abstract class _NovaVistoriaControllerBase with Store {
                 int n = lista.indexOf(el);
                 String uri = await _repository.uploadImages(
                     el,
-                    vistoriaModel.reference.documentID,
+                    vistoriaModel.reference.id,
                     vistoriaModel.listAmbientes.indexOf(e).toString() +
                         e.ambiente.toShortString(),
                     element.item.toShortString(),
