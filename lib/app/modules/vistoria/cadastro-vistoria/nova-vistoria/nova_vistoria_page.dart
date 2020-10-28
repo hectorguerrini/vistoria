@@ -237,8 +237,8 @@ class _NovaVistoriaPageState
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
-                        // onChanged: (value) =>
-                        //     controller.setObservacaoAmbiente(value, index),
+                        onChanged: (value) =>
+                            controller.setObservacaoAmbiente(value, index),
                         controller: controller.obsCtrl,
                         maxLines: null,
                         textCapitalization: TextCapitalization.sentences,
