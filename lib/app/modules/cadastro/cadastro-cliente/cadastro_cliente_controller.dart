@@ -32,7 +32,9 @@ abstract class _CadastroClienteControllerBase with Store {
       clienteModel = Modular.args.data;
       celularCtrl.text = clienteModel.celular;
       cpfCtrl.text = clienteModel.cpf;
-      dtCtrl.text = DateFormat('dd/MM/yyyy').format(clienteModel.dtNascimento);
+      dtCtrl.text = clienteModel.dtNascimento != null
+          ? DateFormat('dd/MM/yyyy').format(clienteModel.dtNascimento)
+          : '';
     } else {
       clienteModel = new ClienteModel(isWhatsapp: false);
     }
