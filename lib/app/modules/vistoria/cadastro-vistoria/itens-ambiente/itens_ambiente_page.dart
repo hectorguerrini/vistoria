@@ -123,6 +123,11 @@ class _ItensAmbientePageState
                                 ButtonBar(
                                   children: <Widget>[
                                     FlatButton.icon(
+                                        onPressed: () => controller
+                                            .uploadPhotoItens(item, index),
+                                        icon: Icon(FontAwesome.upload),
+                                        label: Text('Upload')),
+                                    FlatButton.icon(
                                         onPressed: () =>
                                             controller.photoItens(item, index),
                                         icon: Icon(FontAwesome.camera),

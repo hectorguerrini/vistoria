@@ -11,6 +11,10 @@ enum ItensAmbiente {
   PIA,
   BOX_E_CHUVEIRO,
   PRIVADA_E_BIDE,
+  BANCADA,
+  CADEIRA,
+  LAREIRA,
+  OBJETOS
 }
 
 extension ParseToString on ItensAmbiente {

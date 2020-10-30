@@ -73,6 +73,10 @@ const _$ItensAmbienteEnumMap = {
   ItensAmbiente.PIA: 'PIA',
   ItensAmbiente.BOX_E_CHUVEIRO: 'BOX_E_CHUVEIRO',
   ItensAmbiente.PRIVADA_E_BIDE: 'PRIVADA_E_BIDE',
+  ItensAmbiente.BANCADA: 'BANCADA',
+  ItensAmbiente.CADEIRA: 'CADEIRA',
+  ItensAmbiente.LAREIRA: 'LAREIRA',
+  ItensAmbiente.OBJETOS: 'OBJETOS',
 };
 
 const _$EstadoItensEnumMap = {

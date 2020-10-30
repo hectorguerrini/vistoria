@@ -307,6 +307,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_absolute_path:
+    dependency: "direct main"
+    description:
+      name: flutter_absolute_path
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   flutter_masked_text:
     dependency: "direct main"
     description:
@@ -513,6 +520,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.2"
+  multi_image_picker:
+    dependency: "direct main"
+    description:
+      name: multi_image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.7.14"
   node_interop:
     dependency: transitive
     description:

@@ -85,6 +85,21 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
     });
   }
 
+  final _$progressAtom = Atom(name: '_NovaVistoriaControllerBase.progress');
+
+  @override
+  double get progress {
+    _$progressAtom.reportRead();
+    return super.progress;
+  }
+
+  @override
+  set progress(double value) {
+    _$progressAtom.reportWrite(value, super.progress, () {
+      super.progress = value;
+    });
+  }
+
   final _$listAmbientesAtom =
       Atom(name: '_NovaVistoriaControllerBase.listAmbientes');
 
@@ -308,6 +323,7 @@ mixin _$NovaVistoriaController on _NovaVistoriaControllerBase, Store {
     return '''
 currentStep: ${currentStep},
 vistoriaModel: ${vistoriaModel},
+progress: ${progress},
 listAmbientes: ${listAmbientes},
 obsCtrl: ${obsCtrl},
 descCtrl: ${descCtrl},

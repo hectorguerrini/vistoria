@@ -76,6 +76,15 @@ mixin _$ItensAmbienteController on _ItensAmbienteControllerBase, Store {
     return _$photoItensAsyncAction.run(() => super.photoItens(value, index));
   }
 
+  final _$uploadPhotoItensAsyncAction =
+      AsyncAction('_ItensAmbienteControllerBase.uploadPhotoItens');
+
+  @override
+  Future uploadPhotoItens(ItensAmbienteModel value, int index) {
+    return _$uploadPhotoItensAsyncAction
+        .run(() => super.uploadPhotoItens(value, index));
+  }
+
   final _$willPopAsyncAction =
       AsyncAction('_ItensAmbienteControllerBase.willPop');
 

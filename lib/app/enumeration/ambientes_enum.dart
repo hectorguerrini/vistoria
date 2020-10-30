@@ -11,7 +11,9 @@ enum Ambientes {
   SALA,
   SUITES,
   VARANDA,
-  AREA_EXTERNA
+  AREA_EXTERNA,
+  CLOSET,
+  ESCADA,
 }
 
 extension ParseToString on Ambientes {

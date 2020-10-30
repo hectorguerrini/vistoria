@@ -62,6 +62,9 @@ class AmbienteModel {
       case Ambientes.QUINTAL:
         icon = Icon(RpgAwesome.flowers);
         break;
+      case Ambientes.AREA_EXTERNA:
+        icon = Icon(RpgAwesome.flowers);
+        break;
     }
     return icon;
   }

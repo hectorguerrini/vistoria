@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vistoria/app/enumeration/status_vistoria_enum.dart';
@@ -26,6 +27,9 @@ abstract class _NovaVistoriaControllerBase with Store {
 
   @observable
   VistoriaModel vistoriaModel;
+
+  @observable
+  double progress = 0;
 
   @observable
   ObservableList<VistoriaAmbienteModel> listAmbientes;
@@ -212,27 +216,58 @@ abstract class _NovaVistoriaControllerBase with Store {
                     'Salvar como ${vistoriaModel.statusVistoria.toShortString()}',
               ));
 
+      Modular.to.showDialog(
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          title: Text('Salvando imagens'),
+          content: Observer(builder: (_) {
+            return LinearProgressIndicator(
+              value: progress,
+            );
+          }),
+          actions: [
+            Observer(builder: (_) {
+              return Text('${progress * 100}');
+            })
+          ],
+        ),
+      );
+      var total = listAmbientes
+          .map((element) => element.listItens != null &&
+                  element.listItens.length > 0
+              ? element.listItens
+                  .map((e) => e.fileImages != null ? e.fileImages.length : 0)
+                  .reduce((value, element) => value + element)
+              : 0)
+          .reduce((value, element) => value + element);
+
       if (confimacao) {
         vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
+        var i = 0;
         await Future.wait(vistoriaModel.listAmbientes.map((e) async {
-          await Future.wait(e.listItens.map((element) async {
-            var lista = element.fileImages;
-            if (lista != null) {
-              int saveds = element.photoUrl.length;
-              await Future.wait(lista.map((el) async {
-                int n = lista.indexOf(el);
-                String uri = await _repository.uploadImages(
-                    el,
-                    vistoriaModel.reference.id,
-                    vistoriaModel.listAmbientes.indexOf(e).toString() +
-                        e.ambiente.toShortString(),
-                    element.item.toShortString(),
-                    n + saveds);
-                element.photoUrl.add(uri);
-                element.fileImages.remove(el);
-              }));
-            }
-          }));
+          if (e.listItens != null) {
+            await Future.wait(e.listItens.map((element) async {
+              var lista =
+                  element.fileImages != null ? [...element.fileImages] : null;
+              if (lista != null) {
+                int saveds = element.photoUrl.length;
+                await Future.wait(lista.map((el) async {
+                  int n = lista.indexOf(el);
+                  String uri = await _repository.uploadImages(
+                      el,
+                      vistoriaModel.reference.id,
+                      vistoriaModel.listAmbientes.indexOf(e).toString() +
+                          e.ambiente.toShortString(),
+                      element.item.toShortString(),
+                      n + saveds);
+                  element.photoUrl.add(uri);
+                  element.fileImages.remove(el);
+                  i += 1;
+                  progress = i / total;
+                }));
+              }
+            }));
+          }
         }));
         vistoriaModel.reference = await _repository.saveVistoria(vistoriaModel);
         Modular.to.pop(true);

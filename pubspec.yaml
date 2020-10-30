@@ -43,7 +43,8 @@ dependencies:
   flutter_modular: ^2.0.1
 
   font_awesome_flutter: ^8.8.1
-  
+  multi_image_picker: ^4.7.14
+  flutter_absolute_path: ^1.0.6
   flutter:
     sdk: flutter
   

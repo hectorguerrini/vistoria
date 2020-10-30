@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:vistoria/app/enumeration/estado_itens_enum.dart';
 import 'package:vistoria/app/enumeration/itens_ambiente_enum.dart';
 import 'package:vistoria/app/modules/vistoria/cadastro-vistoria/components/cadastro_itens_ambiente_dialog.dart';
@@ -100,6 +102,30 @@ abstract class _ItensAmbienteControllerBase with Store {
       }
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  @action
+  uploadPhotoItens(ItensAmbienteModel value, int index) async {
+    try {
+      List<Asset> resultList;
+
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 300,
+      );
+
+      if (resultList != null) {
+        for (Asset asset in resultList) {
+          value.fileImages.add(File(
+              await FlutterAbsolutePath.getAbsolutePath(asset.identifier)));
+        }
+
+        listItens[index] =
+            listItens.elementAt(index).copyWith(fileImages: value.fileImages);
+      }
+    } on Exception catch (e) {
+      String error;
+      error = e.toString();
     }
   }
 
